@@ -57,6 +57,9 @@
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
     <ClCompile Include="sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -95,6 +98,9 @@
     <ClInclude Include="Skybox.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Object</Filter>
+    </ClCompile>
     <ClInclude Include="sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>

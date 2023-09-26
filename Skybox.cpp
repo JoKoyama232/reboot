@@ -17,6 +17,9 @@ static Skybox g_Skybox;
 HRESULT InitSkybox(void) {
 	// ƒ‚ƒfƒ‹‚Ì‰Šú‰»
 	LoadModel(MODEL_SKYBOX, &g_Skybox.transform.modelInfo);
+	GetModelDiffuse(&g_Skybox.transform.modelInfo, g_Skybox.transform.modelDiffuse);
+	g_Skybox.transform.load = true;		// ƒ‚ƒfƒ‹‚Ì‰Šú‰»Š®—¹
+
 	g_Skybox.transform.SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	g_Skybox.transform.SetRotation(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	g_Skybox.transform.SetScale(XMFLOAT3(0.0f, 0.0f, 0.0f));
@@ -27,3 +30,6 @@ HRESULT InitSkybox(void) {
 }
 
 // I—¹ˆ—
+void UninitSkybox(void) {
+
+}
