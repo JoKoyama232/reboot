@@ -13,7 +13,7 @@
 #include "sprite.h"
 #include "title.h"
 #include "title.h"
-//#include "title_tex.h"
+#include "title_tex.h"
 
 //#include "title_field.h"
 //#include "model.h"
@@ -25,6 +25,7 @@
 
 HRESULT InitTitle(void)
 {
+	InitTitleTex();
 	return S_OK;
 }
 
@@ -34,7 +35,7 @@ HRESULT InitTitle(void)
 //=============================================================================
 void UninitTitle(void)
 {
-	
+	UninitTitleTex();
 }
 
 
@@ -43,7 +44,7 @@ void UninitTitle(void)
 //=============================================================================
 void UpdateTitle(void)
 {
-
+	UpdateTitleTex();
 }
 
 
@@ -68,6 +69,7 @@ void DrawTitle(void)
 		SetLightEnable(false);
 
 		//ここから下に
+		DrawTitleTex();
 
 		// ライティングを有効に
 		SetLightEnable(true);
