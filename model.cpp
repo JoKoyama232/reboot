@@ -200,7 +200,7 @@ void DrawModel(DX11_MODEL* Model)
 
 
 //モデル読込////////////////////////////////////////////
-void LoadObj(char* FileName, MODEL* Model)
+void LoadObj(const char* FileName, MODEL* Model)
 {
 
 	XMFLOAT3* positionArray;
@@ -449,7 +449,7 @@ void LoadObj(char* FileName, MODEL* Model)
 
 
 //マテリアル読み込み///////////////////////////////////////////////////////////////////
-void LoadMaterial(char* FileName, MODEL_MATERIAL** MaterialArray, unsigned short* MaterialNum)
+void LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, unsigned short* MaterialNum)
 {
 	char str[256];
 
