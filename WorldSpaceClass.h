@@ -7,13 +7,21 @@
 
 
 class WorldSpace {
+	// ゲーム内位置変数群
 	XMFLOAT4X4 worldMtx = XMFLOAT4X4(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 	XMFLOAT3 position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMFLOAT3 rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMFLOAT3 scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
 
 	WorldSpace* parent = NULL;
+
+
 public:
+	// 3Dモデル変数群
+	DX11_MODEL	modelInfo;							// モデル情報
+	XMFLOAT4	modelDiffuse[MODEL_MAX_MATERIAL];	// モデルの色
+	bool		load;								// モデルの読み込みフラグ
+
 	//セッター
 	void SetWorldMatrix(XMFLOAT4X4 a_worldMtx) { worldMtx = a_worldMtx; }
 	void SetPosition(XMFLOAT3 a_position) {
