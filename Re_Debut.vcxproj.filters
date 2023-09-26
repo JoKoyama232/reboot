@@ -1,114 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\UI">
-      <UniqueIdentifier>{d7d335cd-971f-41c8-9552-fed4d0731bb4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Logic">
-      <UniqueIdentifier>{f639012f-a176-4fc6-be43-3416eae3783e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Object">
-      <UniqueIdentifier>{7d199282-f0ef-4f35-9387-7b4405c1d238}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Object">
-      <UniqueIdentifier>{5b7c44a3-3165-48bd-b875-441a5c4ff617}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Logic">
-      <UniqueIdentifier>{5a726b8f-1794-4174-8df5-d0ec52d8a48d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Class">
-      <UniqueIdentifier>{a7ebf923-defa-44b0-9bc0-ac2f2b319595}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="camera.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="debugproc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="model.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="fade.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Source Files\Object</Filter>
+    <ClCompile Include="input.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Object</Filter>
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="sound.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="sprite.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="title.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>ソースファイル\title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="camera.h">
-      <Filter>Header Files</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="debugproc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>Header Files</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="fade.h">
-      <Filter>Header Files</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="WorldSpaceClass.h">
-      <Filter>Header Files\Class</Filter>
+    <ClInclude Include="input.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Skybox.h">
-      <Filter>Header Files\Object</Filter>
+    <ClInclude Include="main.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files\Object</Filter>
-    </ClCompile>
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
     <ClInclude Include="sound.h">
-      <Filter>Header Files</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="sprite.h">
-      <Filter>Header Files</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="title.h">
-      <Filter>Header Files</Filter>
+      <Filter>ヘッダーファイル\title</Filter>
     </ClInclude>
+    <ClInclude Include="WorldSpaceClass.h">
+      <Filter>ヘッダーファイル\Class</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{ed9ab505-d87d-4909-aa27-3355d613d609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル">
+      <UniqueIdentifier>{d4554b00-07a7-40de-8b44-3f17f1194837}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\title">
+      <UniqueIdentifier>{c4bfe325-f974-4790-bb48-d0fb5a00b060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\title">
+      <UniqueIdentifier>{ee906773-a0ea-4033-a5af-a2f5cf4d98c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Class">
+      <UniqueIdentifier>{0a2efa72-ab1f-42f1-9721-2e877cbef18c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
