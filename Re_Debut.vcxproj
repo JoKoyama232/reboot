@@ -150,6 +150,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Skybox.cpp" />
   </ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="WorldSpaceClass.h" />
