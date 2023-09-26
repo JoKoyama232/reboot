@@ -50,7 +50,7 @@ struct VERTEX_DATA {
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void LoadModel(char* FileName, DX11_MODEL* Model);
+void LoadModel(const char* FileName, DX11_MODEL* Model);
 void UnloadModel(DX11_MODEL* Model);
 void DrawModel(DX11_MODEL* Model);
 
