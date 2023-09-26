@@ -62,8 +62,8 @@ struct MODEL
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void LoadObj(char* FileName, MODEL* Model);
-void LoadMaterial(char* FileName, MODEL_MATERIAL** MaterialArray, unsigned short* MaterialNum);
+void LoadObj(const char* FileName, MODEL* Model);
+void LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, unsigned short* MaterialNum);
 
 
 
@@ -71,7 +71,7 @@ void LoadMaterial(char* FileName, MODEL_MATERIAL** MaterialArray, unsigned short
 //=============================================================================
 // 初期化処理
 //=============================================================================
-void LoadModel(char* FileName, DX11_MODEL* Model)
+void LoadModel(const char* FileName, DX11_MODEL* Model)
 {
 	MODEL model;
 
