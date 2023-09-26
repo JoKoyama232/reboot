@@ -5,7 +5,6 @@
 //
 //=============================================================================
 #include "main.h"
-#include "meshfield.h"
 #include "input.h"
 #include "camera.h"
 #include "debugproc.h"
