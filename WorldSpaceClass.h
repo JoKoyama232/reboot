@@ -4,7 +4,7 @@
 //=============================================================================
 #pragma once
 #include "main.h"
-
+#include "model.h"
 
 class WorldSpace {
 	// ƒQ[ƒ€“àˆÊ’u•Ï”ŒQ

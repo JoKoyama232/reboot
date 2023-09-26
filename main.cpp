@@ -10,6 +10,7 @@
 #include "model.h"
 
 #include "fade.h"
+#include "title.h"
 
 //シーン
 
@@ -255,7 +256,7 @@ void Update(void)
 
 	switch (g_Mode) {
 	case MODE_TITLE:
-
+		UpdateTitle();
 		break;
 	case MODE_GAME:
 
@@ -283,7 +284,7 @@ void Draw(void)
 
 	switch (g_Mode) {
 	case MODE_TITLE:
-
+		DrawTitle();
 		break;
 	case MODE_GAME:
 
@@ -334,13 +335,14 @@ void SetMode(int mode) {
 
 
 	// タイトル画面の終了処理
+	UninitTitle();
 
 	//リザルト処理の終了処理
 
 
 	switch (g_Mode) {
 	case MODE_TITLE:
-
+		InitTitle();
 		//PlaySound(SOUND_LABEL_BGM_sample000);
 		break;
 	case MODE_GAME:

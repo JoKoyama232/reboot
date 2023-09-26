@@ -37,6 +37,9 @@
     <ClCompile Include="title.cpp">
       <Filter>ソースファイル\title</Filter>
     </ClCompile>
+    <ClCompile Include="title_tex.cpp">
+      <Filter>ソースファイル\title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -77,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="WorldSpaceClass.h">
       <Filter>ヘッダーファイル\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="title_tex.h">
+      <Filter>ヘッダーファイル\title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
