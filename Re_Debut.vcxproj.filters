@@ -31,6 +31,12 @@
     <Filter Include="Header Files\Class">
       <UniqueIdentifier>{a7ebf923-defa-44b0-9bc0-ac2f2b319595}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\title">
+      <UniqueIdentifier>{3d59ff08-b378-4916-9e22-c6ea8a04d476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\title">
+      <UniqueIdentifier>{4a11a2d7-8959-45f1-841c-79840b6e14a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -64,7 +70,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="title.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,7 +108,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="title.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\title</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
