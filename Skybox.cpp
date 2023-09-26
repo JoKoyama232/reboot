@@ -3,7 +3,7 @@
 //=============================================================================
 
 // インクルード
-
+#include "model.h"
 // 自身のインクルード
 #include "Skybox.h"
 
@@ -15,6 +15,8 @@ static Skybox g_Skybox;
 
 // 初期処理
 HRESULT InitSkybox(void) {
+	// モデルの初期化
+	LoadModel(MODEL_SKYBOX, &g_Skybox.transform.modelInfo);
 	g_Skybox.transform.SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	g_Skybox.transform.SetRotation(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	g_Skybox.transform.SetScale(XMFLOAT3(0.0f, 0.0f, 0.0f));
