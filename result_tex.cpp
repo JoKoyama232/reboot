@@ -1,7 +1,7 @@
 //=============================================================================
 //
-// リザルト画面処理 [result.cpp]
-// Author : 
+// リザルトテクスチャ画面処理 [result.cpp]
+// Author : 岩田　輝
 //
 //=============================================================================
 #include "main.h"
@@ -21,8 +21,8 @@
 #define BUTTON_MAX					(3)
 
 
-#define TEXTURE_WIDTH_LOGO			(480)			// ロゴサイズ
-#define TEXTURE_HEIGHT_LOGO			(80)			// 
+#define TEXTURE_WIDTH_LOGO			(360)			// ロゴサイズ
+#define TEXTURE_HEIGHT_LOGO			(60)			// 
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -159,7 +159,7 @@ void UpdateResultTex(void)
 					//点滅させる
 					if (g_Button[i].flag_alpha == true)
 					{
-						g_Button[i].alpha -= 0.01f;
+						g_Button[i].alpha -= 0.02f;
 						if (g_Button[i].alpha <= 0.0f)
 						{
 							g_Button[i].alpha = 0.0f;
@@ -168,7 +168,7 @@ void UpdateResultTex(void)
 					}
 					else
 					{
-						g_Button[i].alpha += 0.01f;
+						g_Button[i].alpha += 0.02f;
 						if (g_Button[i].alpha >= 1.0f)
 						{
 							g_Button[i].alpha = 1.0f;
