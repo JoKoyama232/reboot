@@ -15,6 +15,11 @@
 //*****************************************************************************
 #define	MODEL_PLAYER		"Data/model/cone.obj"			// 読み込むモデル名(まだ存在してないよ)
 
+#define	VALUE_MOVE			(2.0f)							// 移動量
+
+static float		roty = 0.0f;
+
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -33,6 +38,8 @@ HRESULT InitPlayer(void) {
 		g_Player.time = 0.0f;
 		g_Player.spd = 0.0f;			// 移動スピードクリア
 		g_Player.use = true;
+
+		roty = 0.0f;
 
 		return S_OK;
 
@@ -53,47 +60,47 @@ void UpdatePlayer(void) {
 	// 移動処理
 	if (GetKeyboardPress(DIK_A))
 	{
-
-		g_Player.object.SetRotation(XMFLOAT3{ 0.0f,90.0f,0.0f});
+		g_Player.spd = VALUE_MOVE;
+		roty = XM_PI / 2;
 	}
 	else if (IsButtonTriggered(0, BUTTON_LEFT))
 	{
+		g_Player.spd = VALUE_MOVE;
+		roty = XM_PI / 2;
 
-		g_Player.object.SetRotation(XMFLOAT3{ 0.0f,90.0f,0.0f });
 	}
 
 	if (GetKeyboardPress(DIK_D))
 	{
-
-		g_Player.object.SetRotation(XMFLOAT3{ 0.0f,-90.0f,0.0f });
+		g_Player.spd = VALUE_MOVE;
+		roty = -XM_PI / 2;
 	}
 	else if (IsButtonTriggered(0, BUTTON_RIGHT))
 	{
-
-		g_Player.object.SetRotation(XMFLOAT3{ 0.0f,-90.0f,0.0f });
+		g_Player.spd = VALUE_MOVE;
+		roty = -XM_PI / 2;
 	}
 
 	if (GetKeyboardPress(DIK_W))
 	{
-
-		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 180.0f,0.0f });
+		g_Player.spd = VALUE_MOVE;
+		roty = XM_PI;
 	}
 	else if (IsButtonTriggered(0, BUTTON_UP))
 	{
-
-		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 180.0f,0.0f });
+		g_Player.spd = VALUE_MOVE;
+		roty = XM_PI;
 	}
 
 	if (GetKeyboardPress(DIK_S))
 	{
-
-		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f,0.0f });
+		g_Player.spd = VALUE_MOVE;
+		roty = 0.0f;
 	}
 	else if (IsButtonTriggered(0, BUTTON_DOWN))
 	{
-
-		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f,0.0f });
-
+		g_Player.spd = VALUE_MOVE;
+		roty = 0.0f;
 	}
 
 	// 弾発射処理
