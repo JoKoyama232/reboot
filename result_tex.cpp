@@ -218,11 +218,6 @@ void UpdateResultTex(void)
 		SetFade(FADE_OUT, MODE_TITLE);
 	}
 
-	//マウスの左ボタンが押されたらタイトルに戻る
-	if (GetKeyState(VK_LBUTTON) & 0x80)
-	{
-		SetFade(FADE_OUT, MODE_TITLE);
-	}
 
 #ifdef _DEBUG	// デバッグ情報を表示する
 

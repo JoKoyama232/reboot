@@ -12,6 +12,7 @@
 #include "fade.h"
 #include "title.h"
 #include "result.h"
+#include "sound.h"
 
 //シーン
 
@@ -210,7 +211,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	InitRenderer(hInstance, hWnd, bWindow);
 
 
-
+	
 	InitCamera();
 
 	// 入力処理の初期化
@@ -218,8 +219,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//-----
 	InitFade();
 
-	//PlaySound(SOUND_LABEL_BGM_sample001);
-
+	//サウンドの初期化処理
+	InitSound(hWnd);
 
 	// ライトを有効化
 	SetLightEnable(true);
@@ -240,6 +241,9 @@ void Uninit(void)
 	UninitFade();
 	// カメラの終了処理
 	UninitCamera();
+
+	// サウンドの終了処理
+	UninitSound();
 
 	//入力の終了処理
 	UninitInput();
@@ -344,7 +348,7 @@ void SetMode(int mode) {
 	switch (g_Mode) {
 	case MODE_TITLE:
 		InitTitle();
-		//PlaySound(SOUND_LABEL_BGM_sample000);
+		PlaySound(SOUND_LABEL_BGM_title);
 		break;
 	case MODE_GAME:
 
