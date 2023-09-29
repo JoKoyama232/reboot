@@ -1,27 +1,15 @@
 //=============================================================================
 //
-// タイトルテクスチャ処理 [title_tex.h]
+// リザルト画面処理 [result.h]
 // Author : 岩田　輝
 //
 //=============================================================================
 #pragma once
-#include "WorldSpaceClass.h"
+
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-class BUTTON : public WorldSpace
-{
-public:
-	XMFLOAT3	pos;		//ポリゴンの座標
-	float		w, h;		//幅と高さ
-	float		alpha;		//透明度
-	int			texNo;		//使用しているテクスチャ番号
-	bool		flag_alpha;
-	bool		flag_sound;
-	bool		use;
-
-};
 
 
 
@@ -29,9 +17,9 @@ public:
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitTitleTex(void);
-void UninitTitleTex(void);
-void UpdateTitleTex(void);
-void DrawTitleTex(void);
+HRESULT InitResult(void);
+void UninitResult(void);
+void UpdateResult(void);
+void DrawResult(void);
 
 

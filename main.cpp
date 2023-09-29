@@ -11,6 +11,7 @@
 
 #include "fade.h"
 #include "title.h"
+#include "result.h"
 
 //シーン
 
@@ -42,7 +43,7 @@ char	g_DebugStr[2048] = WINDOW_NAME;		// デバッグ文字表示用
 
 #endif
 
-int	g_Mode = MODE_TITLE;					// 起動時の画面を設定
+int	g_Mode = MODE_RESULT;					// 起動時の画面を設定
 
 
 // メイン関数
@@ -262,7 +263,7 @@ void Update(void)
 
 		break;
 	case MODE_RESULT:
-
+		UpdateResult();
 		break;
 
 	}
@@ -290,7 +291,7 @@ void Draw(void)
 
 		break;
 	case MODE_RESULT:
-
+		DrawResult();
 		break;
 
 	}
@@ -338,7 +339,7 @@ void SetMode(int mode) {
 	UninitTitle();
 
 	//リザルト処理の終了処理
-
+	UninitResult();
 
 	switch (g_Mode) {
 	case MODE_TITLE:
@@ -349,7 +350,7 @@ void SetMode(int mode) {
 
 		break;
 	case MODE_RESULT:
-
+		InitResult();
 		//PlaySound(SOUND_LABEL_BGM_sample003);
 		break;
 	}
