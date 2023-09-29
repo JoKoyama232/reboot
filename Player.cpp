@@ -1,10 +1,13 @@
 // プレイヤー処理 [Player.cpp]
-// Author : 小山　城
+// Author : 小山　城　小井詰　礼
 //=============================================================================
 #include "model.h"
 #include "main.h"
 
 #include "Player.h"
+#include "input.h"
+#include "debugproc.h"
+#include "model.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -46,9 +49,68 @@ void UninitPlayer(void) {
 
 void UpdatePlayer(void) {
 
+	// 移動処理
+	if (GetKeyboardPress(DIK_A))
+	{
+
+		g_Player.object.SetRotation(XMFLOAT3{ 0.0f,90.0f,0.0f});
+	}
+	else if (IsButtonTriggered(0, BUTTON_LEFT))
+	{
+
+		g_Player.object.SetRotation(XMFLOAT3{ 0.0f,90.0f,0.0f });
+	}
+
+	if (GetKeyboardPress(DIK_D))
+	{
+
+		g_Player.object.SetRotation(XMFLOAT3{ 0.0f,-90.0f,0.0f });
+	}
+	else if (IsButtonTriggered(0, BUTTON_RIGHT))
+	{
+
+		g_Player.object.SetRotation(XMFLOAT3{ 0.0f,-90.0f,0.0f });
+	}
+
+	if (GetKeyboardPress(DIK_W))
+	{
+
+		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 180.0f,0.0f });
+	}
+	else if (IsButtonTriggered(0, BUTTON_UP))
+	{
+
+		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 180.0f,0.0f });
+	}
+
+	if (GetKeyboardPress(DIK_S))
+	{
+
+		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f,0.0f });
+	}
+	else if (IsButtonTriggered(0, BUTTON_DOWN))
+	{
+
+		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f,0.0f });
+	}
+
+	// 弾発射処理
+	if (GetKeyboardTrigger(DIK_RETURN))
+	{
+
+	}
+	else if (IsButtonTriggered(0, BUTTON_A))
+	{
+
+	}
+
+
+
 }
 
 void DrawPlayer(void) {
+
+
 
 }
 
