@@ -39,7 +39,7 @@ static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// ÉeÉNÉXÉ`É
 
 
 static const char* g_TexturName[TEXTURE_MAX] = {
-	"data/TEXTURE/title.png",
+	"data/TEXTURE/title_logo.png",
 	"data/TEXTURE/game_start.png",
 	"data/TEXTURE/exit_2.png",
 	"data/TEXTURE/option.png",
@@ -189,7 +189,7 @@ void UpdateTitleTex(void)
 					{
 						if (i == 0)
 						{
-							SetFade(FADE_OUT, MODE_TUTORIAL);
+							SetFade(FADE_OUT, MODE_RESULT);
 							//PlaySound();
 						}
 						else if (i == 1)
