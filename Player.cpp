@@ -7,7 +7,8 @@
 #include "Player.h"
 #include "input.h"
 #include "debugproc.h"
-#include "model.h"
+#include "renderer.h"
+
 
 //*****************************************************************************
 // マクロ定義
@@ -92,6 +93,7 @@ void UpdatePlayer(void) {
 	{
 
 		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f,0.0f });
+
 	}
 
 	// 弾発射処理
@@ -110,7 +112,46 @@ void UpdatePlayer(void) {
 
 void DrawPlayer(void) {
 
+	XMMATRIX mtxScl, mtxRot, mtxTranslate, mtxWorld, quatMatrix;
 
+	// カリング無効
+	SetCullingMode(CULL_MODE_NONE);
+
+	// ワールドマトリックスの初期化
+	mtxWorld = XMMatrixIdentity();
+
+	// スケールを反映
+	
+	mtxScl = XMMatrixScaling(g_Player.scl.x, g_Player.scl.y, g_Player.scl.z);
+
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
+
+	// 回転を反映
+	mtxRot = XMMatrixRotationRollPitchYaw(g_Player.rot.x, g_Player.rot.y + XM_PI, g_Player.rot.z);
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
+
+
+	// 移動を反映
+	mtxTranslate = XMMatrixTranslation(g_Player.pos.x, g_Player.pos.y, g_Player.pos.z);
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
+
+	// ワールドマトリックスの設定
+	SetWorldMatrix(&mtxWorld);
+
+	
+	XMStoreFloat4x4(&g_Player.mtxWorld, mtxWorld);
+
+
+	// 縁取りの設定
+	SetFuchi(1);
+
+	// モデル描画
+	DrawModel(&g_Player.object.modelInfo);
+
+	SetFuchi(0);
+
+	// カリング設定を戻す
+	SetCullingMode(CULL_MODE_BACK);
 
 }
 
