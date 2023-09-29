@@ -41,7 +41,7 @@ static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// ÉeÉNÉXÉ`É
 static const char* g_TexturName[TEXTURE_MAX] = {
 	"data/TEXTURE/bg000.jpg",
 
-	"data/TEXTURE/title_logo_2.png",
+	"data/TEXTURE/title.png",
 	"data/TEXTURE/game_start.png",
 	"data/TEXTURE/exit_2.png",
 	"data/TEXTURE/option.png",
@@ -149,7 +149,75 @@ void UninitTitleTex(void)
 //=============================================================================
 void UpdateTitleTex(void)
 {
+	int x = GetMousePosX();
+	int y = GetMousePosY();
 
+	for (int i{}; i < BUTTON_MAX; i++)
+	{
+		HWND windowHandle = GetForegroundWindow(); // ÉEÉBÉìÉhÉEÇÃÉnÉìÉhÉãÇéÊìæ
+		if (windowHandle != NULL)
+		{
+			RECT windowRect;
+			if (GetWindowRect(windowHandle, &windowRect)) // ÉEÉBÉìÉhÉEÇÃà íuèÓïÒÇéÊìæ
+			{
+				// É}ÉEÉãÇÃà íuÇ™âÊëúÇ…ìñÇΩÇ¡ÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©ÇÃîªíË
+				if ((x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) &&
+					(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) &&
+					(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) &&
+					(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2))
+				{
+					//ì_ñ≈Ç≥ÇπÇÈ
+					if (g_Button[i].flag_alpha == true)
+					{
+						g_Button[i].alpha -= 0.02f;
+						if (g_Button[i].alpha <= 0.0f)
+						{
+							g_Button[i].alpha = 0.0f;
+							g_Button[i].flag_alpha = false;
+						}
+					}
+					else
+					{
+						g_Button[i].alpha += 0.02f;
+						if (g_Button[i].alpha >= 1.0f)
+						{
+							g_Button[i].alpha = 1.0f;
+							g_Button[i].flag_alpha = true;
+						}
+					}
+
+					//É}ÉEÉXÇÃç∂É{É^ÉìÇ™âüÇ≥ÇÍÇΩÇÁ
+					if (GetKeyState(VK_LBUTTON) & 0x80)
+					{
+						if (i == 0)
+						{
+							SetFade(FADE_OUT, MODE_TUTORIAL);
+							//PlaySound();
+						}
+						else if (i == 1)
+						{
+							exit(-1);
+						}
+						else if (i == 2)
+						{
+
+						}
+					}
+
+
+
+
+				}
+				else //É}ÉEÉXÇ™âÊëúÇÃîÕàÕäOÇ»ÇÁì_ñ≈ÇπÇ∏Ç…ï\é¶
+				{
+					g_Button[i].alpha = 1.0f;
+					g_Button[i].flag_sound = true;
+				}
+
+				
+			}
+		}
+	}
 }
 
 //=============================================================================
