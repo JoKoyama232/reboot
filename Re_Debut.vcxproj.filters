@@ -40,6 +40,12 @@
     <ClCompile Include="title_tex.cpp">
       <Filter>ソースファイル\title</Filter>
     </ClCompile>
+    <ClCompile Include="result.cpp">
+      <Filter>ソースファイル\result</Filter>
+    </ClCompile>
+    <ClCompile Include="result_tex.cpp">
+      <Filter>ソースファイル\result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -84,6 +90,12 @@
     <ClInclude Include="title_tex.h">
       <Filter>ヘッダーファイル\title</Filter>
     </ClInclude>
+    <ClInclude Include="result.h">
+      <Filter>ヘッダーファイル\result</Filter>
+    </ClInclude>
+    <ClInclude Include="result_tex.h">
+      <Filter>ヘッダーファイル\result</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ソースファイル">
@@ -100,6 +112,12 @@
     </Filter>
     <Filter Include="ヘッダーファイル\Class">
       <UniqueIdentifier>{0a2efa72-ab1f-42f1-9721-2e877cbef18c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\result">
+      <UniqueIdentifier>{40de05c3-cd61-4c27-b6bd-ffb136b1f089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\result">
+      <UniqueIdentifier>{c0fbe3ff-749a-4e22-9516-76d87b9f230c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

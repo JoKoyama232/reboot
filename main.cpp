@@ -11,6 +11,7 @@
 
 #include "fade.h"
 #include "title.h"
+#include "result.h"
 
 //シーン
 
@@ -262,7 +263,7 @@ void Update(void)
 
 		break;
 	case MODE_RESULT:
-
+		UpdateResult();
 		break;
 
 	}
@@ -290,7 +291,7 @@ void Draw(void)
 
 		break;
 	case MODE_RESULT:
-
+		DrawResult();
 		break;
 
 	}
@@ -338,7 +339,7 @@ void SetMode(int mode) {
 	UninitTitle();
 
 	//リザルト処理の終了処理
-
+	UninitResult();
 
 	switch (g_Mode) {
 	case MODE_TITLE:
@@ -349,7 +350,7 @@ void SetMode(int mode) {
 
 		break;
 	case MODE_RESULT:
-
+		InitResult();
 		//PlaySound(SOUND_LABEL_BGM_sample003);
 		break;
 	}

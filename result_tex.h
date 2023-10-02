@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// タイトルテクスチャ処理 [title_tex.h]
+// リザルトテクスチャ処理 [title.h]
 // Author : 岩田　輝
 //
 //=============================================================================
@@ -29,9 +29,9 @@ public:
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitTitleTex(void);
-void UninitTitleTex(void);
-void UpdateTitleTex(void);
-void DrawTitleTex(void);
+HRESULT InitResultTex(void);
+void UninitResultTex(void);
+void UpdateResultTex(void);
+void DrawResultTex(void);
 
 

@@ -11,8 +11,8 @@
 #include "camera.h"
 #include "sound.h"
 #include "sprite.h"
-#include "title.h"
-#include "title_tex.h"
+#include "result.h"
+#include "result_tex.h"
 
 //#include "title_field.h"
 //#include "model.h"
@@ -22,9 +22,9 @@
 // 初期化処理
 //=============================================================================
 
-HRESULT InitTitle(void)
+HRESULT InitResult(void)
 {
-	InitTitleTex();
+	InitResultTex();
 	return S_OK;
 }
 
@@ -32,18 +32,17 @@ HRESULT InitTitle(void)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void UninitTitle(void)
+void UninitResult(void)
 {
-	UninitTitleTex();
+	UninitResultTex();
 }
-
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void UpdateTitle(void)
+void UpdateResult(void)
 {
-	UpdateTitleTex();
+	UpdateResultTex();
 }
 
 
@@ -51,7 +50,7 @@ void UpdateTitle(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void DrawTitle(void)
+void DrawResult(void)
 {
 
 
@@ -68,7 +67,7 @@ void DrawTitle(void)
 		SetLightEnable(false);
 
 		//ここから下に
-		DrawTitleTex();
+		DrawResultTex();
 
 		// ライティングを有効に
 		SetLightEnable(true);

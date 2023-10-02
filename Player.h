@@ -22,6 +22,12 @@ struct Player
 	float				dir;		// 向き
 	bool				use;
 
+	XMFLOAT4X4			mtxWorld;			// ワールドマトリックス
+	XMFLOAT3			pos;				// モデルの位置
+	XMFLOAT3			rot;				// モデルの向き(回転)
+	XMFLOAT3			scl;				// モデルの大きさ(スケール)
+
+
 	// 階層アニメーション用のメンバー変数(今は使わないかな？)
 	float				time;				// 線形補間用
 	int					tblNo;				// 行動データのテーブル番号
