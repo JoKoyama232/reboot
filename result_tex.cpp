@@ -177,7 +177,7 @@ void UpdateResultTex(void)
 					}
 					if (g_Button[i].flag_sound == true)
 					{
-						//PlaySound(SOUND_LABEL_SE_lion);
+						PlaySound(SOUND_LABEL_SE_ZIPPO);
 						g_Button[i].flag_sound = false;
 					}
 					//マウスの左ボタンが押されたら
