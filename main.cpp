@@ -13,6 +13,7 @@
 #include "title.h"
 #include "result.h"
 #include "sound.h"
+#include "clock.h"
 
 //シーン
 
@@ -135,6 +136,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 #endif
 				dwFPSLastTime = dwCurrentTime;				// FPSを測定した時刻を保存
 				dwFrameCount = 0;							// カウントをクリア
+				AddClock(1);
 			}
 
 			if ((dwCurrentTime - dwExecLastTime) >= (1000 / 60))	// 1/60秒ごとに実行

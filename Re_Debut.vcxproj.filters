@@ -46,6 +46,9 @@
     <ClCompile Include="result_tex.cpp">
       <Filter>ソースファイル\result</Filter>
     </ClCompile>
+    <ClCompile Include="clock.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -95,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="result_tex.h">
       <Filter>ヘッダーファイル\result</Filter>
+    </ClInclude>
+    <ClInclude Include="clock.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
