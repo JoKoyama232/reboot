@@ -34,7 +34,7 @@ HRESULT InitPlayer(void) {
 
 		g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
-		g_Player.object.SetScale(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
+		g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
 		g_Player.time = 0.0f;
 		g_Player.spd = 0.0f;			// 移動スピードクリア
 		g_Player.use = true;
@@ -128,25 +128,26 @@ void DrawPlayer(void) {
 	mtxWorld = XMMatrixIdentity();
 
 	// スケールを反映
-	
-	mtxScl = XMMatrixScaling(g_Player.scl.x, g_Player.scl.y, g_Player.scl.z);
-
+	XMFLOAT3 scale = g_Player.object.GetScaleFloat();
+	mtxScl = XMMatrixScaling(scale.x, scale.y, scale.z);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
 
 	// 回転を反映
-	mtxRot = XMMatrixRotationRollPitchYaw(g_Player.rot.x, g_Player.rot.y + XM_PI, g_Player.rot.z);
+	XMFLOAT3 rotation = g_Player.object.GetRotationFloat();
+	mtxRot = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y + XM_PI, rotation.z);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 
 
 	// 移動を反映
-	mtxTranslate = XMMatrixTranslation(g_Player.pos.x, g_Player.pos.y, g_Player.pos.z);
+	XMFLOAT3 position = g_Player.object.GetPositionFloat();
+	mtxTranslate = XMMatrixTranslation(position.x, position.y, position.z);
 	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
 	// ワールドマトリックスの設定
 	SetWorldMatrix(&mtxWorld);
 
 	
-	XMStoreFloat4x4(&g_Player.mtxWorld, mtxWorld);
+	XMStoreFloat4x4(g_Player.object.GetWorldMatrixPointer(), mtxWorld);
 
 
 	// 縁取りの設定
