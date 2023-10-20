@@ -194,7 +194,7 @@ void UpdateTitleTex(void)
 					{
 						if (i == 0)
 						{
-							SetFade(FADE_OUT, MODE_RESULT);
+							SetFade(FADE_OUT, MODE_GAME);
 							//PlaySound();
 						}
 						else if (i == 1)

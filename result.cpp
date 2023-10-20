@@ -25,6 +25,9 @@
 HRESULT InitResult(void)
 {
 	InitResultTex();
+
+	//マウス表示
+	ShowCursor(true);
 	return S_OK;
 }
 

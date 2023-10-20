@@ -19,9 +19,6 @@
     <ClCompile Include="model.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="renderer.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
@@ -49,6 +46,12 @@
     <ClCompile Include="clock.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>ソースファイル\game</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソースファイル\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -67,9 +70,6 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="model.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="renderer.h">
@@ -102,6 +102,12 @@
     <ClInclude Include="clock.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>ヘッダーファイル\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダーファイル\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ソースファイル">
@@ -124,6 +130,12 @@
     </Filter>
     <Filter Include="ヘッダーファイル\result">
       <UniqueIdentifier>{c0fbe3ff-749a-4e22-9516-76d87b9f230c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\game">
+      <UniqueIdentifier>{5e16df87-9eac-4f4c-8402-1f579b01213d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\game">
+      <UniqueIdentifier>{90df25dc-61de-4ee8-a30c-64f246dded67}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

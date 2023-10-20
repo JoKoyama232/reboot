@@ -16,7 +16,7 @@
 #define TEXTURE_WIDTH				(16)	// キャラサイズ
 #define TEXTURE_HEIGHT				(32)	// 
 #define TEXTURE_MAX					(1)		// テクスチャの数
-#define CLOCK_MAX			(60)		// 制限時間(秒数)
+#define CLOCK_MAX			(10)		// 制限時間(秒数)
 #define CLOCK_DIGIT			(4)			// 桁数
 
 //*****************************************************************************

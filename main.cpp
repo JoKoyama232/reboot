@@ -14,6 +14,7 @@
 #include "result.h"
 #include "sound.h"
 #include "clock.h"
+#include "game.h"
 
 //シーン
 
@@ -261,20 +262,21 @@ void Update(void)
 	// 入力の更新処理
 	UpdateInput();
 
+	// カメラ更新
+	UpdateCamera();
+
 	switch (g_Mode) {
 	case MODE_TITLE:
 		UpdateTitle();
 		break;
 	case MODE_GAME:
-
+		UpdateGame();
 		break;
 	case MODE_RESULT:
 		UpdateResult();
 		break;
 
 	}
-	// カメラ更新
-	UpdateCamera();
 
 	UpdateFade();
 
@@ -288,13 +290,13 @@ void Draw(void)
 	// バックバッファクリア
 	Clear();
 	SetViewPort(TYPE_FULL_SCREEN);
-
+	SetCamera();
 	switch (g_Mode) {
 	case MODE_TITLE:
 		DrawTitle();
 		break;
 	case MODE_GAME:
-
+		DrawGame();
 		break;
 	case MODE_RESULT:
 		DrawResult();
@@ -344,6 +346,9 @@ void SetMode(int mode) {
 	// タイトル画面の終了処理
 	UninitTitle();
 
+	//ゲームシーンの終了処理
+	UninitGame();
+
 	//リザルト処理の終了処理
 	UninitResult();
 
@@ -353,7 +358,7 @@ void SetMode(int mode) {
 		PlaySound(SOUND_LABEL_BGM_title);
 		break;
 	case MODE_GAME:
-
+		InitGame();
 		break;
 	case MODE_RESULT:
 		InitResult();
