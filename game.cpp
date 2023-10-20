@@ -12,9 +12,10 @@
 #include "input.h"
 #include "sound.h"
 #include "fade.h"
+#include "WorldSpaceClass.h"
 
 #include "clock.h"
-
+#include "Player.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -40,6 +41,7 @@ static RECT				g_windowPos;
 //=============================================================================
 HRESULT InitGame(void)
 {
+	InitPlayer();
 
 	//時計の初期化
 	InitClock();
@@ -55,6 +57,8 @@ HRESULT InitGame(void)
 //=============================================================================
 void UninitGame(void)
 {
+	UninitPlayer();
+
 	// 時計の終了処理
 	UninitClock();
 }
@@ -64,12 +68,23 @@ void UninitGame(void)
 //=============================================================================
 void UpdateGame(void)
 {
+	UpdatePlayer();
+
 	// 時計の更新処理
 	UpdateClock();
 }
 
 void DrawGame(void)
 {
+	XMFLOAT3 pos;
+
+	// プレイヤー視点
+	pos = GetPlayer()->object.GetPositionFloat();
+	pos.y = 0.0f;			// カメラ酔いを防ぐためにクリアしている
+	SetCameraAT(pos);
+	SetCamera();
+	
+	DrawPlayer();
 
 	// 2Dの物を描画する処理
 	{
