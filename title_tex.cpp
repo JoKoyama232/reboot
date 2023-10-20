@@ -183,12 +183,18 @@ void UpdateTitleTex(void)
 						}
 					}
 
+					if (g_Button[i].flag_sound == true)
+					{
+						PlaySound(SOUND_LABEL_SE_ZIPPO);
+						g_Button[i].flag_sound = false;
+					}
+
 					//マウスの左ボタンが押されたら
 					if (GetKeyState(VK_LBUTTON) & 0x80)
 					{
 						if (i == 0)
 						{
-							SetFade(FADE_OUT, MODE_RESULT);
+							SetFade(FADE_OUT, MODE_GAME);
 							//PlaySound();
 						}
 						else if (i == 1)
