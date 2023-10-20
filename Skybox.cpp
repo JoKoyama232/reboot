@@ -8,7 +8,7 @@
 #include "Skybox.h"
 
 // マクロ定義
-#define MODEL_SKYBOX "data/model/skybox.obj"
+#define MODEL_SKYBOX "Data/model/Skybox.obj"
 
 // グローバル変数
 static Skybox g_Skybox;
@@ -31,5 +31,16 @@ HRESULT InitSkybox(void) {
 
 // 終了処理
 void UninitSkybox(void) {
+	if (g_Skybox.transform.load) {
+		UnloadModel(&g_Skybox.transform.modelInfo);
+		g_Skybox.transform.load = false;
+	}
+}
+
+void UpdateSkybox(void) {
+
+}
+
+void DrawSkybox(void) {
 
 }

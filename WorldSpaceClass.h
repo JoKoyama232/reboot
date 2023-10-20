@@ -46,6 +46,7 @@ public:
 
 	//ÉQÉbÉ^Å[
 	XMFLOAT4X4 GetWorldMatrix(void) { return worldMtx; }
+	XMFLOAT4X4* GetWorldMatrixPointer(void) { return &worldMtx; }
 	XMFLOAT3 GetPositionFloat(void) { return position; }
 	XMVECTOR GetPositionVector(void) { return XMLoadFloat3(&position); }
 	XMFLOAT3 GetRotationFloat(void) { return rotation; }
@@ -53,6 +54,6 @@ public:
 	XMFLOAT3 GetScaleFloat(void) { return scale; }
 	XMVECTOR GetScaleVector(void) { return XMLoadFloat3(&scale); }
 	WorldSpace* GetParent(void) {
-		if(parent != NULL){ return parent; }
-		 }
+		if (parent != NULL) { return parent; }
+	}
 };
