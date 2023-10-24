@@ -24,7 +24,7 @@ static float		roty = 0.0f;
 // ƒOƒ[ƒoƒ‹•Ï”
 //*****************************************************************************
 
-Player g_Player;
+PLAYER g_Player;
 
 HRESULT InitPlayer(void) {
 
@@ -163,7 +163,7 @@ void DrawPlayer(void) {
 
 }
 
-Player* GetPlayer(void) {
+PLAYER* GetPlayer(void) {
 	return &g_Player;
 }
 
