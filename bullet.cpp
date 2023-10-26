@@ -36,11 +36,11 @@ HRESULT InitBullet(void)
 		GetModelDiffuse(&g_Bullet[b].object.modelInfo, g_Bullet[b].object.modelDiffuse);
 		g_Bullet[b].object.load = true;
 
-		g_Bullet[b].object.SetPosition(XMFLOAT3{ 10.0f,0.0f,0.0f });
+		g_Bullet[b].object.SetPosition(XMFLOAT3{ 0.0f,0.0f,0.0f });
 		g_Bullet[b].object.SetRotation(XMFLOAT3{ 0.0f,0.0f,0.0f });
 		g_Bullet[b].object.SetScale(XMFLOAT3{ 1.0f,1.0f,1.0f });
 		g_Bullet[b].time = 0.0f;
-		g_Bullet[b].spd = 0.0f;
+		g_Bullet[b].spd = 2.0f;
 		g_Bullet[b].use = false;
 
 
@@ -67,27 +67,20 @@ void UpdateBullet(void)
 {
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
-		if (g_Bullet[b].use)
+		if (!g_Bullet[b].use)continue;
 		{
-			PLAYER* player = GetPlayer();
-			XMFLOAT3 p_pos = player->object.GetPositionFloat();
+			//PLAYER* player = GetPlayer();
+			//XMFLOAT3 p_pos = player->object.GetPositionFloat();
 			XMFLOAT3 b_pos = g_Bullet[b].object.GetPositionFloat();
 			XMFLOAT3 b_rot = g_Bullet[b].object.GetRotationFloat();
 
 			// ’e‚ÌˆÚ“®ˆ—
-			b_pos.x -= sinf(b_rot.y) * g_Bullet[b].spd;
-			b_pos.z -= cosf(b_rot.y) * g_Bullet[b].spd;
+			b_pos.x += sinf(b_rot.y) * g_Bullet[b].spd;
+			b_pos.z += cosf(b_rot.y) * g_Bullet[b].spd;
 
-			if (b_pos.x > p_pos.x + 20.0f
-				|| b_pos.x < p_pos.x - 20.0f
-				|| b_pos.z > p_pos.z + 20.0f
-				|| b_pos.z < p_pos.z - 20.0f)
-			{
-				g_Bullet[b].use = false;
-			}
+			g_Bullet[b].object.SetPosition(XMFLOAT3{ b_pos.x,0.0f,b_pos.z });
 		}
 	}
-
 }
 
 //•`‰æˆ—
@@ -156,24 +149,21 @@ int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot)
 
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
-		XMFLOAT3 b_pos = g_Bullet[nCntBullet].object.GetPositionFloat();
-		XMFLOAT3 b_rot = g_Bullet[nCntBullet].object.GetRotationFloat();
-		XMFLOAT3 b_scl = g_Bullet[nCntBullet].object.GetScaleFloat();
+		if (g_Bullet[nCntBullet].use)continue;
 
+		g_Bullet[nCntBullet].object.SetPosition(pos);
+		g_Bullet[nCntBullet].object.SetRotation(rot);
+		g_Bullet[nCntBullet].object.SetScale({XMFLOAT3(1.0f,1.0f,1.0f)});
+		g_Bullet[nCntBullet].use = true;
 
-		if (!g_Bullet[nCntBullet].use)
-		{
-			b_pos = pos;
-			b_rot = rot;
-			b_scl = { 1.0f, 1.0f, 1.0f };
-			g_Bullet[nCntBullet].use = true;
+		nIdxBullet = nCntBullet;
 
-			nIdxBullet = nCntBullet;
+		//PlaySound(SOUND_LABEL_SE_shot000);
 
-			//PlaySound(SOUND_LABEL_SE_shot000);
+			
+		return nIdxBullet;
 
-			break;
-		}
 	}
 	return nIdxBullet;
+
 }
