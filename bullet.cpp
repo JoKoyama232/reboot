@@ -36,12 +36,12 @@ HRESULT InitBullet(void)
 		GetModelDiffuse(&g_Bullet[b].object.modelInfo, g_Bullet[b].object.modelDiffuse);
 		g_Bullet[b].object.load = true;
 
-		g_Bullet[b].object.SetPosition(XMFLOAT3{ 0.0f,0.0f,0.0f });
+		g_Bullet[b].object.SetPosition(XMFLOAT3{ 10.0f,0.0f,0.0f });
 		g_Bullet[b].object.SetRotation(XMFLOAT3{ 0.0f,0.0f,0.0f });
-		g_Bullet[b].object.SetScale(XMFLOAT3{ 0.5f,0.5f,0.5f });
+		g_Bullet[b].object.SetScale(XMFLOAT3{ 1.0f,1.0f,1.0f });
 		g_Bullet[b].time = 0.0f;
 		g_Bullet[b].spd = 0.0f;
-		g_Bullet[b].use = true;
+		g_Bullet[b].use = false;
 
 
 	}
@@ -65,24 +65,26 @@ void UninitBullet(void)
 //更新処理
 void UpdateBullet(void)
 {
-
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
-		PLAYER* player = GetPlayer();
-		XMFLOAT3 p_pos = player->object.GetPositionFloat();
-		XMFLOAT3 b_pos = g_Bullet[b].object.GetPositionFloat();
-
-		// 弾の移動処理
-		g_Bullet[b].spd = VALUE_MOVE;
-		roty = XM_PI;
-
-
-		if (b_pos.x > p_pos.x + 20.0f
-			|| b_pos.x < p_pos.x - 20.0f
-			|| b_pos.z > p_pos.z + 20.0f
-			|| b_pos.z < p_pos.z - 20.0f)
+		if (g_Bullet[b].use)
 		{
-			g_Bullet[b].use = false;
+			PLAYER* player = GetPlayer();
+			XMFLOAT3 p_pos = player->object.GetPositionFloat();
+			XMFLOAT3 b_pos = g_Bullet[b].object.GetPositionFloat();
+			XMFLOAT3 b_rot = g_Bullet[b].object.GetRotationFloat();
+
+			// 弾の移動処理
+			b_pos.x -= sinf(b_rot.y) * g_Bullet[b].spd;
+			b_pos.z -= cosf(b_rot.y) * g_Bullet[b].spd;
+
+			if (b_pos.x > p_pos.x + 20.0f
+				|| b_pos.x < p_pos.x - 20.0f
+				|| b_pos.z > p_pos.z + 20.0f
+				|| b_pos.z < p_pos.z - 20.0f)
+			{
+				g_Bullet[b].use = false;
+			}
 		}
 	}
 
@@ -102,38 +104,41 @@ void DrawBullet(void)
 
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
-		// スケールを反映
-		XMFLOAT3 scale = g_Bullet[b].object.GetScaleFloat();
-		mtxScl = XMMatrixScaling(scale.x, scale.y, scale.z);
-		mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
+		if (g_Bullet[b].use)
+		{
+			// スケールを反映
+			XMFLOAT3 scale = g_Bullet[b].object.GetScaleFloat();
+			mtxScl = XMMatrixScaling(scale.x, scale.y, scale.z);
+			mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
 
-		// 回転を反映
-		XMFLOAT3 rotation = g_Bullet[b].object.GetRotationFloat();
-		mtxRot = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y + XM_PI, rotation.z);
-		mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
+			// 回転を反映
+			XMFLOAT3 rotation = g_Bullet[b].object.GetRotationFloat();
+			mtxRot = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y + XM_PI, rotation.z);
+			mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 
-		// 移動を反映
-		XMFLOAT3 position = g_Bullet[b].object.GetPositionFloat();
-		mtxTranslate = XMMatrixTranslation(position.x, position.y, position.z);
-		mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
+			// 移動を反映
+			XMFLOAT3 position = g_Bullet[b].object.GetPositionFloat();
+			mtxTranslate = XMMatrixTranslation(position.x, position.y, position.z);
+			mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
-		// ワールドマトリックスの設定
-		SetWorldMatrix(&mtxWorld);
-
-
-		XMStoreFloat4x4(g_Bullet[b].object.GetWorldMatrixPointer(), mtxWorld);
+			// ワールドマトリックスの設定
+			SetWorldMatrix(&mtxWorld);
 
 
-		// 縁取りの設定
-		SetFuchi(1);
+			XMStoreFloat4x4(g_Bullet[b].object.GetWorldMatrixPointer(), mtxWorld);
 
-		// モデル描画
-		DrawModel(&g_Bullet[b].object.modelInfo);
 
-		SetFuchi(0);
+			// 縁取りの設定
+			SetFuchi(1);
 
-		// カリング設定を戻す
-		SetCullingMode(CULL_MODE_BACK);
+			// モデル描画
+			DrawModel(&g_Bullet[b].object.modelInfo);
+
+			SetFuchi(0);
+
+			// カリング設定を戻す
+			SetCullingMode(CULL_MODE_BACK);
+		}
 	}
 }
 

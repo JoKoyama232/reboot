@@ -8,7 +8,7 @@
 #include "input.h"
 #include "debugproc.h"
 #include "renderer.h"
-
+#include "bullet.h"
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -104,9 +104,13 @@ void UpdatePlayer(void) {
 	}
 
 	// íeî≠éÀèàóù
-	if (GetKeyboardTrigger(DIK_RETURN))
-	{
 
+	XMFLOAT3 p_pos = g_Player.object.GetPositionFloat();
+	XMFLOAT3 p_rot = g_Player.object.GetRotationFloat();
+
+	if ((GetKeyboardTrigger(DIK_SPACE)) || IsMouseLeftTriggered())
+         	{
+		SetBullet(p_pos, p_rot);
 	}
 	else if (IsButtonTriggered(0, BUTTON_A))
 	{

@@ -37,5 +37,7 @@ void UninitBullet(void);
 void UpdateBullet(void);
 void DrawBullet(void);
 
+int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot);
+
 BULLET* GetBullet(void);
 float GetDistance3D(XMFLOAT3 pos1, XMFLOAT3 pos2);
