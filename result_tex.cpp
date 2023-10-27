@@ -189,7 +189,16 @@ void UpdateResultTex(void)
 						}
 						else if (i == 1)
 						{
-							exit(-1);
+							int id = MessageBox(NULL, "ゲームを終了しますか？", "", MB_YESNO | MB_ICONQUESTION);
+							switch (id)
+							{
+							case IDYES:		// ゲームを終了
+								exit(-1);
+								break;
+							case IDNO:		// 何もせずにタイトルに戻る
+
+								break;
+							}
 						}
 					}
 				}
