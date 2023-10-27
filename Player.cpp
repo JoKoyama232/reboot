@@ -17,7 +17,7 @@
 //*****************************************************************************
 #define	MODEL_PLAYER		"Data/model/cone.obj"			// 読み込むモデル名(まだ存在してないよ)
 
-#define	VALUE_MOVE			(2.0f)							// 移動量
+#define	VALUE_MOVE			(1.0f)							// 移動量
 
 static float		roty = 0.0f;
 
@@ -66,7 +66,7 @@ void UpdatePlayer(void) {
 
 	// ファイル外変数の取得
 	DWORD updateTime = timeGetTime();
-	DWORD deltaTime = updateTime - g_LastUpdate;
+	DWORD deltaTime = (updateTime - g_LastUpdate) * 0.1;
 	g_LastUpdate = updateTime;
 	CAMERA* cam = GetCamera();
 	XMFLOAT3 camPosition = cam->pos;
@@ -75,12 +75,12 @@ void UpdatePlayer(void) {
 	// 入力検知
 	if (GetKeyboardPress(DIK_A) || IsButtonTriggered(0, BUTTON_LEFT))
 	{	// 左
-		g_Player.speed = 1.0f;
+		g_Player.speed = VALUE_MOVE;
 		g_Player.direction = -XM_PI / 2;
 	}
 	else if (GetKeyboardPress(DIK_D) || IsButtonTriggered(0, BUTTON_RIGHT))
 	{	// 右
-		g_Player.speed = 1.0f;
+		g_Player.speed = VALUE_MOVE;
 		g_Player.direction = XM_PI / 2;
 	}
 	else {
@@ -89,30 +89,15 @@ void UpdatePlayer(void) {
 
 	if (GetKeyboardPress(DIK_W) || IsButtonTriggered(0, BUTTON_UP))
 	{	// 前
-		g_Player.speed = 1.0f;
+		g_Player.speed = VALUE_MOVE;
 		g_Player.direction = 0.0f;
 	}
 	else if (GetKeyboardPress(DIK_S) || IsButtonTriggered(0, BUTTON_DOWN))
 	{	// 後ろ
-		g_Player.speed = 1.0f;
+		g_Player.speed = VALUE_MOVE;
 		g_Player.direction = XM_PI;
 	}
 
-	if ((GetKeyboardPress(DIK_SPACE)) || IsMouseLeftTriggered())
-	{
-		g_Player.object.SetPosition(XMFLOAT3{ 1.0f, 0.0f, 0.0f });
-		g_Player.speed = VALUE_MOVE;
-		roty = XM_PI;
-	}
-	//else if (IsButtonTriggered(0, BUTTON_UP))
-	//{
-	//	g_Player.spd = VALUE_MOVE;
-	//	roty = XM_PI;
-	//}
-	else
-	{
-		g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
-	}
 
 	// 移動処理
 	// XZ平面移動
@@ -137,11 +122,9 @@ void UpdatePlayer(void) {
 	g_Player.object.SetRotation(rotation);
 
 	// 弾発射処理
-	if (GetKeyboardTrigger(DIK_SPACE)/* && updateTime - g_LastUpdate > 3000*/)
+	if (GetKeyboardTrigger(DIK_SPACE))
 	{
- 		SetBullet(position, rotation);
-		//g_LastUpdate = updateTime;
-		
+ 		SetBullet(position, camRotation);
 	}
 	PrintDebugProc((char*)"Player Information\nMovement:   W\n            A  S  D\n  Shift    Space\nPosition:(%f, %f, %f)\nRotation:(%f, %f, %f)\n", position.x, position.y, position.z, rotation.x, rotation.y, rotation.z);
 

@@ -18,7 +18,7 @@
 
 #define	VALUE_MOVE			(3.0f)							// 移動量
 
-static int		    g_bulletIdx = -1;						// 最後に発射された弾のインデックス
+static int		    g_bulletIdx = 0;						// 最後に発射された弾のインデックス
 
 //*****************************************************************************
 // グローバル変数
@@ -75,9 +75,10 @@ void UpdateBullet(void)
 
 		// 弾の移動処理
 		b_pos.x += sinf(b_rot.y) * g_Bullet[b].spd;
+		b_pos.y += sinf(b_rot.x) * g_Bullet[b].spd;
 		b_pos.z += cosf(b_rot.y) * g_Bullet[b].spd;
 
-		g_Bullet[b].object.SetPosition(XMFLOAT3{ b_pos.x,0.0f,b_pos.z });
+		g_Bullet[b].object.SetPosition(b_pos);
 	}
 }
 
@@ -147,7 +148,8 @@ int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot)
 	for (int nCntBullet = g_bulletIdx; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
 		// バレットが使用中か？
-		if (g_Bullet[nCntBullet].use) 
+		if (g_Bullet[nCntBullet].use || g_bulletIdx == MAX_BULLET)
+
 		{ 
 			// 最初に発射されたバレットはまだ使われているか？
 			if (!g_Bullet[0].use) {
