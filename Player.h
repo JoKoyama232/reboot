@@ -18,8 +18,8 @@ struct PLAYER
 {
 	WorldSpace			object;
 	
-	float				spd;		// 移動スピード
-	float				dir;		// 向き
+	float				speed;			// 移動スピード
+	float				direction;		// 向き
 	bool				use;
 
 	// 階層アニメーション用のメンバー変数(今は使わないかな？)

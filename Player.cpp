@@ -3,12 +3,14 @@
 //=============================================================================
 #include "model.h"
 #include "main.h"
+#include "camera.h"
 
-#include "Player.h"
 #include "input.h"
 #include "debugproc.h"
 #include "renderer.h"
 #include "bullet.h"
+
+#include "Player.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -37,7 +39,7 @@ HRESULT InitPlayer(void) {
 		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
 		g_Player.time = 0.0f;
-		g_Player.spd = 0.0f;			// 移動スピードクリア
+		g_Player.speed = 0.0f;			// 移動スピードクリア
 		g_Player.use = true;
 		g_LastUpdate = 0.0f;
 		roty = 0.0f;
@@ -58,38 +60,48 @@ void UninitPlayer(void) {
 
 void UpdatePlayer(void) {
 
+	// プレイヤー変数取得
+	XMFLOAT3 position = g_Player.object.GetPositionFloat();
+	XMFLOAT3 rotation = g_Player.object.GetRotationFloat();
+
+	// ファイル外変数の取得
 	DWORD updateTime = timeGetTime();
 	DWORD deltaTime = updateTime - g_LastUpdate;
 	g_LastUpdate = updateTime;
+	CAMERA* cam = GetCamera();
+	XMFLOAT3 camPosition = cam->pos;
+	XMFLOAT3 camRotation = cam->rot;
 
-	// 移動処理
-	if (GetKeyboardPress(DIK_A))
-	{
-		g_Player.spd = VALUE_MOVE;
-		roty = XM_PI / 2;
+	// 入力検知
+	if (GetKeyboardPress(DIK_A) || IsButtonTriggered(0, BUTTON_LEFT))
+	{	// 左
+		g_Player.speed = 1.0f;
+		g_Player.direction = -XM_PI / 2;
 	}
-	else if (IsButtonTriggered(0, BUTTON_LEFT))
-	{
-		g_Player.spd = VALUE_MOVE;
-		roty = XM_PI / 2;
+	else if (GetKeyboardPress(DIK_D) || IsButtonTriggered(0, BUTTON_RIGHT))
+	{	// 右
+		g_Player.speed = 1.0f;
+		g_Player.direction = XM_PI / 2;
+	}
+	else {
+		g_Player.direction = 0.0f;
+	}
 
+	if (GetKeyboardPress(DIK_W) || IsButtonTriggered(0, BUTTON_UP))
+	{	// 前
+		g_Player.speed = 1.0f;
+		g_Player.direction = 0.0f;
 	}
-
-	if (GetKeyboardPress(DIK_D))
-	{
-		g_Player.spd = VALUE_MOVE;
-		roty = -XM_PI / 2;
-	}
-	else if (IsButtonTriggered(0, BUTTON_RIGHT))
-	{
-		g_Player.spd = VALUE_MOVE;
-		roty = -XM_PI / 2;
+	else if (GetKeyboardPress(DIK_S) || IsButtonTriggered(0, BUTTON_DOWN))
+	{	// 後ろ
+		g_Player.speed = 1.0f;
+		g_Player.direction = XM_PI;
 	}
 
 	if ((GetKeyboardPress(DIK_SPACE)) || IsMouseLeftTriggered())
 	{
 		g_Player.object.SetPosition(XMFLOAT3{ 1.0f, 0.0f, 0.0f });
-		g_Player.spd = VALUE_MOVE;
+		g_Player.speed = VALUE_MOVE;
 		roty = XM_PI;
 	}
 	//else if (IsButtonTriggered(0, BUTTON_UP))
@@ -102,37 +114,36 @@ void UpdatePlayer(void) {
 		g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 	}
 
-	if (GetKeyboardPress(DIK_S))
-	{
-		g_Player.spd = VALUE_MOVE;
-		roty = 0.0f;
-	}
-	else if (IsButtonTriggered(0, BUTTON_DOWN))
-	{
-		g_Player.spd = VALUE_MOVE;
-		roty = 0.0f;
-	}
+	// 移動処理
+	// XZ平面移動
+	// プレイヤーの向いている方向をカメラからオフセット
+	rotation.y = g_Player.direction + camRotation.y;
+
+	// 入力のあった方向へプレイヤーを向かせて移動させる
+	// プレイヤーの向いている方向を保存
+	float deltaX = sinf(rotation.y) * g_Player.speed * deltaTime;
+	float deltaZ = cosf(rotation.y) * g_Player.speed * deltaTime;
+	g_Player.speed *= 0.2f;
+	//移動を反映
+	position.x += deltaX;
+	position.z += deltaZ;
+
+	// 高度（Y軸移動）
+	float deltaY = 0.0f * deltaTime;
+	position.y += deltaY;
+
+	// 移動を反映(これ以上プレイヤーの位置を変えない)
+	g_Player.object.SetPosition(position);
+	g_Player.object.SetRotation(rotation);
 
 	// 弾発射処理
-
-	XMFLOAT3 p_pos = g_Player.object.GetPositionFloat();
-	XMFLOAT3 p_rot = g_Player.object.GetRotationFloat();
 	if (GetKeyboardTrigger(DIK_SPACE)/* && updateTime - g_LastUpdate > 3000*/)
 	{
- 		SetBullet(p_pos,p_rot);
+ 		SetBullet(position, rotation);
 		//g_LastUpdate = updateTime;
 		
 	}
-	//if (GetKeyboardPress(DIK_W))
-	//{
-	//	SetBullet(p_pos, p_rot);
-	//}
-	//else if (IsButtonTriggered(0, BUTTON_A))
-	//{
-
-	//}
-
-	PrintDebugProc((char*)"Player Information\nMovement:   W\n            A  S  D\n  Shift    Space\nPosition:(%f, %f, %f)\nRotation:(%f, %f, %f)\n", p_pos.x, p_pos.y, p_pos.z, p_rot.x, p_rot.y, p_rot.z);
+	PrintDebugProc((char*)"Player Information\nMovement:   W\n            A  S  D\n  Shift    Space\nPosition:(%f, %f, %f)\nRotation:(%f, %f, %f)\n", position.x, position.y, position.z, rotation.x, rotation.y, rotation.z);
 
 }
 
