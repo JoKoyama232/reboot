@@ -8,13 +8,14 @@
 #include "camera.h"
 #include "debugproc.h"
 #include "model.h"
-
+#include "WorldSpaceClass.h"
 #include "fade.h"
 #include "title.h"
 #include "result.h"
 #include "sound.h"
 #include "clock.h"
 #include "game.h"
+#include "Player.h"
 
 //シーン
 
@@ -290,15 +291,25 @@ void Draw(void)
 	// バックバッファクリア
 	Clear();
 	SetViewPort(TYPE_FULL_SCREEN);
-	SetCamera();
 	switch (g_Mode) {
 	case MODE_TITLE:
+		SetCamera();
 		DrawTitle();
 		break;
 	case MODE_GAME:
+		// プレイヤー視点
+		XMFLOAT3 pos = GetPlayer()->object.GetPositionFloat();
+		XMFLOAT3 rot = GetCamera()->rot;
+		pos.x += -sinf(rot.y) * (100.0f + sinf(rot.x) * 20) + cosf(rot.y) * 50.0f;
+		pos.z += -cosf(rot.y) * (100.0f + sinf(rot.x) * 20) - sinf(rot.y) * 50.0f;
+		pos.y += -sinf(rot.x) * 100 + 30.0f;
+
+		SetCameraPos(pos);
+		SetCamera();
 		DrawGame();
 		break;
 	case MODE_RESULT:
+		SetCamera();
 		DrawResult();
 		break;
 
