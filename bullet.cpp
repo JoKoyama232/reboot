@@ -18,7 +18,7 @@
 
 #define	VALUE_MOVE			(3.0f)							// 移動量
 
-static float		roty = 0.0f;
+static int		    g_bulletIdx = -1;						// 最後に発射された弾のインデックス
 
 //*****************************************************************************
 // グローバル変数
@@ -68,18 +68,16 @@ void UpdateBullet(void)
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
 		if (!g_Bullet[b].use)continue;
-		{
-			//PLAYER* player = GetPlayer();
-			//XMFLOAT3 p_pos = player->object.GetPositionFloat();
-			XMFLOAT3 b_pos = g_Bullet[b].object.GetPositionFloat();
-			XMFLOAT3 b_rot = g_Bullet[b].object.GetRotationFloat();
+		//PLAYER* player = GetPlayer();
+		//XMFLOAT3 p_pos = player->object.GetPositionFloat();
+		XMFLOAT3 b_pos = g_Bullet[b].object.GetPositionFloat();
+		XMFLOAT3 b_rot = g_Bullet[b].object.GetRotationFloat();
 
-			// 弾の移動処理
-			b_pos.x += sinf(b_rot.y) * g_Bullet[b].spd;
-			b_pos.z += cosf(b_rot.y) * g_Bullet[b].spd;
+		// 弾の移動処理
+		b_pos.x += sinf(b_rot.y) * g_Bullet[b].spd;
+		b_pos.z += cosf(b_rot.y) * g_Bullet[b].spd;
 
-			g_Bullet[b].object.SetPosition(XMFLOAT3{ b_pos.x,0.0f,b_pos.z });
-		}
+		g_Bullet[b].object.SetPosition(XMFLOAT3{ b_pos.x,0.0f,b_pos.z });
 	}
 }
 
@@ -92,46 +90,46 @@ void DrawBullet(void)
 	// カリング無効
 	SetCullingMode(CULL_MODE_NONE);
 
-	// ワールドマトリックスの初期化
-	mtxWorld = XMMatrixIdentity();
+	
 
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
-		if (g_Bullet[b].use)
-		{
-			// スケールを反映
-			XMFLOAT3 scale = g_Bullet[b].object.GetScaleFloat();
-			mtxScl = XMMatrixScaling(scale.x, scale.y, scale.z);
-			mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
+		if (!g_Bullet[b].use) continue;
 
-			// 回転を反映
-			XMFLOAT3 rotation = g_Bullet[b].object.GetRotationFloat();
-			mtxRot = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y + XM_PI, rotation.z);
-			mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
+		// ワールドマトリックスの初期化
+		mtxWorld = XMMatrixIdentity();
 
-			// 移動を反映
-			XMFLOAT3 position = g_Bullet[b].object.GetPositionFloat();
-			mtxTranslate = XMMatrixTranslation(position.x, position.y, position.z);
-			mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
+		// スケールを反映
+		XMFLOAT3 scale = g_Bullet[b].object.GetScaleFloat();
+		mtxScl = XMMatrixScaling(scale.x, scale.y, scale.z);
+		mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
 
-			// ワールドマトリックスの設定
-			SetWorldMatrix(&mtxWorld);
+		// 回転を反映
+		XMFLOAT3 rotation = g_Bullet[b].object.GetRotationFloat();
+		mtxRot = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y + XM_PI, rotation.z);
+		mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 
+		// 移動を反映
+		XMFLOAT3 position = g_Bullet[b].object.GetPositionFloat();
+		mtxTranslate = XMMatrixTranslation(position.x, position.y, position.z);
+		mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
-			XMStoreFloat4x4(g_Bullet[b].object.GetWorldMatrixPointer(), mtxWorld);
+		// ワールドマトリックスの設定
+		SetWorldMatrix(&mtxWorld);
 
+		XMStoreFloat4x4(g_Bullet[b].object.GetWorldMatrixPointer(), mtxWorld);
 
-			// 縁取りの設定
-			SetFuchi(1);
+		// 縁取りの設定
+		SetFuchi(1);
 
-			// モデル描画
-			DrawModel(&g_Bullet[b].object.modelInfo);
+		// モデル描画
+		DrawModel(&g_Bullet[b].object.modelInfo);
 
-			SetFuchi(0);
+		// 縁取りの設定を元に戻す
+		SetFuchi(0);
 
-			// カリング設定を戻す
-			SetCullingMode(CULL_MODE_BACK);
-		}
+		// カリング設定を戻す
+		SetCullingMode(CULL_MODE_BACK);
 	}
 }
 
@@ -145,25 +143,38 @@ BULLET* GetBullet(void)
 //=============================================================================
 int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot)
 {
-	int nIdxBullet = -1;
-
-	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
+	// 使用されていないバレットを模索
+	for (int nCntBullet = g_bulletIdx; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
-		if (g_Bullet[nCntBullet].use)continue;
+		// バレットが使用中か？
+		if (g_Bullet[nCntBullet].use) 
+		{ 
+			// 最初に発射されたバレットはまだ使われているか？
+			if (!g_Bullet[0].use) {
+				// そうであればループさせる
+				nCntBullet = 0;
+			}
+			// 次のインデックスを試す
+			continue; 
+		}
 
+		// バレットの発射時変数設定
 		g_Bullet[nCntBullet].object.SetPosition(pos);
 		g_Bullet[nCntBullet].object.SetRotation(rot);
 		g_Bullet[nCntBullet].object.SetScale({XMFLOAT3(1.0f,1.0f,1.0f)});
 		g_Bullet[nCntBullet].use = true;
 
-		nIdxBullet = nCntBullet;
+		// 最後に発射されたバレットインデックスを更新
+		g_bulletIdx = nCntBullet;
 
+		// バレット音
 		//PlaySound(SOUND_LABEL_SE_shot000);
 
-			
-		return nIdxBullet;
+		// 発射成功時にバレットのインデックスをを返す（無視してもよい）	
+		return g_bulletIdx;
 
 	}
-	return nIdxBullet;
 
+	// 発射不発の場合-1を返す（無視してもよい）
+	return -1;
 }
