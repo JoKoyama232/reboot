@@ -39,21 +39,9 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 // 各音素材のパラメータ
 SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 {
-	{ (char*)"data/BGM/sample000.wav",	 BGM, -1 ,1.0f},	// BGM0
-	{ (char*)"data/BGM/bgm_maoudamashii_neorock73.wav",BGM, -1 ,1.0f},	// BGM1
-	{ (char*)"data/BGM/sample001.wav",	BGM, -1 ,1.0f},	// BGM2
-	{ (char*)"data/BGM/title.wav", BGM, -1, 1.0f},
-	{ (char*)"data/BGM/game.wav", BGM, -1, 1.0f},
-	{ (char*)"data/BGM/result_fail.wav", BGM, -1, 1.0f},
-	{ (char*)"data/SE/defend000.wav",	SE, 0 ,1.0f},		// 弾発射音
-	{ (char*)"data/SE/defend001.wav",	SE, 0 ,1.0f},		// 弾発射音
-	{ (char*)"data/SE/hit000.wav",		SE, 0 ,1.0f},		// 弾発射音
-	{ (char*)"data/SE/laser000.wav",	SE, 0 ,1.0f},		// 弾発射音
-	{ (char*)"data/SE/lockon000.wav",	SE, 0 ,1.0f},		// 弾発射音
-	{ (char*)"data/SE/shot000.wav",		SE, 0 ,1.0f},		// 弾発射音
-	{ (char*)"data/SE/shot001.wav",		SE, 0,1.0f },		// ヒット音
-	{ (char*)"data/SE/zippo.wav",		SE, 0,1.0f },		// ヒット音
-	{ (char*)"data/SE/lion.wav",		SE, 0,1.0f },		// ヒット音
+	{ (char*)"Data/BGM/sample000.wav",	 BGM, -1 ,0.1f},	// BGM0
+	{ (char*)"Data/BGM/title.wav", BGM, -1, 0.1f},
+	{ (char*)"Data/SE/zippo.wav", SE, 0, 0.1f},
 
 };
 

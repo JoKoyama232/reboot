@@ -12,6 +12,9 @@
 #include "fade.h"
 #include "title.h"
 #include "result.h"
+#include "sound.h"
+#include "clock.h"
+#include "game.h"
 
 //シーン
 
@@ -134,6 +137,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 #endif
 				dwFPSLastTime = dwCurrentTime;				// FPSを測定した時刻を保存
 				dwFrameCount = 0;							// カウントをクリア
+				AddClock(1);
 			}
 
 			if ((dwCurrentTime - dwExecLastTime) >= (1000 / 60))	// 1/60秒ごとに実行
@@ -210,7 +214,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	InitRenderer(hInstance, hWnd, bWindow);
 
 
-
+	
 	InitCamera();
 
 	// 入力処理の初期化
@@ -218,8 +222,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//-----
 	InitFade();
 
-	//PlaySound(SOUND_LABEL_BGM_sample001);
-
+	//サウンドの初期化処理
+	InitSound(hWnd);
 
 	// ライトを有効化
 	SetLightEnable(true);
@@ -241,6 +245,9 @@ void Uninit(void)
 	// カメラの終了処理
 	UninitCamera();
 
+	// サウンドの終了処理
+	UninitSound();
+
 	//入力の終了処理
 	UninitInput();
 
@@ -255,20 +262,21 @@ void Update(void)
 	// 入力の更新処理
 	UpdateInput();
 
+	// カメラ更新
+	UpdateCamera();
+
 	switch (g_Mode) {
 	case MODE_TITLE:
 		UpdateTitle();
 		break;
 	case MODE_GAME:
-
+		UpdateGame();
 		break;
 	case MODE_RESULT:
 		UpdateResult();
 		break;
 
 	}
-	// カメラ更新
-	UpdateCamera();
 
 	UpdateFade();
 
@@ -282,13 +290,13 @@ void Draw(void)
 	// バックバッファクリア
 	Clear();
 	SetViewPort(TYPE_FULL_SCREEN);
-
+	SetCamera();
 	switch (g_Mode) {
 	case MODE_TITLE:
 		DrawTitle();
 		break;
 	case MODE_GAME:
-
+		DrawGame();
 		break;
 	case MODE_RESULT:
 		DrawResult();
@@ -338,16 +346,19 @@ void SetMode(int mode) {
 	// タイトル画面の終了処理
 	UninitTitle();
 
+	//ゲームシーンの終了処理
+	UninitGame();
+
 	//リザルト処理の終了処理
 	UninitResult();
 
 	switch (g_Mode) {
 	case MODE_TITLE:
 		InitTitle();
-		//PlaySound(SOUND_LABEL_BGM_sample000);
+		PlaySound(SOUND_LABEL_BGM_title);
 		break;
 	case MODE_GAME:
-
+		InitGame();
 		break;
 	case MODE_RESULT:
 		InitResult();

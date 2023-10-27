@@ -177,7 +177,7 @@ void UpdateResultTex(void)
 					}
 					if (g_Button[i].flag_sound == true)
 					{
-						//PlaySound(SOUND_LABEL_SE_lion);
+						PlaySound(SOUND_LABEL_SE_ZIPPO);
 						g_Button[i].flag_sound = false;
 					}
 					//マウスの左ボタンが押されたら
@@ -218,11 +218,6 @@ void UpdateResultTex(void)
 		SetFade(FADE_OUT, MODE_TITLE);
 	}
 
-	//マウスの左ボタンが押されたらタイトルに戻る
-	if (GetKeyState(VK_LBUTTON) & 0x80)
-	{
-		SetFade(FADE_OUT, MODE_TITLE);
-	}
 
 #ifdef _DEBUG	// デバッグ情報を表示する
 
