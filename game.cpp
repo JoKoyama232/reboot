@@ -12,9 +12,11 @@
 #include "input.h"
 #include "sound.h"
 #include "fade.h"
+#include "WorldSpaceClass.h"
 
 #include "clock.h"
-
+#include "Player.h"
+#include "bullet.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -40,12 +42,20 @@ static RECT				g_windowPos;
 //=============================================================================
 HRESULT InitGame(void)
 {
+	InitPlayer();
+
+	//弾(モチ)の初期化
+	InitBullet();
 
 	//時計の初期化
 	InitClock();
 
+
+
 	//マウス非表示
 	ShowCursor(false);
+
+
 
 	return S_OK;
 }
@@ -55,6 +65,11 @@ HRESULT InitGame(void)
 //=============================================================================
 void UninitGame(void)
 {
+	UninitPlayer();
+
+	//弾(モチ)の終了処理
+	UninitBullet();
+
 	// 時計の終了処理
 	UninitClock();
 }
@@ -64,12 +79,32 @@ void UninitGame(void)
 //=============================================================================
 void UpdateGame(void)
 {
+	UpdatePlayer();
+
+	//弾(モチ)の更新処理
+	UpdateBullet();
+
 	// 時計の更新処理
 	UpdateClock();
 }
 
+//=============================================================================
+// 更新処理
+//=============================================================================
 void DrawGame(void)
 {
+	XMFLOAT3 pos;
+
+	// プレイヤー視点
+	pos = GetPlayer()->object.GetPositionFloat();
+	pos.y = 0.0f;			// カメラ酔いを防ぐためにクリアしている
+	SetCameraAT(pos);
+	SetCamera();
+	
+	DrawPlayer();
+
+	//弾(モチ)の描画処理
+	DrawBullet();
 
 	// 2Dの物を描画する処理
 	{

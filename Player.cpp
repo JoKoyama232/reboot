@@ -8,7 +8,7 @@
 #include "input.h"
 #include "debugproc.h"
 #include "renderer.h"
-
+#include "bullet.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -23,8 +23,9 @@ static float		roty = 0.0f;
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-
-Player g_Player;
+static float        g_LastUpdate;
+PLAYER g_Player;
+static bool g_fire = false;
 
 HRESULT InitPlayer(void) {
 
@@ -38,7 +39,7 @@ HRESULT InitPlayer(void) {
 		g_Player.time = 0.0f;
 		g_Player.spd = 0.0f;			// 移動スピードクリア
 		g_Player.use = true;
-
+		g_LastUpdate = 0.0f;
 		roty = 0.0f;
 
 		return S_OK;
@@ -56,6 +57,10 @@ void UninitPlayer(void) {
 }
 
 void UpdatePlayer(void) {
+
+	DWORD updateTime = timeGetTime();
+	DWORD deltaTime = updateTime - g_LastUpdate;
+	g_LastUpdate = updateTime;
 
 	// 移動処理
 	if (GetKeyboardPress(DIK_A))
@@ -81,15 +86,20 @@ void UpdatePlayer(void) {
 		roty = -XM_PI / 2;
 	}
 
-	if (GetKeyboardPress(DIK_W))
+	if ((GetKeyboardPress(DIK_SPACE)) || IsMouseLeftTriggered())
 	{
+		g_Player.object.SetPosition(XMFLOAT3{ 1.0f, 0.0f, 0.0f });
 		g_Player.spd = VALUE_MOVE;
 		roty = XM_PI;
 	}
-	else if (IsButtonTriggered(0, BUTTON_UP))
+	//else if (IsButtonTriggered(0, BUTTON_UP))
+	//{
+	//	g_Player.spd = VALUE_MOVE;
+	//	roty = XM_PI;
+	//}
+	else
 	{
-		g_Player.spd = VALUE_MOVE;
-		roty = XM_PI;
+		g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 	}
 
 	if (GetKeyboardPress(DIK_S))
@@ -104,16 +114,25 @@ void UpdatePlayer(void) {
 	}
 
 	// 弾発射処理
-	if (GetKeyboardTrigger(DIK_RETURN))
+
+	XMFLOAT3 p_pos = g_Player.object.GetPositionFloat();
+	XMFLOAT3 p_rot = g_Player.object.GetRotationFloat();
+	if (GetKeyboardTrigger(DIK_SPACE)/* && updateTime - g_LastUpdate > 3000*/)
 	{
-
+ 		SetBullet(p_pos,p_rot);
+		//g_LastUpdate = updateTime;
+		
 	}
-	else if (IsButtonTriggered(0, BUTTON_A))
-	{
+	//if (GetKeyboardPress(DIK_W))
+	//{
+	//	SetBullet(p_pos, p_rot);
+	//}
+	//else if (IsButtonTriggered(0, BUTTON_A))
+	//{
 
-	}
+	//}
 
-
+	PrintDebugProc((char*)"Player Information\nMovement:   W\n            A  S  D\n  Shift    Space\nPosition:(%f, %f, %f)\nRotation:(%f, %f, %f)\n", p_pos.x, p_pos.y, p_pos.z, p_rot.x, p_rot.y, p_rot.z);
 
 }
 
@@ -163,7 +182,7 @@ void DrawPlayer(void) {
 
 }
 
-Player* GetPlayer(void) {
+PLAYER* GetPlayer(void) {
 	return &g_Player;
 }
 

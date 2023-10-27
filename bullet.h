@@ -1,5 +1,6 @@
-// プレイヤー処理 [player.h]
-// Author : 小山　城
+//=============================================================================
+// 弾丸処理 [bullet.h]
+// Author :
 //=============================================================================
 #pragma once
 #include "WorldSpaceClass.h"
@@ -7,22 +8,22 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MAX_PLAYER		(1)					// プレイヤーの数
-#define	PLAYER_SIZE		(5.0f)				// 当たり判定の大きさ
+#define MAX_BULLET		(256)				// 取り持ちの数(仮)
+#define	BULLET_SIZE		(5.0f)				// 当たり判定の大きさ
 
 
 //*****************************************************************************
 // 構造体定義
 //*****************************************************************************
-struct PLAYER
+struct BULLET
 {
 	WorldSpace			object;
-	
+
 	float				spd;		// 移動スピード
 	float				dir;		// 向き
 	bool				use;
 
-	// 階層アニメーション用のメンバー変数(今は使わないかな？)
+	// 階層アニメーション用のメンバー変数
 	float				time;				// 線形補間用
 	int					tblNo;				// 行動データのテーブル番号
 	int					tblMax;				// そのテーブルのデータ数
@@ -31,11 +32,12 @@ struct PLAYER
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitPlayer(void);
-void UninitPlayer(void);
-void UpdatePlayer(void);
-void DrawPlayer(void);
+HRESULT InitBullet(void);
+void UninitBullet(void);
+void UpdateBullet(void);
+void DrawBullet(void);
 
-PLAYER* GetPlayer(void);
-XMFLOAT3 GetLerp(XMFLOAT3 initialPos, XMFLOAT3 endingPos, float percentage);
+int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot);
+
+BULLET* GetBullet(void);
 float GetDistance3D(XMFLOAT3 pos1, XMFLOAT3 pos2);
