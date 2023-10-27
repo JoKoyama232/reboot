@@ -75,9 +75,10 @@ void UpdateBullet(void)
 
 		// íeÇÃà⁄ìÆèàóù
 		b_pos.x += sinf(b_rot.y) * g_Bullet[b].spd;
+		b_pos.y += sinf(b_rot.x) * g_Bullet[b].spd;
 		b_pos.z += cosf(b_rot.y) * g_Bullet[b].spd;
 
-		g_Bullet[b].object.SetPosition(XMFLOAT3{ b_pos.x,0.0f,b_pos.z });
+		g_Bullet[b].object.SetPosition(b_pos);
 	}
 }
 
