@@ -18,7 +18,7 @@
 
 #define	VALUE_MOVE			(3.0f)							// 移動量
 
-static int		    g_bulletIdx = -1;						// 最後に発射された弾のインデックス
+static int		    g_bulletIdx = 0;						// 最後に発射された弾のインデックス
 
 //*****************************************************************************
 // グローバル変数
@@ -147,7 +147,8 @@ int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot)
 	for (int nCntBullet = g_bulletIdx; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
 		// バレットが使用中か？
-		if (g_Bullet[nCntBullet].use) 
+		if (g_Bullet[nCntBullet].use || g_bulletIdx == MAX_BULLET)
+
 		{ 
 			// 最初に発射されたバレットはまだ使われているか？
 			if (!g_Bullet[0].use) {
