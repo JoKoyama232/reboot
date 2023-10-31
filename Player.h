@@ -20,8 +20,10 @@ struct PLAYER
 	
 	float				speed;			// 移動スピード
 	float				direction;		// 向き
+	float				str;
+	float				str_max;
+	float				str_flag;
 	bool				use;
-
 	// 階層アニメーション用のメンバー変数(今は使わないかな？)
 	float				time;				// 線形補間用
 	int					tblNo;				// 行動データのテーブル番号
@@ -35,7 +37,7 @@ HRESULT InitPlayer(void);
 void UninitPlayer(void);
 void UpdatePlayer(void);
 void DrawPlayer(void);
-
+void DrawPlayerUI(void);
 PLAYER* GetPlayer(void);
 XMFLOAT3 GetLerp(XMFLOAT3 initialPos, XMFLOAT3 endingPos, float percentage);
 float GetDistance3D(XMFLOAT3 pos1, XMFLOAT3 pos2);
