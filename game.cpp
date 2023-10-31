@@ -117,6 +117,8 @@ void DrawGame(void)
 		//ここから下に
 		DrawClock();
 
+		DrawPlayerUI();
+
 		// ライティングを有効に
 		SetLightEnable(true);
 
