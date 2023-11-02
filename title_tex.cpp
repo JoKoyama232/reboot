@@ -49,7 +49,7 @@ static bool						g_Use;						// true:使っている  false:未使用
 static float					g_w, g_h;					// 幅と高さ
 static XMFLOAT3					g_Pos;						// ポリゴンの座標
 static int						g_TexNo;					// テクスチャ番号
-
+static DWORD	timer;										// タイマー（時間制御のため）
 float	alpha;
 bool	flag_alpha;
 
@@ -110,7 +110,7 @@ HRESULT InitTitleTex(void)
 
 	}
 
-
+	timer = timeGetTime();
 	g_Load = TRUE;
 	return S_OK;
 }
@@ -148,87 +148,84 @@ void UpdateTitleTex(void)
 {
 	int x = GetMousePosX();
 	int y = GetMousePosY();
-
-	for (int i{}; i < BUTTON_MAX; i++)
+	DWORD time = timeGetTime() - timer;
+	for (int i = 0; i < BUTTON_MAX; i++)
 	{
 		HWND windowHandle = GetForegroundWindow(); // ウィンドウのハンドルを取得
-		if (windowHandle != NULL)
+		if (windowHandle) continue;
+
+		RECT windowRect;
+		if (!GetWindowRect(windowHandle, &windowRect)) continue; // ウィンドウの位置情報を取得
+
+		// マウルの位置が画像に当たっているかどうかの判定
+		if (time > 1000 ||
+			!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) ||
+			!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) ||
+			!(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) ||
+			!(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2))
 		{
-			RECT windowRect;
-			if (GetWindowRect(windowHandle, &windowRect)) // ウィンドウの位置情報を取得
+			//マウスが画像の範囲外なら点滅せずに表示
+			g_Button[i].alpha = 1.0f;
+			g_Button[i].flag_sound = true;
+		}
+
+		//点滅させる
+		if (time < 1000) {
+			g_Button[i].alpha = time * 0.001f;
+			alpha = time * 0.001f;
+		}
+		else
+			if (g_Button[i].flag_alpha == true)
 			{
-				// マウルの位置が画像に当たっているかどうかの判定
-				if ((x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) &&
-					(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) &&
-					(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) &&
-					(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2))
+				g_Button[i].alpha -= 0.02f;
+				if (g_Button[i].alpha <= 0.0f)
 				{
-					//点滅させる
-					if (g_Button[i].flag_alpha == true)
-					{
-						g_Button[i].alpha -= 0.02f;
-						if (g_Button[i].alpha <= 0.0f)
-						{
-							g_Button[i].alpha = 0.0f;
-							g_Button[i].flag_alpha = false;
-						}
-					}
-					else
-					{
-						g_Button[i].alpha += 0.02f;
-						if (g_Button[i].alpha >= 1.0f)
-						{
-							g_Button[i].alpha = 1.0f;
-							g_Button[i].flag_alpha = true;
-						}
-					}
-
-					if (g_Button[i].flag_sound == true)
-					{
-						PlaySound(SOUND_LABEL_SE_ZIPPO);
-						g_Button[i].flag_sound = false;
-					}
-
-					//マウスの左ボタンが押されたら
-					if (GetKeyState(VK_LBUTTON) & 0x80)
-					{
-						if (i == 0)
-						{
-							SetFade(FADE_OUT, MODE_GAME);
-							//PlaySound();
-						}
-						else if (i == 1)
-						{
-							int id = MessageBox(NULL, "ゲームを終了しますか？", "", MB_YESNO | MB_ICONQUESTION);
-							switch (id)
-							{
-							case IDYES:		// ゲームを終了
-								exit (-1);
-								break;
-							case IDNO:		// 何もせずにタイトルに戻る
-								
-								break;
-							}
-						}
-						else if (i == 2)
-						{
-
-						}
-					}
-
-
-
-
+					g_Button[i].alpha = 0.0f;
+					g_Button[i].flag_alpha = false;
 				}
-				else //マウスが画像の範囲外なら点滅せずに表示
+			}
+			else
+			{
+				g_Button[i].alpha += 0.02f;
+				if (g_Button[i].alpha >= 1.0f)
 				{
 					g_Button[i].alpha = 1.0f;
-					g_Button[i].flag_sound = true;
+					g_Button[i].flag_alpha = true;
 				}
+			}
 
-				
+		if (g_Button[i].flag_sound == true)
+		{
+			PlaySound(SOUND_LABEL_SE_ZIPPO);
+			g_Button[i].flag_sound = false;
+		}
+
+		//マウスの左ボタンが押されたら
+		if (!(GetKeyState(VK_LBUTTON) & 0x80)) continue;
+
+		switch (i) {
+		case 0:
+			SetFade(FADE_OUT, MODE_GAME);
+			//PlaySound();
+			break;
+		case 1:
+		{
+			int id = MessageBox(NULL, "ゲームを終了しますか？", "", MB_YESNO | MB_ICONQUESTION);
+			switch (id)
+			{
+			case IDYES:		// ゲームを終了
+				exit(-1);
+				break;
+			case IDNO:		// 何もせずにタイトルに戻る
+
+				break;
 			}
 		}
+		break;
+		case 2:
+			break;
+		}
+
 	}
 }
 
@@ -237,53 +234,53 @@ void UpdateTitleTex(void)
 //=============================================================================
 void DrawTitleTex(void)
 {
-	
-		// 頂点バッファ設定
-		UINT stride = sizeof(VERTEX_3D);
-		UINT offset = 0;
-		GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
 
-		// マトリクス設定
-		SetWorldViewProjection2D();
+	// 頂点バッファ設定
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
 
-		// プリミティブトポロジ設定
-		GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	// マトリクス設定
+	SetWorldViewProjection2D();
 
-		// マテリアル設定
-		MATERIAL material;
-		ZeroMemory(&material, sizeof(material));
-		material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		SetMaterial(material);
-		//タイトルのロゴを描画
-		{
-			// テクスチャ設定
-			GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
+	// プリミティブトポロジ設定
+	GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-		//	SetSprite(g_VertexBuffer, g_Pos.x, g_Pos.y, TEXTURE_WIDTH_LOGO, TEXTURE_HEIGHT_LOGO, 0.0f, 0.0f, 1.0f, 1.0f);
-			SetSpriteColor(g_VertexBuffer, g_Pos.x, g_Pos.y - 50.0f,
-				TEXTURE_WIDTH_LOGO * 2.5f, TEXTURE_HEIGHT_LOGO * 2.5f,
-				0.0f, 0.0f, 1.0f, 1.0f,
-				XMFLOAT4(1.0f, 1.0f, 1.0f, alpha));
+	// マテリアル設定
+	MATERIAL material;
+	ZeroMemory(&material, sizeof(material));
+	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	SetMaterial(material);
+	//タイトルのロゴを描画
+	{
+		// テクスチャ設定
+		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
 
-			// ポリゴン描画
-			GetDeviceContext()->Draw(4, 0);
-		}
+		// １枚のポリゴンの頂点とテクスチャ座標を設定
+	//	SetSprite(g_VertexBuffer, g_Pos.x, g_Pos.y, TEXTURE_WIDTH_LOGO, TEXTURE_HEIGHT_LOGO, 0.0f, 0.0f, 1.0f, 1.0f);
+		SetSpriteColor(g_VertexBuffer, g_Pos.x, g_Pos.y - 50.0f,
+			TEXTURE_WIDTH_LOGO * 2.5f, TEXTURE_HEIGHT_LOGO * 2.5f,
+			0.0f, 0.0f, 1.0f, 1.0f,
+			XMFLOAT4(1.0f, 1.0f, 1.0f, alpha));
 
-		//ボタンを描画
-		for (int i = 0; i < BUTTON_MAX; i++)
-		{
-			// テクスチャ設定
-			GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[g_Button[i].texNo]);
+		// ポリゴン描画
+		GetDeviceContext()->Draw(4, 0);
+	}
 
-			// １枚のポリゴンの頂点とテクスチャ座標を設定
-			SetSpriteColor(g_VertexBuffer, g_Button[i].pos.x, g_Button[i].pos.y, TEXTURE_WIDTH_LOGO, TEXTURE_HEIGHT_LOGO,
-				0.0f, 0.0f, 1.0f, 1.0f, XMFLOAT4(1.0f, 1.0f, 1.0f, g_Button[i].alpha));
+	//ボタンを描画
+	for (int i = 0; i < BUTTON_MAX; i++)
+	{
+		// テクスチャ設定
+		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[g_Button[i].texNo]);
 
-			// ポリゴン描画
-			GetDeviceContext()->Draw(4, 0);
+		// １枚のポリゴンの頂点とテクスチャ座標を設定
+		SetSpriteColor(g_VertexBuffer, g_Button[i].pos.x, g_Button[i].pos.y, TEXTURE_WIDTH_LOGO, TEXTURE_HEIGHT_LOGO,
+			0.0f, 0.0f, 1.0f, 1.0f, XMFLOAT4(1.0f, 1.0f, 1.0f, g_Button[i].alpha));
 
-		}
+		// ポリゴン描画
+		GetDeviceContext()->Draw(4, 0);
+
+	}
 
 
 }
