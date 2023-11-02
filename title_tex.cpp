@@ -52,7 +52,7 @@ static int						g_TexNo;					// テクスチャ番号
 static DWORD	timer;										// タイマー（時間制御のため）
 float	alpha;
 bool	flag_alpha;
-
+static int selector = 0;
 static BOOL						g_Load = FALSE;
 static BUTTON					g_Button[BUTTON_MAX];
 
@@ -167,6 +167,9 @@ void UpdateTitleTex(void)
 			g_Button[i].alpha = 1.0f;
 			g_Button[i].flag_sound = true;
 		}
+		else {
+			selector = i;
+		}
 
 		//点滅させる
 		if (time < 1000) {
@@ -175,6 +178,7 @@ void UpdateTitleTex(void)
 		}
 		else if (g_Button[i].flag_alpha == true)
 		{
+			
 			g_Button[i].alpha -= 0.02f;
 			if (g_Button[i].alpha <= 0.0f)
 			{
@@ -184,6 +188,7 @@ void UpdateTitleTex(void)
 		}
 		else
 		{
+			
 			g_Button[i].alpha += 0.02f;
 			if (g_Button[i].alpha >= 1.0f)
 			{
@@ -197,34 +202,34 @@ void UpdateTitleTex(void)
 			PlaySound(SOUND_LABEL_SE_ZIPPO);
 			g_Button[i].flag_sound = false;
 		}
-
-		//マウスの左ボタンが押されたら
-		if (!(GetKeyState(VK_LBUTTON) & 0x80)) continue;
-
-		switch (i) {
+	}
+	//マウスの左ボタンが押されたら
+	if (GetKeyState(VK_LBUTTON) & 0x80)
+	{
+		switch (selector) {
 		case 0:
 			SetFade(FADE_OUT, MODE_GAME);
 			//PlaySound();
 			break;
 		case 1:
-		{
-			int id = MessageBox(NULL, "ゲームを終了しますか？", "", MB_YESNO | MB_ICONQUESTION);
-			switch (id)
 			{
-			case IDYES:		// ゲームを終了
-				exit(-1);
-				break;
-			case IDNO:		// 何もせずにタイトルに戻る
+				int id = MessageBox(NULL, "ゲームを終了しますか？", "", MB_YESNO | MB_ICONQUESTION);
+				switch (id)
+				{
+				case IDYES:		// ゲームを終了
+					exit(-1);
+					break;
+				case IDNO:		// 何もせずにタイトルに戻る
 
-				break;
+					break;
+				}
 			}
-		}
-		break;
+			break;
 		case 2:
 			break;
 		}
-
 	}
+
 }
 
 //=============================================================================
