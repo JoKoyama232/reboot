@@ -21,7 +21,7 @@
 #define	VALUE_MOVE			(1.0f)							// 移動量
 
 #define PLAYER_UI_MAX		(1)								// プレイヤーのUIの数
-#define TEXTURE_MAX			(1)								// テクスチャの数
+#define TEXTURE_MAX			(2)								// テクスチャの数
 
 static float		roty = 0.0f;
 
@@ -36,28 +36,48 @@ static ID3D11Buffer* g_VertexBuffer = NULL;				// 頂点情報
 static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// テクスチャ情報
 
 static const char* g_TexturName[TEXTURE_MAX] = {
-	"data/TEXTURE/bar_white.png",
+	"Data/texture/bar_white.png",
+	"Data/texture/ball_white.png",
 
 };
 
 HRESULT InitPlayer(void) {
+	//テクスチャ生成
+	for (int i = 0; i < TEXTURE_MAX; i++)
+	{
+		g_Texture[i] = NULL;
+		D3DX11CreateShaderResourceViewFromFile(GetDevice(),
+			g_TexturName[i],
+			NULL,
+			NULL,
+			&g_Texture[i],
+			NULL);
+	}
+	// 頂点バッファ生成
+	D3D11_BUFFER_DESC bd;
+	ZeroMemory(&bd, sizeof(bd));
+	bd.Usage = D3D11_USAGE_DYNAMIC;
+	bd.ByteWidth = sizeof(VERTEX_3D) * 4;
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	GetDevice()->CreateBuffer(&bd, NULL, &g_VertexBuffer);
 
-		LoadModel(MODEL_PLAYER, &g_Player.object.modelInfo);
-		GetModelDiffuse(&g_Player.object.modelInfo, g_Player.object.modelDiffuse);
-		g_Player.object.load = true;
+	LoadModel(MODEL_PLAYER, &g_Player.object.modelInfo);
+	GetModelDiffuse(&g_Player.object.modelInfo, g_Player.object.modelDiffuse);
+	g_Player.object.load = true;
 
-		g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
-		g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
-		g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
-		g_Player.str = 100.0f;
-		g_Player.str_max = 100.0f;
-		g_Player.time = 0.0f;
-		g_Player.speed = 0.0f;			// 移動スピードクリア
-		g_Player.use = true;
-		g_LastUpdate = 0.0f;
-		roty = 0.0f;
+	g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
+	g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
+	g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
+	g_Player.str = 100.0f;
+	g_Player.str_max = 100.0f;
+	g_Player.time = 0.0f;
+	g_Player.speed = 0.0f;			// 移動スピードクリア
+	g_Player.use = true;
+	g_LastUpdate = 0.0f;
+	roty = 0.0f;
 
-		return S_OK;
+	return S_OK;
 
 }
 
@@ -227,26 +247,6 @@ void DrawPlayerUI(void)
 {
 	for (int i = 0; i < PLAYER_UI_MAX; i++)
 	{
-		//テクスチャ生成
-		for (int i = 0; i < TEXTURE_MAX; i++)
-		{
-			g_Texture[i] = NULL;
-			D3DX11CreateShaderResourceViewFromFile(GetDevice(),
-				g_TexturName[i],
-				NULL,
-				NULL,
-				&g_Texture[i],
-				NULL);
-		}
-		// 頂点バッファ生成
-		D3D11_BUFFER_DESC bd;
-		ZeroMemory(&bd, sizeof(bd));
-		bd.Usage = D3D11_USAGE_DYNAMIC;
-		bd.ByteWidth = sizeof(VERTEX_3D) * 4;
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		GetDevice()->CreateBuffer(&bd, NULL, &g_VertexBuffer);
-
 		// 頂点バッファ設定
 		UINT stride = sizeof(VERTEX_3D);
 		UINT offset = 0;
@@ -301,5 +301,61 @@ void DrawPlayerUI(void)
 		}
 		// ポリゴン描画
 		GetDeviceContext()->Draw(4, 0);
+	}
+}
+//=============================================================================
+// // プレイヤーの残弾表示処理
+//=============================================================================
+void DrawPlayerRestBullet(void)
+{
+	for (int i = 0; i < MAX_BULLET; i++)
+	{
+		BULLET *bullet = GetBullet();
+		if(bullet[i].use)continue;
+		{
+			// 頂点バッファ設定
+			UINT stride = sizeof(VERTEX_3D);
+			UINT offset = 0;
+			GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+			// マトリクス設定
+			SetWorldViewProjection2D();
+
+			// プリミティブトポロジ設定
+			GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+			// マテリアル設定
+			MATERIAL material;
+			ZeroMemory(&material, sizeof(material));
+			material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+			SetMaterial(material);
+
+			//ゲージの位置やテクスチャー座標を反映
+			float px = 30.0f;		// ゲージの表示位置X
+			float py = 97.0f + (25.0f * i);		// ゲージの表示位置Y
+			float pw = 20.0f;		// ゲージの表示幅
+			float ph = 20.0f;		// ゲージの表示高さ
+
+			float tw = 1.0f;	// テクスチャの幅
+			float th = 1.0f;	// テクスチャの高さ
+			float tx = 0.0f;	// テクスチャの左上X座標
+			float ty = 0.0f;	// テクスチャの左上Y座標
+
+			// プレイヤーのHPに従ってゲージの長さを表示
+			// テクスチャ設定
+			GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[1]);
+
+			//ゲージの位置やテクスチャー座標を反映
+			{
+				// １枚のポリゴンの頂点とテクスチャ座標を設定
+				SetSpriteLTColor(g_VertexBuffer,
+					px, py, pw, ph,
+					tx, ty, tw, th,
+					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
+			}
+			// ポリゴン描画
+			GetDeviceContext()->Draw(4, 0);
+		}
 	}
 }

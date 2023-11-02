@@ -128,6 +128,7 @@ void DrawGame(void)
 
 		DrawPlayerUI();
 
+		DrawPlayerRestBullet();
 		// ライティングを有効に
 		SetLightEnable(true);
 

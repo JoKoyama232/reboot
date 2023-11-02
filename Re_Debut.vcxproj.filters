@@ -57,6 +57,9 @@
     </ClCompile>
     <ClCompile Include="debris.cpp">
       <Filter>ソースファイル\game</Filter>
+     </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="debris.h">
       <Filter>ヘッダーファイル\game</Filter>
+ </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

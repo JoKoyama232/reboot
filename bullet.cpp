@@ -144,39 +144,30 @@ BULLET* GetBullet(void)
 //=============================================================================
 int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot)
 {
+	int nIdxBullet = -1;
+
 	// 使用されていないバレットを模索
-	for (int nCntBullet = g_bulletIdx; nCntBullet < MAX_BULLET; nCntBullet++)
+	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
 		// バレットが使用中か？
-		if (g_Bullet[nCntBullet].use || g_bulletIdx == MAX_BULLET)
-
-		{ 
-			// 最初に発射されたバレットはまだ使われているか？
-			if (!g_Bullet[0].use) {
-				// そうであればループさせる
-				nCntBullet = 0;
-			}
-			// 次のインデックスを試す
-			continue; 
-		}
-
+		if (g_Bullet[nCntBullet].use)continue;
+		
 		// バレットの発射時変数設定
 		g_Bullet[nCntBullet].object.SetPosition(pos);
 		g_Bullet[nCntBullet].object.SetRotation(rot);
-		g_Bullet[nCntBullet].object.SetScale({XMFLOAT3(1.0f,1.0f,1.0f)});
+		g_Bullet[nCntBullet].object.SetScale({ XMFLOAT3(1.0f,1.0f,1.0f) });
 		g_Bullet[nCntBullet].use = true;
 
 		// 最後に発射されたバレットインデックスを更新
-		g_bulletIdx = nCntBullet;
+		nIdxBullet = nCntBullet;
 
 		// バレット音
 		//PlaySound(SOUND_LABEL_SE_shot000);
 
-		// 発射成功時にバレットのインデックスをを返す（無視してもよい）	
-		return g_bulletIdx;
-
+		break;
+		
 	}
+	// 発射成功時にバレットのインデックスをを返す（無視してもよい）	
+	return nIdxBullet;
 
-	// 発射不発の場合-1を返す（無視してもよい）
-	return -1;
 }
