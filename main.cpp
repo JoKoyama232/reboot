@@ -55,7 +55,7 @@ char	g_DebugStr[2048] = WINDOW_NAME;		// デバッグ文字表示用
 
 #endif
 
-int	g_Mode = MODE_INTRO;					// 起動時の画面を設定
+int	g_Mode = MODE_TITLE;					// 起動時の画面を設定
 
 
 // メイン関数
