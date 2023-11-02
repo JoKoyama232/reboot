@@ -25,6 +25,13 @@
 #define CLASS_NAME		"AppClass"			// ウインドウのクラス名
 #define WINDOW_NAME		"Flight"		// ウインドウのキャプション名
 
+// カメラ位置定数群
+#define CAMERA_OFFSET_BACK	 (100.0f)	// プレイヤーからの後ろへのカメラのオフセット
+#define CAMERA_OFFSET_RIGHT	 (30.0f)	// プレイヤーからの右へのカメラのオフセット
+#define CAMERA_OFFSET_HEIGHT (15.0f)	// プレイヤーからの上へのカメラのオフセット
+#define CAMERA_PITCH_RADIUSZ (30.0f)	// プレイヤーからのオフセット位置を軸としたx軸の楕円の横距離
+#define CAMERA_PITCH_RADIUSY (100.0f)	// プレイヤーからのオフセット位置を軸としたy軸の楕円の横距離
+
 // プロトタイプ宣言
 //*****************************************************************************
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -301,9 +308,9 @@ void Draw(void)
 		// プレイヤー視点
 		XMFLOAT3 pos = GetPlayer()->object.GetPositionFloat();
 		XMFLOAT3 rot = GetCamera()->rot;
-		pos.x += -sinf(rot.y) * (100.0f + sinf(rot.x) * 20) + cosf(rot.y) * 50.0f;
-		pos.z += -cosf(rot.y) * (100.0f + sinf(rot.x) * 20) - sinf(rot.y) * 50.0f;
-		pos.y += -sinf(rot.x) * 100 + 30.0f;
+		pos.x += -sinf(rot.y) * (CAMERA_OFFSET_BACK + sinf(rot.x) * CAMERA_PITCH_RADIUSZ) + cosf(rot.y) * CAMERA_OFFSET_RIGHT;
+		pos.z += -cosf(rot.y) * (CAMERA_OFFSET_BACK + sinf(rot.x) * CAMERA_PITCH_RADIUSZ) - sinf(rot.y) * CAMERA_OFFSET_RIGHT;
+		pos.y += -sinf(rot.x) * CAMERA_PITCH_RADIUSY + CAMERA_OFFSET_HEIGHT;
 
 		SetCameraPos(pos);
 		SetCamera();
