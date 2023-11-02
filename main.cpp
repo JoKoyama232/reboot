@@ -17,7 +17,7 @@
 #include "game.h"
 #include "Player.h"
 #include "debris.h"
-
+#include "Intro.h"
 //シーン
 
 // マクロ定義
@@ -55,7 +55,7 @@ char	g_DebugStr[2048] = WINDOW_NAME;		// デバッグ文字表示用
 
 #endif
 
-int	g_Mode = MODE_TITLE;					// 起動時の画面を設定
+int	g_Mode = MODE_INTRO;					// 起動時の画面を設定
 
 
 // メイン関数
@@ -275,6 +275,9 @@ void Update(void)
 	UpdateCamera();
 
 	switch (g_Mode) {
+	case MODE_INTRO:
+		UpdateIntro();
+
 	case MODE_TITLE:
 		UpdateTitle();
 		break;
@@ -300,6 +303,10 @@ void Draw(void)
 	Clear();
 	SetViewPort(TYPE_FULL_SCREEN);
 	switch (g_Mode) {
+	case MODE_INTRO:
+		SetCamera();
+		DrawIntro();
+		break;
 	case MODE_TITLE:
 		SetCamera();
 		DrawTitle();
@@ -360,7 +367,7 @@ char* GetDebugStr(void)
 
 void SetMode(int mode) {
 	g_Mode = mode;
-
+	UninitIntro();
 
 	// タイトル画面の終了処理
 	UninitTitle();
@@ -372,6 +379,9 @@ void SetMode(int mode) {
 	UninitResult();
 
 	switch (g_Mode) {
+	case MODE_INTRO:
+		InitIntro();
+
 	case MODE_TITLE:
 		InitTitle();
 		PlaySound(SOUND_LABEL_BGM_title);
