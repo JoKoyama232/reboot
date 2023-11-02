@@ -149,20 +149,19 @@ void UpdateTitleTex(void)
 	int x = GetMousePosX();
 	int y = GetMousePosY();
 	DWORD time = timeGetTime() - timer;
+	PrintDebugProc((char*)"Timer = %d\n", time);
 	for (int i = 0; i < BUTTON_MAX; i++)
 	{
 		HWND windowHandle = GetForegroundWindow(); // ウィンドウのハンドルを取得
-		if (windowHandle) continue;
-
 		RECT windowRect;
-		if (!GetWindowRect(windowHandle, &windowRect)) continue; // ウィンドウの位置情報を取得
+		GetWindowRect(windowHandle, &windowRect);// ウィンドウの位置情報を取得
 
 		// マウルの位置が画像に当たっているかどうかの判定
-		if (time > 1000 ||
-			!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) ||
+		if (time > 1000 &&
+			(!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) ||
 			!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) ||
 			!(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) ||
-			!(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2))
+			!(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2)))
 		{
 			//マウスが画像の範囲外なら点滅せずに表示
 			g_Button[i].alpha = 1.0f;
@@ -174,25 +173,24 @@ void UpdateTitleTex(void)
 			g_Button[i].alpha = time * 0.001f;
 			alpha = time * 0.001f;
 		}
+		else if (g_Button[i].flag_alpha == true)
+		{
+			g_Button[i].alpha -= 0.02f;
+			if (g_Button[i].alpha <= 0.0f)
+			{
+				g_Button[i].alpha = 0.0f;
+				g_Button[i].flag_alpha = false;
+			}
+		}
 		else
-			if (g_Button[i].flag_alpha == true)
+		{
+			g_Button[i].alpha += 0.02f;
+			if (g_Button[i].alpha >= 1.0f)
 			{
-				g_Button[i].alpha -= 0.02f;
-				if (g_Button[i].alpha <= 0.0f)
-				{
-					g_Button[i].alpha = 0.0f;
-					g_Button[i].flag_alpha = false;
-				}
+				g_Button[i].alpha = 1.0f;
+				g_Button[i].flag_alpha = true;
 			}
-			else
-			{
-				g_Button[i].alpha += 0.02f;
-				if (g_Button[i].alpha >= 1.0f)
-				{
-					g_Button[i].alpha = 1.0f;
-					g_Button[i].flag_alpha = true;
-				}
-			}
+		}
 
 		if (g_Button[i].flag_sound == true)
 		{

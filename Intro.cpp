@@ -147,7 +147,7 @@ void UpdateIntro(void)
 {
 	DWORD time = timeGetTime() - timer;
 	if (GetKeyboardTrigger(DIK_RETURN)) { time = 8001; }
-	PrintDebugProc((char*)"Timer = %d", time);
+	PrintDebugProc((char*)"Timer = %d\n", time);
 
 	if (time > 8000)
 	{
