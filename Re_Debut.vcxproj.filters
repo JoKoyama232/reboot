@@ -1,124 +1,130 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="camera.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="debugproc.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="fade.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="model.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="sound.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="sprite.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="title.cpp">
-      <Filter>ソースファイル\title</Filter>
-    </ClCompile>
     <ClCompile Include="title_tex.cpp">
-      <Filter>ソースファイル\title</Filter>
-    </ClCompile>
-    <ClCompile Include="result.cpp">
-      <Filter>ソースファイル\result</Filter>
-    </ClCompile>
-    <ClCompile Include="result_tex.cpp">
-      <Filter>ソースファイル\result</Filter>
-    </ClCompile>
-    <ClCompile Include="clock.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>ソースファイル\game</Filter>
+      <Filter>ソースファイル\Title</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソースファイル\game</Filter>
+      <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="bullet.cpp">
-      <Filter>ソースファイル\game</Filter>
+      <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="result.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="result_tex.cpp">
+      <Filter>ソースファイル\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="clock.cpp">
+      <Filter>ソースファイル\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="debugproc.cpp">
+      <Filter>ソースファイル\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>ソースファイル\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>ソースファイル\Tool</Filter>
     </ClCompile>
     <ClCompile Include="Quaternion.cpp">
-      <Filter>ソースファイル</Filter>
+      <Filter>ソースファイル\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>ソースファイル\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="sound.cpp">
+      <Filter>ソースファイル\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite.cpp">
+      <Filter>ソースファイル\Tool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="debugproc.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="fade.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Skybox.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="sound.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="sprite.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="title.h">
-      <Filter>ヘッダーファイル\title</Filter>
     </ClInclude>
     <ClInclude Include="WorldSpaceClass.h">
       <Filter>ヘッダーファイル\Class</Filter>
     </ClInclude>
     <ClInclude Include="title_tex.h">
-      <Filter>ヘッダーファイル\title</Filter>
-    </ClInclude>
-    <ClInclude Include="result.h">
-      <Filter>ヘッダーファイル\result</Filter>
+      <Filter>ヘッダーファイル\Title</Filter>
     </ClInclude>
     <ClInclude Include="result_tex.h">
-      <Filter>ヘッダーファイル\result</Filter>
-    </ClInclude>
-    <ClInclude Include="clock.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>ヘッダーファイル\game</Filter>
+      <Filter>ヘッダーファイル\Result</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ヘッダーファイル\game</Filter>
+      <Filter>ヘッダーファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
-      <Filter>ヘッダーファイル\game</Filter>
+      <Filter>ヘッダーファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="result.h">
+      <Filter>ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="title.h">
+      <Filter>ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro.h">
+      <Filter>ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>ヘッダーファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="clock.h">
+      <Filter>ヘッダーファイル\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="debugproc.h">
+      <Filter>ヘッダーファイル\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>ヘッダーファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>ヘッダーファイル\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>ヘッダーファイル\Tool</Filter>
     </ClInclude>
     <ClInclude Include="Quaternion.h">
-      <Filter>ヘッダーファイル</Filter>
+      <Filter>ヘッダーファイル\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>ヘッダーファイル\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>ヘッダーファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite.h">
+      <Filter>ヘッダーファイル\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="sound.h">
+      <Filter>ヘッダーファイル\Tool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -128,26 +134,44 @@
     <Filter Include="ヘッダーファイル">
       <UniqueIdentifier>{d4554b00-07a7-40de-8b44-3f17f1194837}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソースファイル\title">
-      <UniqueIdentifier>{c4bfe325-f974-4790-bb48-d0fb5a00b060}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダーファイル\title">
-      <UniqueIdentifier>{ee906773-a0ea-4033-a5af-a2f5cf4d98c0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダーファイル\Class">
       <UniqueIdentifier>{0a2efa72-ab1f-42f1-9721-2e877cbef18c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソースファイル\result">
-      <UniqueIdentifier>{40de05c3-cd61-4c27-b6bd-ffb136b1f089}</UniqueIdentifier>
+    <Filter Include="ソースファイル\Scene">
+      <UniqueIdentifier>{02a27ffa-722a-4fdd-af02-5640f9787b17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダーファイル\result">
+    <Filter Include="ヘッダーファイル\Scene">
+      <UniqueIdentifier>{39dc9b69-af46-4c0b-ab18-4eba73082496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Object">
+      <UniqueIdentifier>{990d4953-4349-4c5e-9bd4-957926b64c44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Object">
+      <UniqueIdentifier>{ddf52e1c-9cd7-4251-8092-48e116986726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Game">
+      <UniqueIdentifier>{a5059cd6-f2d5-4f16-b53c-cd0039194881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Result">
+      <UniqueIdentifier>{503b3ddc-39c0-4ed9-8445-92b3f933c333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Title">
+      <UniqueIdentifier>{c4bfe325-f974-4790-bb48-d0fb5a00b060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Game">
+      <UniqueIdentifier>{90df25dc-61de-4ee8-a30c-64f246dded67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Result">
       <UniqueIdentifier>{c0fbe3ff-749a-4e22-9516-76d87b9f230c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソースファイル\game">
-      <UniqueIdentifier>{5e16df87-9eac-4f4c-8402-1f579b01213d}</UniqueIdentifier>
+    <Filter Include="ヘッダーファイル\Title">
+      <UniqueIdentifier>{ee906773-a0ea-4033-a5af-a2f5cf4d98c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダーファイル\game">
-      <UniqueIdentifier>{90df25dc-61de-4ee8-a30c-64f246dded67}</UniqueIdentifier>
+    <Filter Include="ソースファイル\Tool">
+      <UniqueIdentifier>{e8a9b83a-bcf7-4b93-b2aa-855880c8a88b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Tool">
+      <UniqueIdentifier>{78748821-8015-4279-8849-054b82b614c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
