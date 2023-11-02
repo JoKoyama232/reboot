@@ -277,7 +277,7 @@ void Update(void)
 	switch (g_Mode) {
 	case MODE_INTRO:
 		UpdateIntro();
-
+		break;
 	case MODE_TITLE:
 		UpdateTitle();
 		break;
@@ -381,7 +381,7 @@ void SetMode(int mode) {
 	switch (g_Mode) {
 	case MODE_INTRO:
 		InitIntro();
-
+		break;
 	case MODE_TITLE:
 		InitTitle();
 		PlaySound(SOUND_LABEL_BGM_title);
