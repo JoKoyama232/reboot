@@ -55,6 +55,9 @@
     <ClCompile Include="bullet.cpp">
       <Filter>ソースファイル\game</Filter>
     </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="bullet.h">
       <Filter>ヘッダーファイル\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
