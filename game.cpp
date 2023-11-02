@@ -16,6 +16,7 @@
 
 #include "clock.h"
 #include "Player.h"
+#include "debris.h"
 #include "bullet.h"
 //*****************************************************************************
 // マクロ定義
@@ -44,6 +45,8 @@ HRESULT InitGame(void)
 {
 	InitPlayer();
 
+	InitDebris();
+
 	//弾(モチ)の初期化
 	InitBullet();
 
@@ -67,6 +70,8 @@ void UninitGame(void)
 {
 	UninitPlayer();
 
+	UninitDebris();
+
 	//弾(モチ)の終了処理
 	UninitBullet();
 
@@ -80,6 +85,8 @@ void UninitGame(void)
 void UpdateGame(void)
 {
 	UpdatePlayer();
+
+	UpdateDebris();
 
 	//弾(モチ)の更新処理
 	UpdateBullet();
@@ -102,6 +109,8 @@ void DrawGame(void)
 	SetCamera();
 	
 	DrawPlayer();
+
+	DrawDebris();
 
 	//弾(モチ)の描画処理
 	DrawBullet();

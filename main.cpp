@@ -16,6 +16,7 @@
 #include "clock.h"
 #include "game.h"
 #include "Player.h"
+#include "debris.h"
 
 //ÉVÅ[Éì
 
