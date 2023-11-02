@@ -55,6 +55,9 @@
     <ClCompile Include="bullet.cpp">
       <Filter>ソースファイル\game</Filter>
     </ClCompile>
+    <ClCompile Include="debris.cpp">
+      <Filter>ソースファイル\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -112,6 +115,9 @@
       <Filter>ヘッダーファイル\game</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
+      <Filter>ヘッダーファイル\game</Filter>
+    </ClInclude>
+    <ClInclude Include="debris.h">
       <Filter>ヘッダーファイル\game</Filter>
     </ClInclude>
   </ItemGroup>
