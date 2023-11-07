@@ -48,7 +48,7 @@ static bool						g_Use;						// true:使っている  false:未使用
 static float					g_w, g_h;					// 幅と高さ
 static XMFLOAT3					g_Pos;						// ポリゴンの座標
 static int						g_TexNo;					// テクスチャ番号
-
+static int selector = 0;
 static BOOL						g_Load = FALSE;
 static BUTTON					g_Button[BUTTON_MAX];
 
@@ -99,7 +99,7 @@ HRESULT InitResultTex(void)
 
 		g_Button[i].alpha = 1.0f;
 		g_Button[i].flag_alpha = true;
-		g_Button[i].flag_sound = true;
+		g_Button[i].flag_sound = false;
 	}
 
 	//// BGM再生
@@ -142,75 +142,78 @@ void UpdateResultTex(void)
 	int x = GetMousePosX();
 	int y = GetMousePosY();
 
+	HWND windowHandle = GetForegroundWindow(); // ウィンドウのハンドルを取得
+	RECT windowRect;
+	GetWindowRect(windowHandle, &windowRect);// ウィンドウの位置情報を取得
 	for (int i = 0; i < BUTTON_MAX; i++)
 	{
-		HWND windowHandle = GetForegroundWindow(); // ウィンドウのハンドルを取得
-		if (windowHandle != NULL)
+		// マウルの位置が画像に当たっているかどうかの判定
+		if ((x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) &&
+			(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) &&
+			(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) &&
+			(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2))
 		{
-			RECT windowRect;
-			if (GetWindowRect(windowHandle, &windowRect)) // ウィンドウの位置情報を取得
+
+			//点滅させる
+			if (g_Button[i].flag_alpha == true)
 			{
-				// マウルの位置が画像に当たっているかどうかの判定
-				if ((x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) &&
-					(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) &&
-					(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) &&
-					(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2))
+				g_Button[i].alpha -= 0.01f;
+				if (g_Button[i].alpha <= 0.0f)
 				{
-					//点滅させる
-					if (g_Button[i].flag_alpha == true)
-					{
-						g_Button[i].alpha -= 0.02f;
-						if (g_Button[i].alpha <= 0.0f)
-						{
-							g_Button[i].alpha = 0.0f;
-							g_Button[i].flag_alpha = false;
-						}
-					}
-					else
-					{
-						g_Button[i].alpha += 0.02f;
-						if (g_Button[i].alpha >= 1.0f)
-						{
-							g_Button[i].alpha = 1.0f;
-							g_Button[i].flag_alpha = true;
-						}
-					}
-					if (g_Button[i].flag_sound == true)
-					{
-						PlaySound(SOUND_LABEL_SE_ZIPPO);
-						g_Button[i].flag_sound = false;
-					}
-					//マウスの左ボタンが押されたら
-					if (GetKeyState(VK_LBUTTON) & 0x80)
-					{
-						if (i == 0)
-						{
-							SetFade(FADE_OUT, MODE_TITLE);
-						}
-						else if (i == 1)
-						{
-							int id = MessageBox(NULL, "ゲームを終了しますか？", "", MB_YESNO | MB_ICONQUESTION);
-							switch (id)
-							{
-							case IDYES:		// ゲームを終了
-								exit(-1);
-								break;
-							case IDNO:		// 何もせずにタイトルに戻る
-
-								break;
-							}
-						}
-					}
-				}
-
-				else //マウスが画像の範囲外なら点滅せずに表示
-				{
-					g_Button[i].alpha = 1.0f;
-					g_Button[i].flag_sound = true;
+					g_Button[i].alpha = 0.0f;
+					g_Button[i].flag_alpha = false;
 				}
 			}
+			else
+			{
+				g_Button[i].alpha += 0.01f;
+				if (g_Button[i].alpha >= 1.0f)
+				{
+					g_Button[i].alpha = 1.0f;
+					g_Button[i].flag_alpha = true;
+				}
+			}
+
+			if (g_Button[i].flag_sound == true)
+			{
+				PlaySound(SOUND_LABEL_SE_ZIPPO);
+				g_Button[i].flag_sound = false;
+			}
+
+			//マウスの左ボタンが押されたら
+			if (GetKeyState(VK_LBUTTON) & 0x80)
+			{
+				switch (i) {
+				case 0:
+					SetFade(FADE_OUT, MODE_GAME);
+					//PlaySound();
+					break;
+				case 1:
+				{
+					int id = MessageBox(NULL, "ゲームを終了しますか？", "", MB_YESNO | MB_ICONQUESTION);
+					switch (id)
+					{
+					case IDYES:		// ゲームを終了
+						exit(-1);
+						break;
+					case IDNO:		// 何もせずにタイトルに戻る
+
+						break;
+					}
+				}
+				break;
+				}
+			}
+
 		}
+		else //マウスが画像の範囲外なら点滅せずに表示
+		{
+			g_Button[i].alpha = 1.0f;
+			g_Button[i].flag_sound = true;
+		}
+
 	}
+	
 
 	if (GetKeyboardTrigger(DIK_RETURN))
 	{// Enter押したら、ステージを切り替える
