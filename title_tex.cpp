@@ -106,7 +106,7 @@ HRESULT InitTitleTex(void)
 
 		g_Button[i].alpha = 1.0f;
 		g_Button[i].flag_alpha = true;
-		g_Button[i].flag_sound = true;
+		g_Button[i].flag_sound = false;
 
 	}
 
@@ -168,7 +168,13 @@ void UpdateTitleTex(void)
 			g_Button[i].flag_sound = true;
 		}
 		else {
-			selector = i;
+			selector = i;			
+			if (g_Button[i].flag_sound == true)
+			{
+				PlaySound(SOUND_LABEL_SE_ZIPPO);
+				g_Button[i].flag_sound = false;
+			}
+
 		}
 
 		//点滅させる
@@ -197,11 +203,6 @@ void UpdateTitleTex(void)
 			}
 		}
 
-		if (g_Button[i].flag_sound == true)
-		{
-			PlaySound(SOUND_LABEL_SE_ZIPPO);
-			g_Button[i].flag_sound = false;
-		}
 	}
 	//マウスの左ボタンが押されたら
 	if (GetKeyState(VK_LBUTTON) & 0x80)
@@ -224,8 +225,6 @@ void UpdateTitleTex(void)
 					break;
 				}
 			}
-			break;
-		case 2:
 			break;
 		}
 	}
