@@ -10,6 +10,8 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+BOOL CollisionBC(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 r1, XMFLOAT3 r2);
+
 HRESULT InitGame(void);
 void UninitGame(void);
 void UpdateGame(void);
