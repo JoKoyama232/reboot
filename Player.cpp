@@ -12,6 +12,7 @@
 
 #include "Player.h"
 #include "sprite.h"
+#include "sound.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -124,14 +125,32 @@ void UpdatePlayer(void) {
 	{	// 前
 		g_Player.speed = VALUE_MOVE;
 		g_Player.direction = 0.0f;
+		if ((GetKeyboardPress(DIK_A)) || (IsButtonPressed(0, BUTTON_LEFT)))
+		{
+			g_Player.direction = -XM_PI * 1 / 4;
+		}
+		else if ((GetKeyboardPress(DIK_D)) || (IsButtonPressed(0, BUTTON_RIGHT)))
+		{
+			g_Player.direction = XM_PI * 1 / 4;
+		}
+
 	}
 	else if (GetKeyboardPress(DIK_S) || IsButtonTriggered(0, BUTTON_DOWN))
 	{	// 後ろ
 		g_Player.speed = VALUE_MOVE;
 		g_Player.direction = XM_PI;
+		if ((GetKeyboardPress(DIK_A)) || (IsButtonPressed(0, BUTTON_LEFT)))
+		{
+			g_Player.direction = -XM_PI * 3 / 4;
+		}
+		else if ((GetKeyboardPress(DIK_D)) || (IsButtonPressed(0, BUTTON_RIGHT)))
+		{
+			g_Player.direction = XM_PI * 3 / 4;
+		}
+
 	}
 
-	//スタミナゲージ処理
+	//スタミナゲージ処理&移動中のSE処理
 	if (g_Player.speed == VALUE_MOVE)
 	{
 		g_Player.str -= 0.5f;
@@ -139,6 +158,7 @@ void UpdatePlayer(void) {
 		{
 			g_Player.str = 0;
 		}
+		//PlaySound(SOUND_LABEL_SE_?????); //ブースター噴射音
 	}
 	else
 	{
@@ -156,8 +176,8 @@ void UpdatePlayer(void) {
 
 	// 入力のあった方向へプレイヤーを向かせて移動させる
 	// プレイヤーの向いている方向を保存
-	float deltaX = sinf(rotation.y) * g_Player.speed * deltaTime;
-	float deltaZ = cosf(rotation.y) * g_Player.speed * deltaTime;
+	float deltaX = sinf(rotation.y) * g_Player.speed;
+	float deltaZ = cosf(rotation.y) * g_Player.speed;
 	g_Player.speed *= 0.2f;
 	//移動を反映
 	position.x += deltaX;
@@ -172,9 +192,10 @@ void UpdatePlayer(void) {
 	g_Player.object.SetRotation(rotation);
 
 	// 弾発射処理
-	if (GetKeyboardTrigger(DIK_SPACE))
+	if ((GetKeyboardTrigger(DIK_SPACE)) || IsMouseLeftTriggered())
 	{
  		SetBullet(position, camRotation);
+		//PlaySound(SOUND_LABEL_SE_?????); //モチ発射音
 	}
 	PrintDebugProc((char*)"Player Information\nMovement:   W\n            A  S  D\n  Shift    Space\nPosition:(%f, %f, %f)\nRotation:(%f, %f, %f)\n", position.x, position.y, position.z, rotation.x, rotation.y, rotation.z);
 

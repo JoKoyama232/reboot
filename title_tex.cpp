@@ -157,7 +157,7 @@ void UpdateTitleTex(void)
 		GetWindowRect(windowHandle, &windowRect);// ウィンドウの位置情報を取得
 
 		// マウルの位置が画像に当たっているかどうかの判定
-		if (time > 1000 &&
+		if (time > 0 &&
 			(!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) ||
 				!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) ||
 				!(y + 15 > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) ||
@@ -259,7 +259,6 @@ void DrawTitleTex(void)
 		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
 
 		// １枚のポリゴンの頂点とテクスチャ座標を設定
-	//	SetSprite(g_VertexBuffer, g_Pos.x, g_Pos.y, TEXTURE_WIDTH_LOGO, TEXTURE_HEIGHT_LOGO, 0.0f, 0.0f, 1.0f, 1.0f);
 		SetSpriteColor(g_VertexBuffer, g_Pos.x, g_Pos.y - 150,
 			TEXTURE_WIDTH_LOGO * 2.5f, TEXTURE_HEIGHT_LOGO * 2.5f,
 			0.0f, 0.0f, 1.0f, 1.0f,
