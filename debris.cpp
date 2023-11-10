@@ -21,7 +21,6 @@
 
 #define TEXTURE_MAX			(1)								// テクスチャの数
 
-static float		roty = 0.0f;
 
 //*****************************************************************************
 // グローバル変数
@@ -47,7 +46,7 @@ HRESULT InitDebris(void) {
 		GetModelDiffuse(&g_Debris[i].object.modelInfo, g_Debris[i].object.modelDiffuse);
 		g_Debris[i].object.load = true;
 
-		g_Debris[i].object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
+		g_Debris[i].object.SetPosition(XMFLOAT3{ 0.0f+i*100.0f, 0.0f, 100.0f });
 		g_Debris[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Debris[i].object.SetScale(XMFLOAT3{ 0.1f, 0.1f, 0.1f });
 		g_Debris[i].str = 100.0f;
@@ -56,7 +55,6 @@ HRESULT InitDebris(void) {
 		g_Debris[i].speed = 0.0f;			// 移動スピードクリア
 		g_Debris[i].use = true;
 		g_LastUpdate = 0.0f;
-		roty = 0.0f;
 
 	}
 		return S_OK;
@@ -85,6 +83,14 @@ void UpdateDebris(void) {
 		XMFLOAT3 position = g_Debris[i].object.GetPositionFloat();
 		XMFLOAT3 rotation = g_Debris[i].object.GetRotationFloat();
 
+		if (g_Debris[i].use)
+		{
+			
+		}
+
+		// 移動回転を反映
+		g_Debris[i].object.SetPosition(position);
+		g_Debris[i].object.SetRotation(rotation);
 	}
 
 }
