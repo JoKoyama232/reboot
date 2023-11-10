@@ -22,8 +22,8 @@
 #define BUTTON_MAX					(3)
 
 
-#define TEXTURE_WIDTH_LOGO			(240)			// ロゴサイズ
-#define TEXTURE_HEIGHT_LOGO			(40)			// 
+#define TEXTURE_WIDTH_LOGO			(360)			// ロゴサイズ
+#define TEXTURE_HEIGHT_LOGO			(60)			// 
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -102,7 +102,7 @@ HRESULT InitTitleTex(void)
 		g_Button[i].texNo = 1 + i;
 		g_Button[i].h = TEXTURE_HEIGHT;
 		g_Button[i].w = TEXTURE_WIDTH;
-		g_Button[i].pos = XMFLOAT3(g_Button[i].w / 2, g_Button[i].h / 2 + 100 + (50.0f * i), 0.0f);
+		g_Button[i].pos = XMFLOAT3(g_Button[i].w / 2, g_Button[i].h / 2 + 125 + (75.0f * i), 0.0f);
 
 		g_Button[i].alpha = 1.0f;
 		g_Button[i].flag_alpha = true;
@@ -157,11 +157,11 @@ void UpdateTitleTex(void)
 		GetWindowRect(windowHandle, &windowRect);// ウィンドウの位置情報を取得
 
 		// マウルの位置が画像に当たっているかどうかの判定
-		if (time > 1000 &&
+		if (time > 0 &&
 			(!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) ||
-			!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) ||
-			!(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) ||
-			!(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2)))
+				!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) ||
+				!(y + 15 > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) ||
+				!(y + 15 < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2)))
 		{
 			//マウスが画像の範囲外なら点滅せずに表示
 			g_Button[i].alpha = 1.0f;
@@ -259,8 +259,7 @@ void DrawTitleTex(void)
 		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
 
 		// １枚のポリゴンの頂点とテクスチャ座標を設定
-	//	SetSprite(g_VertexBuffer, g_Pos.x, g_Pos.y, TEXTURE_WIDTH_LOGO, TEXTURE_HEIGHT_LOGO, 0.0f, 0.0f, 1.0f, 1.0f);
-		SetSpriteColor(g_VertexBuffer, g_Pos.x, g_Pos.y - 50.0f,
+		SetSpriteColor(g_VertexBuffer, g_Pos.x, g_Pos.y - 150,
 			TEXTURE_WIDTH_LOGO * 2.5f, TEXTURE_HEIGHT_LOGO * 2.5f,
 			0.0f, 0.0f, 1.0f, 1.0f,
 			XMFLOAT4(1.0f, 1.0f, 1.0f, alpha));
