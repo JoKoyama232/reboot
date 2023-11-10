@@ -72,7 +72,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	DWORD dwFrameCount;
 
 	WNDCLASSEX	wcex = {
-		sizeof(WNDCLASSEX),
+ 		sizeof(WNDCLASSEX),
 		CS_CLASSDC,
 		WndProc,
 		0,

@@ -38,6 +38,7 @@ void CheckHit(void);
 static bool	g_bPause = true;	// ポーズON/OFF
 static RECT				g_windowPos;
 
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -93,10 +94,13 @@ void UpdateGame(void)
 
 	// 時計の更新処理
 	UpdateClock();
+
+	//当たり判定
+	CheckHit();
 }
 
 //=============================================================================
-// 更新処理
+// 描画処理
 //=============================================================================
 void DrawGame(void)
 {
@@ -143,6 +147,72 @@ void DrawGame(void)
 //=============================================================================
 void CheckHit(void)
 {
+	XMFLOAT3 p_pos, d_pos, b_pos, p_size, d_size, b_size;
+	PLAYER* player = GetPlayer();
+	DEBRIS* debris = GetDebris();
+	BULLET* bullet = GetBullet();
+	p_pos = GetPlayer()->object.GetPositionFloat();
+	p_size = GetPlayer()->object.GetScaleFloat();
+
+	//プレイヤーとデブリ
+	for (int i = 0; i < MAX_DEBRIS; i++)
+	{
+		if ((player->use == false) && (debris[i].use == false))
+			continue;
+		d_pos = debris[i].object.GetPositionFloat();
+		d_size = debris[i].object.GetScaleFloat();
+		if (CollisionBC(p_pos, d_pos, p_size, d_size))
+		{
+			debris[i].use = false;
+		}
+	}
+
+	//トリモチ(弾丸)とデブリ
+	for (int b = 0; b < MAX_BULLET; b++)
+	for (int d = 0; d < MAX_DEBRIS; d++)
+	{
+		//弾丸とデブリの座標とsizeをゲット
+		b_pos = bullet[b].object.GetPositionFloat();
+		b_size = bullet[b].object.GetScaleFloat();
+		d_pos = debris[d].object.GetPositionFloat();
+		d_size = debris[d].object.GetScaleFloat();
+		
+		if ((bullet[b].use == false) && (debris[d].use == false))
+			continue;
+		if (CollisionBC(b_pos, d_pos, b_size, d_size))
+		{
+			debris[d].use = false;
+		}
+
+	}
 
 
+	
+}
+
+
+
+
+//=============================================================================
+// BCによる当たり判定処理
+// サイズは半径
+// 戻り値：当たってたらTRUE
+//=============================================================================
+BOOL CollisionBC(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 r1, XMFLOAT3 r2)
+{
+	BOOL ans = FALSE;						// 外れをセットしておく
+
+	float len = (r1.x + r2.x) * (r1.z + r2.z);		// 半径を2乗した物
+	XMVECTOR temp = XMLoadFloat3(&pos1) - XMLoadFloat3(&pos2);
+	temp = XMVector3LengthSq(temp);			// 2点間の距離（2乗した物）
+	float lenSq = 0.0f;						// 型変換用float型変数の宣言と初期化
+	XMStoreFloat(&lenSq, temp);				// 比較処理のためにfloat型に型変換
+
+	// 半径を2乗した物より距離が短い？
+	if (len > lenSq)
+	{
+		ans = TRUE;	// 当たっている
+	}
+
+	return ans;
 }
