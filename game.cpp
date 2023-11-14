@@ -154,20 +154,6 @@ void CheckHit(void)
 	p_pos = GetPlayer()->object.GetPositionFloat();
 	p_size = GetPlayer()->object.GetScaleFloat();
 
-	//プレイヤーとデブリ
-	for (int i = 0; i < MAX_DEBRIS; i++)
-	{
-		if ((player->use == false) && (debris[i].use == false))
-			continue;
-		d_pos = debris[i].object.GetPositionFloat();
-		d_size = debris[i].object.GetScaleFloat();
-		if (CollisionBC(p_pos, d_pos, p_size, d_size))
-		{
-			debris[i].use = false;
-		}
-	}
-
-	//トリモチ(弾丸)とデブリ
 	for (int b = 0; b < MAX_BULLET; b++)
 	for (int d = 0; d < MAX_DEBRIS; d++)
 	{
@@ -177,17 +163,31 @@ void CheckHit(void)
 		d_pos = debris[d].object.GetPositionFloat();
 		d_size = debris[d].object.GetScaleFloat();
 		
-		if ((bullet[b].use == false) && (debris[d].use == false))
+		//プレイヤーとデブリ
+		if ((player->use == false) && (debris[d].use == false))
 			continue;
-		if (CollisionBC(b_pos, d_pos, b_size, d_size))
+		d_pos = debris[d].object.GetPositionFloat();
+		d_size = debris[d].object.GetScaleFloat();
+		if (CollisionBC(p_pos, d_pos, p_size, d_size))
 		{
 			debris[d].use = false;
 		}
 
+		//モチとデブリ
+		if ((bullet[b].use == false) && (debris[d].use == false))
+			continue;
+		if (CollisionBC(b_pos, d_pos, b_size, d_size))
+		{
+			bullet[b].spd = 0.0f;
+			if (CollisionBC(p_pos, b_pos, p_size, b_size))
+			{
+				bullet[b].use = false;
+				//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
+
+
+			}
+		}
 	}
-
-
-	
 }
 
 
