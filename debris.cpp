@@ -11,6 +11,7 @@
 
 #include "debris.h"
 #include "sprite.h"
+#include <time.h>
 
 //*****************************************************************************
 // マクロ定義
@@ -76,7 +77,6 @@ void UninitDebris(void) {
 
 void UpdateDebris(void) {
 	// デブリ変数取得
-
 	for (int i = 0; i < MAX_DEBRIS; i++)
 	{
 
@@ -85,7 +85,6 @@ void UpdateDebris(void) {
 
 		if (g_Debris[i].use)
 		{
-			
 		}
 
 		// 移動回転を反映

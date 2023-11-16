@@ -115,6 +115,11 @@ void DrawBullet(void)
 		mtxTranslate = XMMatrixTranslation(position.x, position.y, position.z);
 		mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
+		if (g_Bullet[b].object.GetParent())
+		{
+			mtxWorld = XMMatrixMultiply(mtxWorld,XMLoadFloat4x4(g_Bullet[b].object.GetParent()->GetWorldMatrixPointer()));
+		}
+
 		// ワールドマトリックスの設定
 		SetWorldMatrix(&mtxWorld);
 

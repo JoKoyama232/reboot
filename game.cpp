@@ -179,13 +179,17 @@ void CheckHit(void)
 		if (CollisionBC(b_pos, d_pos, b_size, d_size))
 		{
 			bullet[b].spd = 0.0f;
+			bullet[b].object.SetParent(&debris[d].object);
 			if (CollisionBC(p_pos, b_pos, p_size, b_size))
 			{
 				bullet[b].use = false;
+				bullet[b].spd = 1.0f;
 				//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
 
 
 			}
+
+			
 		}
 	}
 }
