@@ -15,9 +15,6 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define TEXTURE_WIDTH				(SCREEN_WIDTH)	// 背景サイズ
-#define TEXTURE_HEIGHT				(SCREEN_HEIGHT)	// 
-
 #define TEXTURE_MAX					(5)				// テクスチャの数
 #define BUTTON_MAX					(3)
 
@@ -88,9 +85,9 @@ HRESULT InitTitleTex(void)
 
 	// 変数の初期化
 	g_Use = true;
-	g_h = TEXTURE_HEIGHT;
-	g_w = TEXTURE_WIDTH;
-	g_Pos = XMFLOAT3(g_w / 2, g_h / 2, 0.0f);
+	g_h = SCREEN_HEIGHT;
+	g_w = SCREEN_WIDTH;
+	g_Pos = XMFLOAT3(g_w * 0.5f, g_h * 0.5f, 0.0f);
 	g_TexNo = 0;
 
 	alpha = 1.0f;
@@ -100,9 +97,9 @@ HRESULT InitTitleTex(void)
 	{
 		g_Button[i].use = false;
 		g_Button[i].texNo = 1 + i;
-		g_Button[i].h = TEXTURE_HEIGHT;
-		g_Button[i].w = TEXTURE_WIDTH;
-		g_Button[i].pos = XMFLOAT3(g_Button[i].w / 2, g_Button[i].h / 2 + 125 + (75.0f * i), 0.0f);
+		g_Button[i].h = g_h;
+		g_Button[i].w = g_w;
+		g_Button[i].pos = XMFLOAT3(g_Button[i].w * 0.5f, g_Button[i].h * 0.5f + 125 + (75.0f * i), 0.0f);
 
 		g_Button[i].alpha = 1.0f;
 		g_Button[i].flag_alpha = true;
@@ -158,10 +155,10 @@ void UpdateTitleTex(void)
 
 		// マウルの位置が画像に当たっているかどうかの判定
 		if (time > 0 &&
-			(!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) ||
-				!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) ||
-				!(y + 15 > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) ||
-				!(y + 15 < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2)))
+			(!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO *0.5f) ||
+				!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO * 0.5f) ||
+				!(y + 15 > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) ||
+				!(y + 15 < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f)))
 		{
 			//マウスが画像の範囲外なら点滅せずに表示
 			g_Button[i].alpha = 1.0f;
