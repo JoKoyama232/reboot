@@ -24,6 +24,7 @@ struct DEBRIS
 	float				str;
 	float				str_max;
 	float				str_flag;
+	float				size;
 	bool				use;
 	// 階層アニメーション用のメンバー変数(今は使わないかな？)
 	float				time;				// 線形補間用

@@ -42,6 +42,7 @@ HRESULT InitBullet(void)
 		g_Bullet[b].time = 0.0f;
 		g_Bullet[b].spd = 2.0f;
 		g_Bullet[b].use = false;
+		g_Bullet[b].size = BULLET_SIZE;
 
 
 	}
@@ -114,6 +115,11 @@ void DrawBullet(void)
 		XMFLOAT3 position = g_Bullet[b].object.GetPositionFloat();
 		mtxTranslate = XMMatrixTranslation(position.x, position.y, position.z);
 		mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
+
+		if (g_Bullet[b].object.GetParent())
+		{
+			mtxWorld = XMMatrixMultiply(mtxWorld,XMLoadFloat4x4(g_Bullet[b].object.GetParent()->GetWorldMatrixPointer()));
+		}
 
 		// ワールドマトリックスの設定
 		SetWorldMatrix(&mtxWorld);
