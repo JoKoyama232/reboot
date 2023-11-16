@@ -147,49 +147,48 @@ void DrawGame(void)
 //=============================================================================
 void CheckHit(void)
 {
-	XMFLOAT3 p_pos, d_pos, b_pos, p_size, d_size, b_size;
+	XMFLOAT3 p_pos, d_pos, b_pos;
 	PLAYER* player = GetPlayer();
 	DEBRIS* debris = GetDebris();
 	BULLET* bullet = GetBullet();
 	p_pos = GetPlayer()->object.GetPositionFloat();
-	p_size = GetPlayer()->object.GetScaleFloat();
 
 	for (int b = 0; b < MAX_BULLET; b++)
-	for (int d = 0; d < MAX_DEBRIS; d++)
 	{
-		//弾丸とデブリの座標とsizeをゲット
-		b_pos = bullet[b].object.GetPositionFloat();
-		b_size = bullet[b].object.GetScaleFloat();
-		d_pos = debris[d].object.GetPositionFloat();
-		d_size = debris[d].object.GetScaleFloat();
-		
-		//プレイヤーとデブリ
-		if ((player->use == false) && (debris[d].use == false))
-			continue;
-		d_pos = debris[d].object.GetPositionFloat();
-		d_size = debris[d].object.GetScaleFloat();
-		if (CollisionBC(p_pos, d_pos, p_size, d_size))
+		for (int d = 0; d < MAX_DEBRIS; d++)
 		{
-			debris[d].use = false;
-		}
+			//弾丸とデブリの座標をゲット
+			b_pos = bullet[b].object.GetPositionFloat();
+			d_pos = debris[d].object.GetPositionFloat();
 
-		//モチとデブリ
-		if ((bullet[b].use == false) && (debris[d].use == false))
-			continue;
-		if (CollisionBC(b_pos, d_pos, b_size, d_size))
-		{
-			bullet[b].spd = 0.0f;
-			bullet[b].object.SetParent(&debris[d].object);
-			if (CollisionBC(p_pos, b_pos, p_size, b_size))
+			//プレイヤーとデブリ
+			if ((player->use == false) || (debris[d].use == false))
+				continue;
+			if (CollisionBC(p_pos, d_pos, player->size, debris[d].size))
 			{
-				bullet[b].use = false;
-				bullet[b].spd = 1.0f;
-				//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
+				debris[d].use = false;
+			}
+
+			//モチとデブリ
+			if ((bullet[b].use == false) || (debris[d].use == false))
+				continue;
+			if (CollisionBC(b_pos, d_pos, bullet[b].size, debris[d].size))
+			{
+				bullet[b].spd = 0.0f;
+				bullet[b].object.SetParent(&debris[d].object);
+				if (CollisionBC(p_pos, b_pos, player->size, bullet[b].size))
+				{
+					bullet[b].use = false;
+					bullet[b].spd = 1.0f;
+					bullet[b].object.SetParent(NULL);
+
+					//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
+
+
+				}
 
 
 			}
-
-			
 		}
 	}
 }
@@ -202,11 +201,11 @@ void CheckHit(void)
 // サイズは半径
 // 戻り値：当たってたらTRUE
 //=============================================================================
-BOOL CollisionBC(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 r1, XMFLOAT3 r2)
+BOOL CollisionBC(XMFLOAT3 pos1, XMFLOAT3 pos2, float r1, float r2)
 {
 	BOOL ans = FALSE;						// 外れをセットしておく
 
-	float len = (r1.x + r2.x) * (r1.z + r2.z);		// 半径を2乗した物
+	float len = (r1 + r2) * (r1 + r2);		// 半径を2乗した物
 	XMVECTOR temp = XMLoadFloat3(&pos1) - XMLoadFloat3(&pos2);
 	temp = XMVector3LengthSq(temp);			// 2点間の距離（2乗した物）
 	float lenSq = 0.0f;						// 型変換用float型変数の宣言と初期化

@@ -75,6 +75,7 @@ HRESULT InitPlayer(void) {
 	g_Player.time = 0.0f;
 	g_Player.speed = 0.0f;			// 移動スピードクリア
 	g_Player.use = true;
+	g_Player.size = PLAYER_SIZE;
 	g_LastUpdate = 0.0f;
 	roty = 0.0f;
 

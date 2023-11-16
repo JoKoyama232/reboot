@@ -42,6 +42,7 @@ HRESULT InitBullet(void)
 		g_Bullet[b].time = 0.0f;
 		g_Bullet[b].spd = 2.0f;
 		g_Bullet[b].use = false;
+		g_Bullet[b].size = BULLET_SIZE;
 
 
 	}

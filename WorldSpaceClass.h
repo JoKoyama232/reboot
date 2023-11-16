@@ -55,5 +55,6 @@ public:
 	XMVECTOR GetScaleVector(void) { return XMLoadFloat3(&scale); }
 	WorldSpace* GetParent(void) {
 		if (parent != NULL) { return parent; }
+		return NULL;
 	}
 };
