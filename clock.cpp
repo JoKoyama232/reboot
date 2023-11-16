@@ -13,8 +13,8 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define TEXTURE_WIDTH				(16)	// キャラサイズ
-#define TEXTURE_HEIGHT				(32)	// 
+#define TEXTURE_WIDTH				(32)	// キャラサイズ
+#define TEXTURE_HEIGHT				(64)	// 
 #define TEXTURE_MAX					(1)		// テクスチャの数
 #define CLOCK_MAX			(100)		// 制限時間(秒数)
 #define CLOCK_DIGIT			(4)			// 桁数
@@ -80,7 +80,7 @@ HRESULT InitClock(void)
 	g_Use = true;
 	g_w = TEXTURE_WIDTH + 10;
 	g_h = TEXTURE_HEIGHT + 10;
-	g_Pos = { 100.0f, 20.0f, 0.0f };
+	g_Pos = { 200.0f, 40.0f, 0.0f };
 	g_TexNo = 0;
 
 	g_Clock = CLOCK_MAX;	// スコアの初期化

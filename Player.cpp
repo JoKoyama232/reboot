@@ -157,6 +157,7 @@ void UpdatePlayer(void) {
 		if (g_Player.str <= 0)
 		{
 			g_Player.str = 0;
+			g_Player.speed = 0.1f;
 		}
 		//PlaySound(SOUND_LABEL_SE_?????); //ブースター噴射音
 	}
