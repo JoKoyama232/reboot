@@ -15,8 +15,6 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define TEXTURE_WIDTH				(SCREEN_WIDTH)	// 背景サイズ
-#define TEXTURE_HEIGHT				(SCREEN_HEIGHT)	// 
 #define TEXTURE_MAX					(6)				// テクスチャの数
 #define BUTTON_MAX					(3)
 
@@ -85,17 +83,17 @@ HRESULT InitResultTex(void)
 
 	// 変数の初期化
 	g_Use = true;
-	g_w = TEXTURE_WIDTH;
-	g_h = TEXTURE_HEIGHT;
-	g_Pos = { g_w / 2, 50.0f, 0.0f };
+	g_w = SCREEN_WIDTH;
+	g_h = SCREEN_HEIGHT;
+	g_Pos = { g_w * 0.5f, 50.0f, 0.0f };
 	g_TexNo = 0;
 
 	for (int i = 0; i < BUTTON_MAX; i++)
 	{
 		g_Button[i].texNo = 1 + i;
-		g_Button[i].h = TEXTURE_HEIGHT;
-		g_Button[i].w = TEXTURE_WIDTH;
-		g_Button[i].pos = XMFLOAT3(g_Button[i].w / 2, g_Button[i].h / 2 + 100 + (100.0f * i), 0.0f);
+		g_Button[i].h = SCREEN_HEIGHT;
+		g_Button[i].w = SCREEN_WIDTH;
+		g_Button[i].pos = XMFLOAT3(g_Button[i].w * 0.5f, g_Button[i].h * 0.5f + 100.0f * (i + 1), 0.0f);
 
 		g_Button[i].alpha = 1.0f;
 		g_Button[i].flag_alpha = true;
@@ -148,10 +146,10 @@ void UpdateResultTex(void)
 	for (int i = 0; i < BUTTON_MAX; i++)
 	{
 		// マウルの位置が画像に当たっているかどうかの判定
-		if ((x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO / 2) &&
-			(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO / 2) &&
-			(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO / 2) &&
-			(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO / 2))
+		if ((x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO * 0.5f) &&
+			(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO * 0.5f) &&
+			(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) &&
+			(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f))
 		{
 
 			//点滅させる

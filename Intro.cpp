@@ -15,9 +15,6 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define TEXTURE_WIDTH				(SCREEN_WIDTH)	// 背景サイズ
-#define TEXTURE_HEIGHT				(SCREEN_HEIGHT)	// 
-#define TEXTURE_MAX					(4)				// テクスチャの数
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -28,16 +25,16 @@ enum IntroTexture
 	introBackground,
 	logo,
 	credit,
-	
+	IntroTextureMAX
 };
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 static ID3D11Buffer* g_VertexBuffer = NULL;				// 頂点情報
-static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// テクスチャ情報
+static ID3D11ShaderResourceView* g_Texture[IntroTextureMAX] = { NULL };	// テクスチャ情報
 
-static char* g_TextureName[TEXTURE_MAX] = { // テクスチャファイルアドレス配列
+static char* g_TextureName[IntroTextureMAX] = { // テクスチャファイルアドレス配列
 	(char*) "Data/texture/sunrise.jpg",
 	(char*) "Data/texture/fade_black.png",
 	(char*) "Data/texture/Logo.png",
@@ -49,7 +46,7 @@ static BOOL		g_Use;					// TRUE:使っている  FALSE:未使用
 static float	g_w, g_h;				// 幅と高さ
 static XMFLOAT3	g_Pos;					// ポリゴンの座標
 static int		g_TexNo;				// テクスチャ番号
-static SPRITE	sprite[TEXTURE_MAX];	// テクスチャ配列
+static SPRITE	sprite[IntroTextureMAX];	// テクスチャ配列
 static DWORD	timer;					// タイマー（時間制御のため）
 static bool		g_Load = false;			// ロードフラグ
 
@@ -61,7 +58,7 @@ HRESULT InitIntro(void)
 	ID3D11Device* pDevice = GetDevice();
 
 	//テクスチャ生成
-	for (int i = 0; i < TEXTURE_MAX; i++)
+	for (int i = 0; i < IntroTextureMAX; i++)
 	{
 		g_Texture[i] = NULL;
 		D3DX11CreateShaderResourceViewFromFile(GetDevice(),
@@ -90,25 +87,25 @@ HRESULT InitIntro(void)
 	g_w = SCREEN_WIDTH;
 	g_h = SCREEN_HEIGHT;
 
-	sprite[introBackground].pos = { g_w / 2, g_h / 2 };
-	sprite[introBackground].size = { (float)TEXTURE_WIDTH, (float)TEXTURE_HEIGHT };
+	sprite[introBackground].pos = { g_w * 0.5f, g_h * 0.5f };
+	sprite[introBackground].size = { g_w, g_h };
 	sprite[introBackground].useColor = true;
 	sprite[introBackground].use = true;
 
-	sprite[logo].pos = { 530.0f, g_h / 2 };
-	sprite[logo].size = { 486.0f, 168.0f };
+	sprite[logo].pos = { g_w * 0.55f, g_h * 0.5f };
+	sprite[logo].size = { g_w * 0.5f,  g_h * 0.31f };
 	sprite[logo].useColor = true;
 	sprite[logo].color.w = 0.0f;
 	sprite[logo].use = true;
 
-	sprite[credit].pos = { g_w / 2, 520.0f };
-	sprite[credit].size = { 210, 10 };
+	sprite[credit].pos = { g_w * 0.5f,  g_h * 0.96f };
+	sprite[credit].size = { g_w * 0.21f,  g_h * 0.019f };
 	sprite[credit].useColor = true;
 	sprite[credit].color.w = 0.0f;
 	sprite[credit].use = true;
 
-	sprite[background].pos = { g_w / 2, g_h / 2 };
-	sprite[background].size = { (float)TEXTURE_WIDTH, (float)TEXTURE_HEIGHT };
+	sprite[background].pos = { g_w * 0.5f, g_h * 0.5f };
+	sprite[background].size = { g_w, g_h };
 
 	timer = timeGetTime();
 	g_Load = TRUE;
@@ -128,7 +125,7 @@ void UninitIntro(void)
 		g_VertexBuffer = NULL;
 	}
 
-	for (int i = 0; i < TEXTURE_MAX; i++)
+	for (int i = 0; i < IntroTextureMAX; i++)
 	{
 		if (g_Texture[i])
 		{
@@ -160,18 +157,18 @@ void UpdateIntro(void)
 	}
 	else if (time > 7000)
 	{
-		sprite[logo].color.w = 1 - (time - 7000) / 1000.0f;
-		sprite[credit].color.w = 1 - (time - 7000) / 1000.0f;
-		sprite[introBackground].color.w = 1 - (time - 7000) / 1000.0f;
+		sprite[logo].color.w = 1 - (time - 7000) * 0.001f;
+		sprite[credit].color.w = 1 - (time - 7000) * 0.001f;
+		sprite[introBackground].color.w = 1 - (time - 7000) * 0.001f;
 		return;
 	}
 	else if (time > 3000)
 	{
-		sprite[credit].color.w = (time - 3000) / 1000.0f;
+		sprite[credit].color.w = (time - 3000) * 0.001f;
 	}
 	else if (time > 1000)
 	{
-		sprite[logo].color.w = (time - 1000) / 2000.0f;
+		sprite[logo].color.w = (time - 1000) * 0.0005f;
 	}
 
 
@@ -210,7 +207,7 @@ void DrawIntro(void)
 	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	SetMaterial(material);
 
-	for (int i = 0; i < TEXTURE_MAX; i++)
+	for (int i = 0; i < IntroTextureMAX; i++)
 	{
 		if (!sprite[i].use)
 			continue;
