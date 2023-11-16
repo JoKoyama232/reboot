@@ -7,17 +7,19 @@
 #include "main.h"
 #include "renderer.h"
 #include "model.h"
-#include "game.h"
+
 #include "camera.h"
 #include "input.h"
 #include "sound.h"
 #include "fade.h"
 #include "WorldSpaceClass.h"
-
+#include "Skybox.h"
 #include "clock.h"
 #include "Player.h"
 #include "debris.h"
 #include "bullet.h"
+
+#include "game.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -54,7 +56,7 @@ HRESULT InitGame(void)
 	//時計の初期化
 	InitClock();
 
-
+	InitSkybox();
 
 	//マウス非表示
 	ShowCursor(false);
@@ -72,6 +74,8 @@ void UninitGame(void)
 	UninitPlayer();
 
 	UninitDebris();
+
+	UninitSkybox();
 
 	//弾(モチ)の終了処理
 	UninitBullet();
@@ -95,6 +99,8 @@ void UpdateGame(void)
 	// 時計の更新処理
 	UpdateClock();
 
+	UpdateSkybox();
+
 	//当たり判定
 	CheckHit();
 }
@@ -111,7 +117,9 @@ void DrawGame(void)
 	pos.y = 0.0f;			// カメラ酔いを防ぐためにクリアしている
 	SetCameraAT(pos);
 	SetCamera();
-	
+
+	DrawSkybox();
+
 	DrawPlayer();
 
 	DrawDebris();

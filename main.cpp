@@ -18,7 +18,10 @@
 #include "Player.h"
 #include "debris.h"
 #include "Intro.h"
+#include "light.h"
 //シーン
+
+
 
 // マクロ定義
 //*****************************************************************************
@@ -222,7 +225,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 {
 	InitRenderer(hInstance, hWnd, bWindow);
 
-
+	InitLight();
 	
 	InitCamera();
 
@@ -248,8 +251,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 //=============================================================================
 void Uninit(void)
 {
-
-
+	
 	UninitFade();
 	// カメラの終了処理
 	UninitCamera();
@@ -268,6 +270,8 @@ void Uninit(void)
 //=============================================================================
 void Update(void)
 {
+	UpdateLight();
+
 	// 入力の更新処理
 	UpdateInput();
 

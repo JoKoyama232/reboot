@@ -48,7 +48,7 @@
     </ClCompile>
     <ClCompile Include="debris.cpp">
       <Filter>ソースファイル\game</Filter>
-     </ClCompile>
+    </ClCompile>
     <ClCompile Include="Quaternion.cpp">
       <Filter>ソースファイル\Tool</Filter>
     </ClCompile>
@@ -63,6 +63,9 @@
     </ClCompile>
     <ClCompile Include="sprite.cpp">
       <Filter>ソースファイル\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>ソースファイル\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,7 +119,7 @@
     </ClInclude>
     <ClInclude Include="debris.h">
       <Filter>ヘッダーファイル\game</Filter>
- </ClInclude>
+    </ClInclude>
     <ClInclude Include="Quaternion.h">
       <Filter>ヘッダーファイル\Tool</Filter>
     </ClInclude>
@@ -131,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="sound.h">
       <Filter>ヘッダーファイル\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>ヘッダーファイル\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
