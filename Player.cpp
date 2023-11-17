@@ -197,7 +197,7 @@ void UpdatePlayer(void) {
 	if ((GetKeyboardTrigger(DIK_SPACE)) || IsMouseLeftTriggered())
 	{
  		SetBullet(position, camRotation);
-		//PlaySound(SOUND_LABEL_SE_?????); //ƒ‚ƒ`”­ŽË‰¹
+		PlaySound(SOUND_LABEL_SE_BULLET); //ƒ‚ƒ`”­ŽË‰¹
 	}
 	PrintDebugProc((char*)"Player Information\nMovement:   W\n            A  S  D\n  Shift    Space\nPosition:(%f, %f, %f)\nRotation:(%f, %f, %f)\n", position.x, position.y, position.z, rotation.x, rotation.y, rotation.z);
 

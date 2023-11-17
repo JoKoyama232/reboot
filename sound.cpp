@@ -42,6 +42,8 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ (char*)"Data/BGM/sample000.wav",	 BGM, -1 ,0.1f},	// BGM0
 	{ (char*)"Data/BGM/title.wav", BGM, -1, 0.1f},
 	{ (char*)"Data/SE/zippo.wav", SE, 0, 0.1f},
+	{ (char*)"Data/SE/bullet.wav", SE, 0, 0.1f},
+	{ (char*)"Data/SE/absorb.wav", SE, 0, 0.1f},
 
 };
 
