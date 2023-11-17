@@ -152,6 +152,7 @@ void UpdateIntro(void)
 		sprite[credit].use = false;
 		sprite[introBackground].use = false;
 		setLoad(false);
+		
 		// イントロが終わればタイトルへ移行
 		SetMode(MODE_TITLE);
 	}
@@ -171,11 +172,11 @@ void UpdateIntro(void)
 		sprite[logo].color.w = (time - 1000) * 0.0005f;
 	}
 
-
-	
-
-
-
+	if (GetKeyState(VK_LBUTTON) & 0x80)
+	{	
+		setLoad(false);
+		SetFade(FADE_OUT, MODE_TITLE);
+	}
 }
 
 //=============================================================================

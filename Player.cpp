@@ -18,7 +18,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	MODEL_PLAYER		"Data/model/cone.obj"			// 読み込むモデル名(まだ存在してないよ)
+#define	MODEL_PLAYER		"Data/model/robo_low.obj"			// 読み込むモデル名(まだ存在してないよ)
 
 #define	VALUE_MOVE			(1.0f)							// 移動量
 
@@ -154,7 +154,7 @@ void UpdatePlayer(void) {
 	//スタミナゲージ処理&移動中のSE処理
 	if (g_Player.speed == VALUE_MOVE)
 	{
-		g_Player.str -= 0.5f;
+		g_Player.str -= 0.375f;
 		if (g_Player.str <= 0)
 		{
 			g_Player.str = 0;

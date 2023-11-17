@@ -128,9 +128,6 @@ void DrawDebris(void) {
 
 	XMStoreFloat4x4(g_Debris[i].object.GetWorldMatrixPointer(), mtxWorld);
 
-	// ‰æ‚è‚Ìİ’è
-	SetFuchi(1);
-
 	// ƒ‚ƒfƒ‹•`‰æ
 	DrawModel(&g_Debris[i].object.modelInfo);
 
