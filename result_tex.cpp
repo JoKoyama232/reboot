@@ -35,8 +35,8 @@ static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// ÉeÉNÉXÉ`É
 
 static const char* g_TexturName[TEXTURE_MAX] = {
 	"data/TEXTURE/result_logo.png",
-	"data/TEXTURE/replay.png",
-	"data/TEXTURE/exit_2.png",
+	"data/TEXTURE/replay_mission.png",
+	"data/TEXTURE/quit_game.png",
 
 
 };

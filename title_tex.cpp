@@ -36,8 +36,8 @@ static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// ÉeÉNÉXÉ`É
 
 static const char* g_TexturName[TEXTURE_MAX] = {
 	"data/TEXTURE/title_logo.png",
-	"data/TEXTURE/game_start.png",
-	"data/TEXTURE/exit_2.png",
+	"data/TEXTURE/start.png",
+	"data/TEXTURE/quit.png",
 	"data/TEXTURE/option.png",
 };
 
@@ -171,7 +171,30 @@ void UpdateTitleTex(void)
 				PlaySound(SOUND_LABEL_SE_ZIPPO);
 				g_Button[i].flag_sound = false;
 			}
+			//É}ÉEÉXÇÃç∂É{É^ÉìÇ™âüÇ≥ÇÍÇΩÇÁ
+			if (GetKeyState(VK_LBUTTON) & 0x80)
+			{
+				switch (selector) {
+				case 0:
+					SetFade(FADE_OUT, MODE_GAME);
+					//PlaySound();
+					break;
+				case 1:
+				{
+					int id = MessageBox(NULL, "ÉQÅ[ÉÄÇèIóπÇµÇ‹Ç∑Ç©ÅH", "", MB_YESNO | MB_ICONQUESTION);
+					switch (id)
+					{
+					case IDYES:		// ÉQÅ[ÉÄÇèIóπ
+						exit(-1);
+						break;
+					case IDNO:		// âΩÇ‡ÇπÇ∏Ç…É^ÉCÉgÉãÇ…ñﬂÇÈ
 
+						break;
+					}
+				}
+				break;
+				}
+			}
 		}
 
 		//ì_ñ≈Ç≥ÇπÇÈ
@@ -201,30 +224,7 @@ void UpdateTitleTex(void)
 		}
 
 	}
-	//É}ÉEÉXÇÃç∂É{É^ÉìÇ™âüÇ≥ÇÍÇΩÇÁ
-	if (GetKeyState(VK_LBUTTON) & 0x80)
-	{
-		switch (selector) {
-		case 0:
-			SetFade(FADE_OUT, MODE_GAME);
-			//PlaySound();
-			break;
-		case 1:
-			{
-				int id = MessageBox(NULL, "ÉQÅ[ÉÄÇèIóπÇµÇ‹Ç∑Ç©ÅH", "", MB_YESNO | MB_ICONQUESTION);
-				switch (id)
-				{
-				case IDYES:		// ÉQÅ[ÉÄÇèIóπ
-					exit(-1);
-					break;
-				case IDNO:		// âΩÇ‡ÇπÇ∏Ç…É^ÉCÉgÉãÇ…ñﬂÇÈ
-
-					break;
-				}
-			}
-			break;
-		}
-	}
+	
 
 }
 

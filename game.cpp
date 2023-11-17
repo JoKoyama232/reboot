@@ -174,7 +174,15 @@ void CheckHit(void)
 				continue;
 			if (CollisionBC(p_pos, d_pos, player->size, debris[d].size))
 			{
+				bullet[b].object.SetParent(NULL);
+				bullet[b].use = false;
 				debris[d].use = false;
+				bullet[b].spd = 1.0f;
+				if (bullet[b].object.GetParent() == NULL)
+				{
+					PlaySound(SOUND_LABEL_SE_ABSORB);
+				}
+				//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
 			}
 
 			//モチとデブリ
@@ -184,18 +192,6 @@ void CheckHit(void)
 			{
 				bullet[b].spd = 0.0f;
 				bullet[b].object.SetParent(&debris[d].object);
-				if (CollisionBC(p_pos, b_pos, player->size, bullet[b].size))
-				{
-					bullet[b].use = false;
-					bullet[b].spd = 1.0f;
-					bullet[b].object.SetParent(NULL);
-
-					//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
-
-
-				}
-
-
 			}
 		}
 	}

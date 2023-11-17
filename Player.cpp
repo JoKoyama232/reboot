@@ -18,7 +18,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	MODEL_PLAYER		"Data/model/cone.obj"			// 読み込むモデル名(まだ存在してないよ)
+#define	MODEL_PLAYER		"Data/model/robo_low.obj"			// 読み込むモデル名(まだ存在してないよ)
 
 #define	VALUE_MOVE			(1.0f)							// 移動量
 
@@ -154,7 +154,7 @@ void UpdatePlayer(void) {
 	//スタミナゲージ処理&移動中のSE処理
 	if (g_Player.speed == VALUE_MOVE)
 	{
-		g_Player.str -= 0.5f;
+		g_Player.str -= 0.375f;
 		if (g_Player.str <= 0)
 		{
 			g_Player.str = 0;
@@ -197,7 +197,7 @@ void UpdatePlayer(void) {
 	if ((GetKeyboardTrigger(DIK_SPACE)) || IsMouseLeftTriggered())
 	{
  		SetBullet(position, camRotation);
-		//PlaySound(SOUND_LABEL_SE_?????); //モチ発射音
+		PlaySound(SOUND_LABEL_SE_BULLET); //モチ発射音
 	}
 	PrintDebugProc((char*)"Player Information\nMovement:   W\n            A  S  D\n  Shift    Space\nPosition:(%f, %f, %f)\nRotation:(%f, %f, %f)\n", position.x, position.y, position.z, rotation.x, rotation.y, rotation.z);
 
