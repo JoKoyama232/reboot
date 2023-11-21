@@ -50,8 +50,6 @@ HRESULT InitDebris(void) {
 		g_Debris[i].object.SetPosition(XMFLOAT3{ 0.0f+i*100.0f, 0.0f, 100.0f });
 		g_Debris[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Debris[i].object.SetScale(XMFLOAT3{ 0.1f, 0.1f, 0.1f });
-		g_Debris[i].str = 100.0f;
-		g_Debris[i].str_max = 100.0f;
 		g_Debris[i].time = 0.0f;
 		g_Debris[i].speed = 0.0f;			// 移動スピードクリア
 		g_Debris[i].use = true;

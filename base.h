@@ -1,6 +1,6 @@
 //=============================================================================
-// デブリ処理 [debris.h]
-// Author : 小井詰　礼
+// 回収拠点処理 [base.h]
+// Author : 岩田輝
 //=============================================================================
 #pragma once
 #include "WorldSpaceClass.h"
@@ -8,8 +8,8 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MAX_DEBRIS		(5)					// デブリの数
-#define	DEBRIS_SIZE		(5.0f)				// 当たり判定の大きさ
+#define MAX_BASE		(1)					// デブリの数
+#define	BASE_SIZE		(5.0f)				// 当たり判定の大きさ
 
 
 //*****************************************************************************
@@ -32,10 +32,11 @@ struct DEBRIS
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitDebris(void);
-void UninitDebris(void);
-void UpdateDebris(void);
-void DrawDebris(void);
-DEBRIS* GetDebris(void);
+HRESULT InitBase(void);
+void UninitBase(void);
+void UpdateBase(void);
+void DrawBase(void);
+DEBRIS* GetBase(void);
 XMFLOAT3 GetLerp(XMFLOAT3 initialPos, XMFLOAT3 endingPos, float percentage);
 float GetDistance3D(XMFLOAT3 pos1, XMFLOAT3 pos2);
+

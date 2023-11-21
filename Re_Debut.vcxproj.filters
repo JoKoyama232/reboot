@@ -67,6 +67,9 @@
     <ClCompile Include="light.cpp">
       <Filter>ソースファイル\Object</Filter>
     </ClCompile>
+    <ClCompile Include="base.cpp">
+      <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -137,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="light.h">
       <Filter>ヘッダーファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="base.h">
+      <Filter>ヘッダーファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
