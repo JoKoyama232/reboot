@@ -36,3 +36,6 @@ void SetSpriteLTColor(ID3D11Buffer* buf,
 	float X, float Y, float Width, float Height,
 	float U, float V, float UW, float VH,
 	XMFLOAT4 color);
+
+int SetSpriteGlitch(ID3D11Buffer* buf, float positionX, float positionY, float width, float height,
+	int glitchRow, int totalRows, float glitchOffset, XMFLOAT4 glitchColor);

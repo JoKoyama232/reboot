@@ -54,11 +54,6 @@ void UpdateTitle(void)
 void DrawTitle(void)
 {
 
-
-
-
-
-
 	// 2D‚Ì•¨‚ğ•`‰æ‚·‚éˆ—
 	{
 		// Z”äŠr‚È‚µ
