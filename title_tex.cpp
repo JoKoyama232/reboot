@@ -18,6 +18,9 @@
 #define TEXTURE_MAX					(5)				// テクスチャの数
 #define BUTTON_MAX					(3)
 
+#define GLITCH_INITIAL_OFFSET		(30.0f)
+#define GLITCH_ANIM_TIME			(5)
+#define GLITCH_INTERVAL_SEC			(2.0f)			
 
 #define TEXTURE_WIDTH_LOGO			(360)			// ロゴサイズ
 #define TEXTURE_HEIGHT_LOGO			(60)			// 
@@ -46,7 +49,11 @@ static bool						g_Use;						// true:使っている  false:未使用
 static float					g_w, g_h;					// 幅と高さ
 static XMFLOAT3					g_Pos;						// ポリゴンの座標
 static int						g_TexNo;					// テクスチャ番号
-static DWORD	timer;										// タイマー（時間制御のため）
+static DWORD					timer;						// タイマー（時間制御のため）
+static int						glitchAnimFrame;
+static int						glitchRow;					// タイトルのグリッチ表現用の変数
+static int						glitchOffset;				// グリッチ表現の変更幅
+static int						glitchInterval;				// グリッチ表現の発動間隔
 float	alpha;
 bool	flag_alpha;
 static int selector = 0;
@@ -59,7 +66,7 @@ static BUTTON					g_Button[BUTTON_MAX];
 HRESULT InitTitleTex(void)
 {
 	ID3D11Device* pDevice = GetDevice();
-
+	srand(timeGetTime());
 	//テクスチャ生成
 	for (int i = 0; i < TEXTURE_MAX; i++)
 	{
@@ -77,7 +84,7 @@ HRESULT InitTitleTex(void)
 	D3D11_BUFFER_DESC bd;
 	ZeroMemory(&bd, sizeof(bd));
 	bd.Usage = D3D11_USAGE_DYNAMIC;
-	bd.ByteWidth = sizeof(VERTEX_3D) * 4;
+	bd.ByteWidth = sizeof(VERTEX_3D) * 12;
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	GetDevice()->CreateBuffer(&bd, NULL, &g_VertexBuffer);
@@ -89,7 +96,7 @@ HRESULT InitTitleTex(void)
 	g_w = SCREEN_WIDTH;
 	g_Pos = XMFLOAT3(g_w * 0.5f, g_h * 0.5f, 0.0f);
 	g_TexNo = 0;
-
+	glitchRow = 0;
 	alpha = 1.0f;
 	flag_alpha = true;
 
@@ -226,6 +233,22 @@ void UpdateTitleTex(void)
 	}
 	
 
+	// グリッチ制御
+	int interval = (int)(time / (GLITCH_INTERVAL_SEC * 1000.0f));
+	if (glitchAnimFrame > 2) {
+		glitchOffset *= (rand() % 4 + 7) * 0.1f;
+		glitchAnimFrame--;
+	}
+	else{
+		glitchOffset *= -0.95f;
+		glitchAnimFrame--;
+	}
+	if (interval > glitchInterval) {
+		glitchInterval = interval;
+		glitchAnimFrame = GLITCH_ANIM_TIME;
+		glitchOffset = GLITCH_INITIAL_OFFSET;
+	}
+	glitchRow = (glitchRow + 1) % 20;
 }
 
 //=============================================================================
@@ -254,18 +277,22 @@ void DrawTitleTex(void)
 	{
 		// テクスチャ設定
 		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
-
-		// １枚のポリゴンの頂点とテクスチャ座標を設定
-		SetSpriteColor(g_VertexBuffer, g_Pos.x, g_Pos.y - 150,
+		int index = 4;
+		if (glitchRow != -1) {
+			// １枚のポリゴンの頂点とテクスチャ座標を設定
+			index = SetSpriteGlitch(g_VertexBuffer, g_Pos.x, g_Pos.y - 150,
 			TEXTURE_WIDTH_LOGO * 2.5f, TEXTURE_HEIGHT_LOGO * 2.5f,
-			0.0f, 0.0f, 1.0f, 1.0f,
-			XMFLOAT4(1.0f, 1.0f, 1.0f, alpha));
-
+			glitchRow, 16, glitchOffset, XMFLOAT4(1.0f, 1.0f, 1.0f, alpha));
+		}
+		else {
+			SetSpriteColor(g_VertexBuffer, g_Pos.x, g_Pos.y - 150, TEXTURE_WIDTH_LOGO * 2.5f, TEXTURE_HEIGHT_LOGO * 2.5f,
+				0.0f, 0.0f, 1.0f, 1.0f, XMFLOAT4(1.0f, 1.0f, 1.0f, alpha));
+		}
 		// ポリゴン描画
-		GetDeviceContext()->Draw(4, 0);
+		GetDeviceContext()->Draw(index, 0);
 	}
 
-	//ボタンを描画
+	////ボタンを描画
 	for (int i = 0; i < BUTTON_MAX; i++)
 	{
 		// テクスチャ設定

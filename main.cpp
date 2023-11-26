@@ -388,7 +388,7 @@ void SetMode(int mode) {
 		break;
 	case MODE_TITLE:
 		InitTitle();
-		PlaySound(SOUND_LABEL_BGM_title);
+		//PlaySound(SOUND_LABEL_BGM_title);
 		break;
 	case MODE_GAME:
 		InitGame();

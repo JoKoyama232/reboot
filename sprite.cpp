@@ -186,6 +186,110 @@ void SetSpriteColor(ID3D11Buffer *buf, float X, float Y, float Width, float Heig
 
 }
 
+int SetSpriteGlitch(ID3D11Buffer* buf, float positionX, float positionY, float width, float height,
+	int glitchRow, int totalRows, float glitchOffset, XMFLOAT4 glitchColor)
+{
+	D3D11_MAPPED_SUBRESOURCE msr;
+	GetDeviceContext()->Map(buf, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
+
+	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
+
+	XMFLOAT3 topLeft = XMFLOAT3(positionX - width * 0.5f, positionY - height * 0.5f, 0.0f);
+	XMFLOAT4 defaultColor = XMFLOAT4(1.0f, 1.0f, 1.0f, glitchColor.w);
+	int idx = 0;
+	float cutoff = (float)(glitchRow % totalRows) / totalRows;
+
+	// 変更が一番上の場合描画する”四角”は２つになるためインデックスを可変にする必要がある
+	// グリッチの上のテクスチャ設定
+	if (cutoff != 0) {
+		// 頂点０番（左上の頂点）
+		vertex[idx].Position = topLeft;
+		vertex[idx].Diffuse = defaultColor;
+		vertex[idx].TexCoord = XMFLOAT2(0.0f, 0.0f);
+		idx++;
+
+		// 頂点１番（右上の頂点）
+		vertex[idx].Position = XMFLOAT3(topLeft.x + width, topLeft.y, 0.0f);
+		vertex[idx].Diffuse = defaultColor;
+		vertex[idx].TexCoord = XMFLOAT2(1.0f, 0.0f);
+		idx++;
+
+		// 頂点２番（左下の頂点）
+		vertex[idx].Position = XMFLOAT3(topLeft.x, topLeft.y + height * cutoff, 0.0f);
+		vertex[idx].Diffuse = defaultColor;
+		vertex[idx].TexCoord = XMFLOAT2(0.0f, cutoff);
+		idx++;
+
+		// 頂点３番（右下の頂点）(四角の最後の為二回入力)
+		vertex[idx].Position = XMFLOAT3(topLeft.x + width, topLeft.y + height * cutoff, 0.0f);
+		vertex[idx].Diffuse = defaultColor;
+		vertex[idx].TexCoord = XMFLOAT2(1.0f, cutoff);
+		idx++;
+		
+	}
+
+	// グリッチ描画
+	// 頂点０番（左上の頂点）
+	vertex[idx].Position = XMFLOAT3(topLeft.x + glitchOffset, topLeft.y + height * cutoff, 0.0f);;
+	vertex[idx].Diffuse = glitchColor;
+	vertex[idx].TexCoord = XMFLOAT2(0.0f, cutoff);
+	idx++;
+
+	// 頂点１番（右上の頂点）
+	vertex[idx].Position = XMFLOAT3(topLeft.x + width + glitchOffset, topLeft.y + height * cutoff, 0.0f);
+	vertex[idx].Diffuse = glitchColor;
+	vertex[idx].TexCoord = XMFLOAT2(1.0f, cutoff);
+	idx++;
+
+	// 分割を１マス分下げる
+	cutoff = (float)((glitchRow + 1) % totalRows) / totalRows;
+
+	// 頂点２番（左下の頂点）
+	vertex[idx].Position = XMFLOAT3(topLeft.x + glitchOffset, topLeft.y + height * cutoff, 0.0f);
+	vertex[idx].Diffuse = glitchColor;
+	vertex[idx].TexCoord = XMFLOAT2(0.0f, cutoff);
+	idx++;
+
+	// 頂点３番（右下の頂点）(テクスチャの最後の為一回で十分、下にあれば同じデータ追加）
+
+	vertex[idx].Position = XMFLOAT3(topLeft.x + width + glitchOffset, topLeft.y + height * cutoff, 0.0f);
+	vertex[idx].Diffuse = glitchColor;
+	vertex[idx].TexCoord = XMFLOAT2(1.0f, cutoff);
+	idx++;
+	
+
+	// 変更が一番下の場合描画する”四角”は２つになるためインデックスを可変にする必要がある
+	// グリッチの上のテクスチャ設定
+	if (cutoff < 1.0f) {
+		// 頂点０番（左上の頂点）
+		vertex[idx].Position = XMFLOAT3(topLeft.x, topLeft.y + height * cutoff, 0.0f);;
+		vertex[idx].Diffuse = defaultColor;
+		vertex[idx].TexCoord = XMFLOAT2(0.0f, cutoff);
+		idx++;
+
+		// 頂点１番（右上の頂点）
+		vertex[idx].Position = XMFLOAT3(topLeft.x + width, topLeft.y + height * cutoff, 0.0f);
+		vertex[idx].Diffuse = defaultColor;
+		vertex[idx].TexCoord = XMFLOAT2(1.0f, cutoff);
+		idx++;
+
+		// 頂点２番（左下の頂点）
+		vertex[idx].Position = XMFLOAT3(topLeft.x, topLeft.y + height, 0.0f);
+		vertex[idx].Diffuse = defaultColor;
+		vertex[idx].TexCoord = XMFLOAT2(0.0f, 1.0f);
+		idx++;
+
+		// 頂点３番（右下の頂点）(テクスチャの最後の為一回で十分)
+		vertex[idx].Position = XMFLOAT3(topLeft.x + width, topLeft.y + height, 0.0f);
+		vertex[idx].Diffuse = defaultColor;
+		vertex[idx].TexCoord = XMFLOAT2(1.0f, 1.0f);
+	 idx++;
+	}
+
+	GetDeviceContext()->Unmap(buf, 0);
+	return idx;
+}
+
 
 void SetSpriteColorRotation(ID3D11Buffer *buf, float X, float Y, float Width, float Height,
 	float U, float V, float UW, float VH,
