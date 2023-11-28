@@ -15,7 +15,7 @@
 //*****************************************************************************
 // ç\ë¢ëÃíËã`
 //*****************************************************************************
-struct DEBRIS
+struct BASE
 {
 	WorldSpace			object;
 
@@ -36,7 +36,7 @@ HRESULT InitBase(void);
 void UninitBase(void);
 void UpdateBase(void);
 void DrawBase(void);
-DEBRIS* GetBase(void);
+BASE* GetBase(void);
 XMFLOAT3 GetLerp(XMFLOAT3 initialPos, XMFLOAT3 endingPos, float percentage);
 float GetDistance3D(XMFLOAT3 pos1, XMFLOAT3 pos2);
 

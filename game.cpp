@@ -18,6 +18,7 @@
 #include "Player.h"
 #include "debris.h"
 #include "bullet.h"
+#include "base.h"
 
 #include "game.h"
 //*****************************************************************************
@@ -50,6 +51,8 @@ HRESULT InitGame(void)
 
 	InitDebris();
 
+	InitBase();
+
 	//弾(モチ)の初期化
 	InitBullet();
 
@@ -75,6 +78,8 @@ void UninitGame(void)
 
 	UninitDebris();
 
+	UninitBase();
+
 	UninitSkybox();
 
 	//弾(モチ)の終了処理
@@ -93,6 +98,7 @@ void UpdateGame(void)
 
 	UpdateDebris();
 
+	UpdateBase();
 	//弾(モチ)の更新処理
 	UpdateBullet();
 
@@ -124,6 +130,7 @@ void DrawGame(void)
 
 	DrawDebris();
 
+	DrawBase();
 	//弾(モチ)の描画処理
 	DrawBullet();
 
@@ -155,12 +162,13 @@ void DrawGame(void)
 //=============================================================================
 void CheckHit(void)
 {
-	XMFLOAT3 p_pos, d_pos, b_pos;
+	XMFLOAT3 p_pos, d_pos, b_pos, basepos;
 	PLAYER* player = GetPlayer();
 	DEBRIS* debris = GetDebris();
 	BULLET* bullet = GetBullet();
+	BASE* base = GetBase();
 	p_pos = GetPlayer()->object.GetPositionFloat();
-
+	basepos = GetBase()->object.GetPositionFloat();
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
 		for (int d = 0; d < MAX_DEBRIS; d++)
@@ -174,15 +182,14 @@ void CheckHit(void)
 				continue;
 			if (CollisionBC(p_pos, d_pos, player->size, debris[d].size))
 			{
-				bullet[b].object.SetParent(NULL);
-				if (bullet[b].object.GetParent() == NULL)
+				if (!bullet[b].object.GetParent() == NULL)
 				{
 					PlaySound(SOUND_LABEL_SE_ABSORB);
 					bullet[b].use = false;
 					bullet[b].spd = 1.0f;
-					
+					debris[d].use = false;
+					bullet[b].object.SetParent(NULL);
 				}
-				debris[d].use = false;
 				//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
 			}
 
@@ -194,6 +201,18 @@ void CheckHit(void)
 				bullet[b].spd = 0.0f;
 				bullet[b].object.SetParent(&debris[d].object);
 			}
+
+			//拠点とプレイヤー
+			if ((player->use == false) || (base->use == false))
+				continue;
+			if (CollisionBC(p_pos, basepos, player->size, base->size))
+			{
+				if (bullet[b].object.GetParent() == NULL)
+				{
+					bullet[b].use = false;
+				}
+			}
+
 		}
 	}
 }
