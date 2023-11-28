@@ -164,7 +164,7 @@ void UpdatePlayer(void) {
 	}
 	else
 	{
-		g_Player.str += 0.5f;
+		g_Player.str += 0.25f;
 		if (g_Player.str > g_Player.str_max)
 		{
 			g_Player.str = g_Player.str_max;

@@ -25,7 +25,7 @@
 // グローバル変数
 //*****************************************************************************
 static float        g_LastUpdate;
-DEBRIS g_Base[MAX_BASE];
+BASE g_Base[MAX_BASE];
 static bool g_fire = false;
 static ID3D11Buffer* g_VertexBuffer = NULL;				// 頂点情報
 static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// テクスチャ情報
@@ -43,9 +43,9 @@ HRESULT InitBase(void)
 		GetModelDiffuse(&g_Base[i].object.modelInfo, g_Base[i].object.modelDiffuse);
 		g_Base[i].object.load = true;
 
-		g_Base[i].object.SetPosition(XMFLOAT3{ 0.0f,0.0f,0.0f });
+		g_Base[i].object.SetPosition(XMFLOAT3{ 100.0f,0.0f,500.0f });
 		g_Base[i].object.SetRotation(XMFLOAT3{ 0.0f,0.0f,0.0f });
-		g_Base[i].object.SetScale(XMFLOAT3{ 1.0f,1.0f,1.0f });
+		g_Base[i].object.SetScale(XMFLOAT3{ 0.5f,0.5f,0.5f });
 		g_Base[i].use = true;
 		g_Base[i].size = BASE_SIZE;
 	}
@@ -126,7 +126,7 @@ void DrawBase(void)
 	}
 }
 
-DEBRIS* GetDebris(void) {
+BASE* GetBase(void) {
 
 	return &g_Base[0];
 }
