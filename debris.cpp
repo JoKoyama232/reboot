@@ -46,8 +46,7 @@ HRESULT InitDebris(void) {
 		LoadModel(MODEL_DEBRIS, &g_Debris[i].object.modelInfo);
 		GetModelDiffuse(&g_Debris[i].object.modelInfo, g_Debris[i].object.modelDiffuse);
 		g_Debris[i].object.load = true;
-
-		g_Debris[i].object.SetPosition(XMFLOAT3{ 0.0f+i*100.0f, 0.0f, 100.0f });
+		g_Debris[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, 0.0f, rand() % 1000 + 0.0f});
 		g_Debris[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Debris[i].object.SetScale(XMFLOAT3{ 0.1f, 0.1f, 0.1f });
 		g_Debris[i].time = 0.0f;
