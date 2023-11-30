@@ -84,11 +84,20 @@ void UpdateDebris(void) {
 
 		if (g_Debris[i].use)
 		{
+
+			rotation.x += (i + 1) * 0.005f;
+			rotation.y += ((rand() % 5) + 1) * 0.001f;
+			rotation.z += ((MAX_DEBRIS + 1) - i) * 0.005f;
+
+
+
+			// ˆÚ“®‰ñ“]‚ð”½‰f
+			g_Debris[i].object.SetPosition(position);
+			g_Debris[i].object.SetRotation(rotation);
+
 		}
 
-		// ˆÚ“®‰ñ“]‚ð”½‰f
-		g_Debris[i].object.SetPosition(position);
-		g_Debris[i].object.SetRotation(rotation);
+
 	}
 
 }
