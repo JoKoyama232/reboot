@@ -198,8 +198,11 @@ void CheckHit(void)
 				continue;
 			if (CollisionBC(b_pos, d_pos, bullet[b].size, debris[d].size))
 			{
-				bullet[b].spd = 0.0f;
-				bullet[b].object.SetParent(&debris[d].object);
+				if (debris[d].object.GetParent() == NULL)
+				{
+					bullet[b].spd = 0.0f;
+					debris[d].object.SetParent(&bullet[b].object);
+				}
 			}
 
 			//拠点とプレイヤー
