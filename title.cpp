@@ -13,10 +13,7 @@
 #include "sprite.h"
 #include "title.h"
 #include "title_tex.h"
-
-//#include "title_field.h"
-//#include "model.h"
-//#include "title_model.h"
+#include "Skybox.h"
 
 //=============================================================================
 // èâä˙âªèàóù
@@ -25,6 +22,8 @@
 HRESULT InitTitle(void)
 {
 	InitTitleTex();
+
+	InitSkybox();
 	return S_OK;
 }
 
@@ -35,6 +34,8 @@ HRESULT InitTitle(void)
 void UninitTitle(void)
 {
 	UninitTitleTex();
+
+	UninitSkybox();
 }
 
 
@@ -44,6 +45,8 @@ void UninitTitle(void)
 void UpdateTitle(void)
 {
 	UpdateTitleTex();
+
+	UpdateSkybox();
 }
 
 
@@ -53,7 +56,7 @@ void UpdateTitle(void)
 //=============================================================================
 void DrawTitle(void)
 {
-
+	DrawSkybox();
 	// 2DÇÃï®Çï`âÊÇ∑ÇÈèàóù
 	{
 		// Zî‰ärÇ»Çµ
