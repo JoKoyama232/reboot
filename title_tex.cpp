@@ -184,7 +184,7 @@ void UpdateTitleTex(void)
 				switch (selector) {
 				case 0:
 					SetFade(FADE_OUT, MODE_GAME);
-					//PlaySound();
+					PlaySound(SOUND_LABEL_SE_start);
 					break;
 				case 1:
 				{
