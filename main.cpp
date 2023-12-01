@@ -388,14 +388,15 @@ void SetMode(int mode) {
 		break;
 	case MODE_TITLE:
 		InitTitle();
-		//PlaySound(SOUND_LABEL_BGM_title);
+		PlaySound(SOUND_LABEL_BGM_title);
 		break;
 	case MODE_GAME:
 		InitGame();
+		PlaySound(SOUND_LABEL_BGM_stage1);
 		break;
 	case MODE_RESULT:
 		InitResult();
-		//PlaySound(SOUND_LABEL_BGM_sample003);
+		
 		break;
 	}
 }
