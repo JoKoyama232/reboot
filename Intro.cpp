@@ -154,7 +154,7 @@ void UpdateIntro(void)
 		setLoad(false);
 		
 		// イントロが終わればタイトルへ移行
-		SetMode(MODE_TITLE);
+		SetFade(FADE_OUT, MODE_TITLE);
 	}
 	else if (time > 7000)
 	{

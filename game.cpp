@@ -221,7 +221,7 @@ void CheckHit(void)
 	{
 		// デブリの使用フラグ確認
 		if (!debris[d].use) continue;
-
+		d_pos = debris[d].object.GetPositionFloat();
 		if (!CollisionBC(p_pos, d_pos, player->size, debris[d].size)) continue;
 		
 		// プレイヤーとデブリの当たり反応（真）
