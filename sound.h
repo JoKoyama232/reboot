@@ -13,8 +13,8 @@
 //*****************************************************************************
 enum
 {
-	SOUND_LABEL_BGM_sample000,	// BGM0
 	SOUND_LABEL_BGM_title,
+	SOUND_LABEL_BGM_stage1,
 	SOUND_LABEL_SE_ZIPPO,
 	SOUND_LABEL_SE_BULLET,
 	SOUND_LABEL_SE_ABSORB,
