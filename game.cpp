@@ -40,7 +40,7 @@ void CheckHit(void);
 //*****************************************************************************
 
 static bool	g_bPause = true;	// ポーズON/OFF
-static RECT				g_windowPos;
+static RECT	g_windowPos;
 
 
 //=============================================================================
@@ -171,61 +171,67 @@ void DrawGame(void)
 void CheckHit(void)
 {
 	XMFLOAT3 p_pos, d_pos, b_pos, basepos;
-	PLAYER* player = GetPlayer();
-	DEBRIS* debris = GetDebris();
-	BULLET* bullet = GetBullet();
-	BASE* base = GetBase();
+	PLAYER* player = GetPlayer();			// プレイヤー情報
+	DEBRIS* debris = GetDebris();			// デブリ情報
+	BULLET* bullet = GetBullet();			// 弾丸情報
+	BASE* base = GetBase();					// 基地情報
 	p_pos = GetPlayer()->object.GetPositionFloat();
 	basepos = GetBase()->object.GetPositionFloat();
+
+	// プレイヤーが使われていないのなら当たり判定も必要ないためまずプレイヤーの使用フラグ確認
+	if (!player->use) return;
+
+	// 弾丸毎の当たり判定----------------------------------------------------
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
+		// 弾丸の使用フラグを確認、またペアレントされていれば当たり判定を行われない
+		if (!bullet[b].use || bullet[b].object.GetParent()) continue;
+
+		// バレット対デブリ当たり判定
 		for (int d = 0; d < MAX_DEBRIS; d++)
 		{
-			//弾丸とデブリの座標をゲット
+			// デブリの使用フラグ確認
+			if (!debris[d].use) continue;
+			
+			// 弾丸とデブリの座標をゲット
 			b_pos = bullet[b].object.GetPositionFloat();
 			d_pos = debris[d].object.GetPositionFloat();
 
-			//プレイヤーとデブリ
-			if ((player->use == false) || (debris[d].use == false))
-				continue;
-			if (CollisionBC(p_pos, d_pos, player->size, debris[d].size))
-			{
-				if (!bullet[b].object.GetParent() == NULL)
-				{
-					PlaySound(SOUND_LABEL_SE_ABSORB);
-					bullet[b].use = false;
-					bullet[b].spd = 1.0f;
-					debris[d].use = false;
-					bullet[b].object.SetParent(NULL);
-				}
-				//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
-			}
-
-			//モチとデブリ
-			if ((bullet[b].use == false) || (debris[d].use == false))
-				continue;
-			if (CollisionBC(b_pos, d_pos, bullet[b].size, debris[d].size))
-			{
-				if (bullet[b].object.GetParent() == NULL)
-				{
-					bullet[b].spd = 0.0f;
-					bullet[b].object.SetParent(&debris[d].object);
-				}
-			}
-
-			//拠点とプレイヤー
-			if ((player->use == false) || (base->use == false))
-				continue;
-			if (CollisionBC(p_pos, basepos, player->size, base->size))
-			{
-				if (bullet[b].object.GetParent() == NULL)
-				{
-					bullet[b].use = false;
-				}
-			}
-
+			// 弾丸とデブリの当たり判定
+			if (!CollisionBC(b_pos, d_pos, bullet[b].size, debris[d].size)) continue;
+			
+			// 弾丸とデブリの当たり反応（真）
+			bullet[b].spd = 0.0f;
+			bullet[b].object.SetParent(&debris[d].object);
 		}
 	}
+	//----------------------------------------------------------------------
+
+	// プレイヤーの当たり判定-------------------------------------------------
+
+	bool unload = false;		// 保持しているデブリを回収
+	// プレイヤーと基地の当たり判定
+	if (CollisionBC(p_pos, basepos, player->size, base->size))
+	{
+		// プレイヤーと基地の当たり反応（真）
+	}
+
+	// デブリ毎に判定
+	for (int d = 0; d < MAX_DEBRIS; d++)
+	{
+		// デブリの使用フラグ確認
+		if (!debris[d].use) continue;
+
+		if (!CollisionBC(p_pos, d_pos, player->size, debris[d].size)) continue;
+		
+		// プレイヤーとデブリの当たり反応（真）
+		PlaySound(SOUND_LABEL_SE_ABSORB);
+		debris[d].use = false;
+		
+		//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
+	}
+	//----------------------------------------------------------------------
+
 }
 
 

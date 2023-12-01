@@ -22,7 +22,7 @@ struct BULLET
 	float				spd;		// 移動スピード
 	float				dir;		// 向き
 	float				size;
-	bool				use;
+	bool				use;		// 使用フラグ
 
 	// 階層アニメーション用のメンバー変数
 	float				time;				// 線形補間用

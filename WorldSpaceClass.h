@@ -21,6 +21,7 @@ public:
 	DX11_MODEL	modelInfo;							// モデル情報
 	XMFLOAT4	modelDiffuse[MODEL_MAX_MATERIAL];	// モデルの色
 	bool		load;								// モデルの読み込みフラグ
+	bool		draw;								// モデルの描画フラグ
 
 	//セッター
 	void SetWorldMatrix(XMFLOAT4X4 a_worldMtx) { worldMtx = a_worldMtx; }
