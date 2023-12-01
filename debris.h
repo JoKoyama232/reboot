@@ -22,7 +22,8 @@ struct DEBRIS
 	float				speed;			// 移動スピード
 	float				direction;		// 向き
 	float				size;
-	bool				use;
+	bool				use;			// 使用フラグ
+
 	// 階層アニメーション用のメンバー変数(今は使わないかな？)
 	float				time;				// 線形補間用
 	int					tblNo;				// 行動データのテーブル番号

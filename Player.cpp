@@ -154,7 +154,7 @@ void UpdatePlayer(void) {
 	//スタミナゲージ処理&移動中のSE処理
 	if (g_Player.speed == VALUE_MOVE)
 	{
-		g_Player.str -= 0.375f;
+		g_Player.str -= 0.25f;
 		if (g_Player.str <= 0)
 		{
 			g_Player.str = 0;
