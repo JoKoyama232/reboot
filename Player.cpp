@@ -20,7 +20,7 @@
 //*****************************************************************************
 #define	MODEL_PLAYER		"Data/model/robo_low.obj"			// 読み込むモデル名(まだ存在してないよ)
 
-#define	VALUE_MOVE			(1.0f)							// 移動量
+#define	VALUE_MOVE			(3.0f)							// 移動量
 
 #define PLAYER_UI_MAX		(1)								// プレイヤーのUIの数
 #define TEXTURE_MAX			(2)								// テクスチャの数
@@ -158,7 +158,7 @@ void UpdatePlayer(void) {
 		if (g_Player.str <= 0)
 		{
 			g_Player.str = 0;
-			g_Player.speed = 0.1f;
+			//g_Player.speed = 0.1f;
 		}
 		//PlaySound(SOUND_LABEL_SE_?????); //ブースター噴射音
 	}

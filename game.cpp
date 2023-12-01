@@ -40,6 +40,7 @@ void CheckHit(void);
 //*****************************************************************************
 
 static bool	g_bPause = true;	// ポーズON/OFF
+static int flag_score = 0;
 static RECT	g_windowPos;
 
 
@@ -202,7 +203,7 @@ void CheckHit(void)
 			
 			// 弾丸とデブリの当たり反応（真）
 			bullet[b].spd = 0.0f;
-			bullet[b].object.SetParent(&debris[d].object);
+			debris[d].object.SetParent(&bullet[b].object);
 		}
 	}
 	//----------------------------------------------------------------------
@@ -213,7 +214,10 @@ void CheckHit(void)
 	// プレイヤーと基地の当たり判定
 	if (CollisionBC(p_pos, basepos, player->size, base->size))
 	{
-		// プレイヤーと基地の当たり反応（真）
+		// プレイヤーと基地の当たり反応（真
+		AddScore(flag_score * 100);
+		flag_score = 0;
+		
 	}
 
 	// デブリ毎に判定
@@ -225,9 +229,20 @@ void CheckHit(void)
 		if (!CollisionBC(p_pos, d_pos, player->size, debris[d].size)) continue;
 		
 		// プレイヤーとデブリの当たり反応（真）
-		PlaySound(SOUND_LABEL_SE_ABSORB);
-		debris[d].use = false;
-		
+		if (!debris[d].object.GetParent() == NULL)
+		{
+			PlaySound(SOUND_LABEL_SE_ABSORB);
+			debris[d].use = false;
+			flag_score += 1;
+			for (int b = 0; b < MAX_BULLET; b++)
+			{			
+				// 弾丸の使用フラグを確認
+				if (!bullet[b].use)continue;
+				bullet[b].object.SetParent(NULL);
+				bullet[b].use = false;
+				bullet[b].spd = 1.0f;
+			}
+		}
 		//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
 	}
 	//----------------------------------------------------------------------
