@@ -334,7 +334,7 @@ void DrawPlayerRestBullet(void)
 	for (int i = 0; i < MAX_BULLET; i++)
 	{
 		BULLET *bullet = GetBullet();
-		if(bullet[i].use)continue;
+		if(bullet[i].object.draw)continue;
 		{
 			// 頂点バッファ設定
 			UINT stride = sizeof(VERTEX_3D);
