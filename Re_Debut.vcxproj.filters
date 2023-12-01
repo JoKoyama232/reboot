@@ -70,6 +70,9 @@
     <ClCompile Include="base.cpp">
       <Filter>ソースファイル\Game</Filter>
     </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -143,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="base.h">
       <Filter>ヘッダーファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ヘッダーファイル\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

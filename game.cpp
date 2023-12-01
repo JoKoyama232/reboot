@@ -19,6 +19,7 @@
 #include "debris.h"
 #include "bullet.h"
 #include "base.h"
+#include "score.h"
 
 #include "game.h"
 //*****************************************************************************
@@ -59,6 +60,8 @@ HRESULT InitGame(void)
 	//時計の初期化
 	InitClock();
 
+	InitScore();
+
 	InitSkybox();
 
 	//マウス非表示
@@ -87,6 +90,9 @@ void UninitGame(void)
 
 	// 時計の終了処理
 	UninitClock();
+
+	UninitScore();
+
 }
 
 //=============================================================================
@@ -144,6 +150,8 @@ void DrawGame(void)
 
 		//ここから下に
 		DrawClock();
+
+		DrawScore();
 
 		DrawPlayerUI();
 
