@@ -41,7 +41,8 @@ HRESULT InitBullet(void)
 		g_Bullet[b].object.SetScale(XMFLOAT3{ 1.0f,1.0f,1.0f });
 		g_Bullet[b].time = 0.0f;
 		g_Bullet[b].spd = 2.0f;
-		g_Bullet[b].use = false;
+		g_Bullet[b].use = true;
+		g_Bullet[b].object.draw = false;
 		g_Bullet[b].size = BULLET_SIZE;
 
 
@@ -68,7 +69,20 @@ void UpdateBullet(void)
 {
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
-		if (!g_Bullet[b].use)continue;
+		// 弾丸にペアレントがありかつそのペアレントの描画フラグが偽の時
+		if (g_Bullet[b].object.GetParent() && !g_Bullet[b].object.GetParent()->draw) {
+			g_Bullet[b].use = false;
+			
+		}
+
+		// 弾丸の使用フラグを確認
+		if (!g_Bullet[b].use) 
+		{
+			g_Bullet[b].object.draw = false;
+			continue;
+		}
+		
+
 		//PLAYER* player = GetPlayer();
 		//XMFLOAT3 p_pos = player->object.GetPositionFloat();
 		XMFLOAT3 b_pos = g_Bullet[b].object.GetPositionFloat();
@@ -80,6 +94,7 @@ void UpdateBullet(void)
 		b_pos.z += cosf(b_rot.y) * g_Bullet[b].spd;
 
 		g_Bullet[b].object.SetPosition(b_pos);
+
 	}
 }
 
@@ -92,11 +107,9 @@ void DrawBullet(void)
 	// カリング無効
 	SetCullingMode(CULL_MODE_NONE);
 
-	
-
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
-		if (!g_Bullet[b].use) continue;
+		if (!g_Bullet[b].object.draw) continue;
 
 		// ワールドマトリックスの初期化
 		mtxWorld = XMMatrixIdentity();
@@ -156,13 +169,14 @@ int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot)
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
 		// バレットが使用中か？
-		if (g_Bullet[nCntBullet].use)continue;
+		if (g_Bullet[nCntBullet].object.draw)continue;
 		
 		// バレットの発射時変数設定
 		g_Bullet[nCntBullet].object.SetPosition(pos);
 		g_Bullet[nCntBullet].object.SetRotation(rot);
 		g_Bullet[nCntBullet].object.SetScale({ XMFLOAT3(1.0f,1.0f,1.0f) });
 		g_Bullet[nCntBullet].use = true;
+		g_Bullet[nCntBullet].object.draw = true;
 
 		// 最後に発射されたバレットインデックスを更新
 		nIdxBullet = nCntBullet;
@@ -171,9 +185,7 @@ int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot)
 		//PlaySound(SOUND_LABEL_SE_shot000);
 
 		break;
-		
 	}
 	// 発射成功時にバレットのインデックスをを返す（無視してもよい）	
 	return nIdxBullet;
-
 }

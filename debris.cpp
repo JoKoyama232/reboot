@@ -52,6 +52,7 @@ HRESULT InitDebris(void) {
 		g_Debris[i].time = 0.0f;
 		g_Debris[i].speed = 0.0f;			// 移動スピードクリア
 		g_Debris[i].use = true;
+		g_Debris[i].object.draw = true;
 		g_Debris[i].size = DEBRIS_SIZE;
 		g_LastUpdate = 0.0f;
 
@@ -77,26 +78,26 @@ void UpdateDebris(void) {
 	// デブリ変数取得
 	for (int i = 0; i < MAX_DEBRIS; i++)
 	{
+		// デブリの使用フラグを確認
+		if (!g_Debris[i].use)
+		{
+			g_Debris[i].object.draw = false;
+			continue;
+		}
 
 		XMFLOAT3 position = g_Debris[i].object.GetPositionFloat();
 		XMFLOAT3 rotation = g_Debris[i].object.GetRotationFloat();
 
-		if (g_Debris[i].use)
-		{
+		
+		
+		// 
+		rotation.x += (i + 1) * 0.005f;
+		rotation.y += ((rand() % 5) + 1) * 0.001f;
+		rotation.z += ((MAX_DEBRIS + 1) - i) * 0.005f;
 
-			rotation.x += (i + 1) * 0.005f;
-			rotation.y += ((rand() % 5) + 1) * 0.001f;
-			rotation.z += ((MAX_DEBRIS + 1) - i) * 0.005f;
-
-
-
-			// 移動回転を反映
-			g_Debris[i].object.SetPosition(position);
-			g_Debris[i].object.SetRotation(rotation);
-
-		}
-
-
+		// 移動回転を反映
+		g_Debris[i].object.SetPosition(position);
+		g_Debris[i].object.SetRotation(rotation);
 	}
 
 }
@@ -110,7 +111,7 @@ void DrawDebris(void) {
 
 	for (int i = 0; i < MAX_DEBRIS; i++)
 	{
-		if (!g_Debris[i].use) continue;
+		if (!g_Debris[i].object.draw) continue;
 		// ワールドマトリックスの初期化
 		mtxWorld = XMMatrixIdentity();
 
