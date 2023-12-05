@@ -217,7 +217,13 @@ void CheckHit(void)
 		// プレイヤーと基地の当たり反応（真
 		AddScore(flag_score * 100);
 		flag_score = 0;
-		
+		for (int i = 0; i < MAX_BULLET; i++)
+		{
+			if (!bullet[i].use)continue;
+			{
+				bullet[i].use = false;
+			}
+		}
 	}
 
 	// デブリ毎に判定
