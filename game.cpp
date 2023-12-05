@@ -238,9 +238,12 @@ void CheckHit(void)
 			{			
 				// 弾丸の使用フラグを確認
 				if (!bullet[b].use)continue;
-				bullet[b].object.SetParent(NULL);
-				bullet[b].use = false;
-				bullet[b].spd = 1.0f;
+				if (bullet[b].spd < 1.0f)
+				{
+					debris[d].object.SetParent(NULL);
+					bullet[b].use = false;
+					bullet[b].spd = 1.0f;
+				}
 			}
 		}
 		//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
