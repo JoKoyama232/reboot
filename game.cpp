@@ -127,7 +127,6 @@ void DrawGame(void)
 
 	// プレイヤー視点
 	pos = GetPlayer()->object.GetPositionFloat();
-	pos.y = 0.0f;			// カメラ酔いを防ぐためにクリアしている
 	SetCameraAT(pos);
 	SetCamera();
 
@@ -217,7 +216,13 @@ void CheckHit(void)
 		// プレイヤーと基地の当たり反応（真
 		AddScore(flag_score * 100);
 		flag_score = 0;
-		
+		for (int i = 0; i < MAX_BULLET; i++)
+		{
+			if (!bullet[i].use)continue;
+			{
+				bullet[i].use = false;
+			}
+		}
 	}
 
 	// デブリ毎に判定
@@ -238,9 +243,12 @@ void CheckHit(void)
 			{			
 				// 弾丸の使用フラグを確認
 				if (!bullet[b].use)continue;
-				bullet[b].object.SetParent(NULL);
-				bullet[b].use = false;
-				bullet[b].spd = 1.0f;
+				if (bullet[b].spd < 1.0f)
+				{
+					debris[d].object.SetParent(NULL);
+					bullet[b].use = false;
+					bullet[b].spd = 1.0f;
+				}
 			}
 		}
 		//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
