@@ -210,7 +210,7 @@ void SetCamera(void)
 
 	SetProjectionMatrix(&mtxProjection);
 	XMStoreFloat4x4(&g_Camera.mtxProjection, mtxProjection);
-	PrintDebugProc((char*)"camera\n%f %f %f", g_Camera.pos.x, g_Camera.pos.y, g_Camera.pos.z);
+	PrintDebugProc((char*)"camera\n%f %f %f\n%f %f %f", g_Camera.pos.x, g_Camera.pos.y, g_Camera.pos.z, g_Camera.at.x, g_Camera.at.y, g_Camera.at.z);
 	SetShaderCamera(g_Camera.pos);
 }
 

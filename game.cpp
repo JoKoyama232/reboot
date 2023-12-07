@@ -127,7 +127,6 @@ void DrawGame(void)
 
 	// プレイヤー視点
 	pos = GetPlayer()->object.GetPositionFloat();
-	pos.y = 0.0f;			// カメラ酔いを防ぐためにクリアしている
 	SetCameraAT(pos);
 	SetCamera();
 

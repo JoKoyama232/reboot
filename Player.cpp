@@ -106,7 +106,7 @@ void UpdatePlayer(void) {
 	CAMERA* cam = GetCamera();
 	XMFLOAT3 camPosition = cam->pos;
 	XMFLOAT3 camRotation = cam->rot;
-
+	XMFLOAT3 camat = cam->at;
 	// 入力検知
 	if (GetKeyboardPress(DIK_A) || IsButtonTriggered(0, BUTTON_LEFT))
 	{	// 左
@@ -150,6 +150,19 @@ void UpdatePlayer(void) {
 		}
 
 	}
+
+	if (GetKeyboardPress(DIK_Q))
+	{
+		position.y += 1.0f;
+		camat.y += 1.0f;
+	}
+
+	if (GetKeyboardPress(DIK_Z))
+	{
+		position.y -= 1.0f;
+		camat.y -= 1.0f;
+	}
+
 
 	//スタミナゲージ処理&移動中のSE処理
 	if (g_Player.speed == VALUE_MOVE)
