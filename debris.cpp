@@ -90,7 +90,7 @@ void UpdateDebris(void) {
 
 		
 		
-		// 
+		// ‚®‚é‚®‚é‰ñ“]
 		rotation.x += (i + 1) * 0.005f;
 		rotation.y += ((rand() % 5) + 1) * 0.001f;
 		rotation.z += ((MAX_DEBRIS + 1) - i) * 0.005f;
