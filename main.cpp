@@ -150,13 +150,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 #endif
 				dwFPSLastTime = dwCurrentTime;				// FPSを測定した時刻を保存
 				dwFrameCount = 0;							// カウントをクリア
-				AddClock(1);
+				
 			}
 
 			if ((dwCurrentTime - dwExecLastTime) >= (1000 / 60))	// 1/60秒ごとに実行
 			{
 				dwExecLastTime = dwCurrentTime;	// 処理した時刻を保存
-
+				AddClock(1);
 #ifdef _DEBUG	// デバッグ版の時だけFPSを表示する
 				wsprintf(g_DebugStr, WINDOW_NAME);
 				wsprintf(&g_DebugStr[strlen(g_DebugStr)], " FPS:%d", g_CountFPS);
