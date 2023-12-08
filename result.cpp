@@ -13,6 +13,7 @@
 #include "sprite.h"
 #include "result.h"
 #include "result_tex.h"
+#include "Skybox.h"
 
 //#include "title_field.h"
 //#include "model.h"
@@ -26,6 +27,8 @@ HRESULT InitResult(void)
 {
 	InitResultTex();
 
+	InitSkybox();
+
 	//マウス表示
 	ShowCursor(true);
 	return S_OK;
@@ -38,6 +41,8 @@ HRESULT InitResult(void)
 void UninitResult(void)
 {
 	UninitResultTex();
+
+	UninitSkybox();
 }
 
 //=============================================================================
@@ -46,6 +51,8 @@ void UninitResult(void)
 void UpdateResult(void)
 {
 	UpdateResultTex();
+
+	UpdateSkybox();
 }
 
 
@@ -55,7 +62,7 @@ void UpdateResult(void)
 //=============================================================================
 void DrawResult(void)
 {
-
+	DrawSkybox();
 
 
 

@@ -9,6 +9,7 @@
 #include "clock.h"
 #include "sprite.h"
 #include "fade.h"
+#include "sound.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -40,11 +41,11 @@ static float					g_w, g_h;					// 幅と高さ
 static XMFLOAT3					g_Pos;						// ポリゴンの座標
 static int						g_TexNo;					// テクスチャ番号
 
-static int						g_Clock;					// スコア
+static float					g_Clock;					// スコア
 static int						g_Count;				// カウント
 
 static BOOL						g_Load = FALSE;
-
+static bool						g_falg = false;
 
 //=============================================================================
 // 初期化処理
@@ -82,7 +83,7 @@ HRESULT InitClock(void)
 	g_h = TEXTURE_HEIGHT + 10;
 	g_Pos = { 200.0f, 40.0f, 0.0f };
 	g_TexNo = 0;
-
+	g_falg = false;
 	g_Clock = CLOCK_MAX;	// スコアの初期化
 
 	g_Load = TRUE;
@@ -119,12 +120,22 @@ void UninitClock(void)
 //=============================================================================
 void UpdateClock(void)
 {
-	if (g_Clock <= 0)	//3600フレーム(約1分)たったらゲームリザルトに行く
+	if (g_Clock <= 0.0f)	//3600フレーム(約1分)たったらゲームリザルトに行く
 	{
 		SetFade(FADE_OUT, MODE_RESULT);
 
 	}
 
+	if (g_Clock == 90.0f)
+	{
+		g_falg = true;
+	}
+
+	if (g_falg == true)
+	{
+		PlaySound(SOUND_LABEL_SE_ALARM);
+		g_falg = false;
+	}
 
 #ifdef _DEBUG	// デバッグ情報を表示する
 	//char *str = GetDebugStr();

@@ -45,6 +45,7 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ (char*)"Data/SE/zippo.wav", SE, 0, 0.1f},
 	{ (char*)"Data/SE/bullet.wav", SE, 0, 0.1f},
 	{ (char*)"Data/SE/absorb.wav", SE, 0, 0.1f},
+	{ (char*)"Data/SE/alarm.wav", SE, 0, 0.1f},
 
 };
 
