@@ -17,6 +17,7 @@
 #include "clock.h"
 #include "Player.h"
 #include "debris.h"
+#include "antenna.h"
 #include "bullet.h"
 #include "base.h"
 #include "score.h"
@@ -53,6 +54,8 @@ HRESULT InitGame(void)
 
 	InitDebris();
 
+	InitAntenna();
+
 	InitBase();
 
 	//’e(ƒ‚ƒ`)‚Ì‰Šú‰»
@@ -82,6 +85,8 @@ void UninitGame(void)
 
 	UninitDebris();
 
+	UninitAntenna();
+
 	UninitBase();
 
 	UninitSkybox();
@@ -104,6 +109,8 @@ void UpdateGame(void)
 	UpdatePlayer();
 
 	UpdateDebris();
+
+	UpdateAntenna();
 
 	UpdateBase();
 	//’e(ƒ‚ƒ`)‚ÌXVˆ—
@@ -135,6 +142,8 @@ void DrawGame(void)
 	DrawPlayer();
 
 	DrawDebris();
+
+	DrawAntenna();
 
 	DrawBase();
 	//’e(ƒ‚ƒ`)‚Ì•`‰æˆ—
