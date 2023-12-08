@@ -17,7 +17,7 @@
 #define TEXTURE_WIDTH				(32)	// キャラサイズ
 #define TEXTURE_HEIGHT				(64)	// 
 #define TEXTURE_MAX					(1)		// テクスチャの数
-#define CLOCK_MAX			(100)		// 制限時間(秒数)
+#define CLOCK_MAX			(6000)		// 制限時間(秒数)
 #define CLOCK_DIGIT			(4)			// 桁数
 
 //*****************************************************************************
@@ -123,20 +123,23 @@ void UpdateClock(void)
 	if (g_Clock <= 0.0f)	//3600フレーム(約1分)たったらゲームリザルトに行く
 	{
 		SetFade(FADE_OUT, MODE_RESULT);
-
+		g_Clock = 0.0f;
 	}
 
-	if (g_Clock == 90.0f)
+	if (g_Clock == 5000.0f)
 	{
 		g_falg = true;
-	}
-
-	if (g_falg == true)
-	{
 		PlaySound(SOUND_LABEL_SE_ALARM);
-		g_falg = false;
+		StopSound(SOUND_LABEL_BGM_stage1);
 	}
 
+	if (g_Clock == 4600.0f)
+	{
+		PlaySound(SOUND_LABEL_BGM_stage1);
+	}
+
+
+	
 #ifdef _DEBUG	// デバッグ情報を表示する
 	//char *str = GetDebugStr();
 	//sprintf(&str[strlen(str)], " PX:%.2f PY:%.2f", g_Pos.x, g_Pos.y);
@@ -175,7 +178,7 @@ void DrawClock(void)
 	for (int i = 0; i < CLOCK_DIGIT; i++)
 	{
 		// 今回表示する桁の数字
-		float x = (float)(number % 10);
+		float x = (float)(number);
 
 		// スコアの位置やテクスチャー座標を反映
 		float px = g_Pos.x - g_w * i;	// スコアの表示位置X
