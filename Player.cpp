@@ -155,9 +155,10 @@ void UpdatePlayer(void) {
 	{
 		position.y += 1.0f;
 		camat.y += 1.0f;
+		g_Player.str -= 0.3f;
 	}
 
-	if (GetKeyboardPress(DIK_Z))
+	else if (GetKeyboardPress(DIK_Z))
 	{
 		position.y -= 1.0f;
 		camat.y -= 1.0f;
@@ -167,7 +168,7 @@ void UpdatePlayer(void) {
 	//スタミナゲージ処理&移動中のSE処理
 	if (g_Player.speed == VALUE_MOVE)
 	{
-		g_Player.str -= 0.25f;
+		g_Player.str -= 0.3f;
 		if (g_Player.str <= 0)
 		{
 			g_Player.str = 0;
@@ -188,7 +189,6 @@ void UpdatePlayer(void) {
 	// XZ平面移動
 	// プレイヤーの向いている方向をカメラからオフセット
 	rotation.y = g_Player.direction + camRotation.y;
-
 	// 入力のあった方向へプレイヤーを向かせて移動させる
 	// プレイヤーの向いている方向を保存
 	float deltaX = sinf(rotation.y) * g_Player.speed;
