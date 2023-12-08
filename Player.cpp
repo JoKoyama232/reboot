@@ -246,13 +246,8 @@ void DrawPlayer(void) {
 
 	XMStoreFloat4x4(g_Player.object.GetWorldMatrixPointer(), mtxWorld);
 
-	// ‰æ‚è‚Ìİ’è
-	SetFuchi(1);
-
 	// ƒ‚ƒfƒ‹•`‰æ
 	DrawModel(&g_Player.object.modelInfo);
-
-	SetFuchi(0);
 
 	// ƒJƒŠƒ“ƒOİ’è‚ğ–ß‚·
 	SetCullingMode(CULL_MODE_BACK);

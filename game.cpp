@@ -179,10 +179,11 @@ void DrawGame(void)
 //=============================================================================
 void CheckHit(void)
 {
-	XMFLOAT3 p_pos, d_pos, b_pos, basepos;
+	XMFLOAT3 p_pos, d_pos, b_pos, a_pos, basepos;
 	PLAYER* player = GetPlayer();			// プレイヤー情報
 	DEBRIS* debris = GetDebris();			// デブリ情報
 	BULLET* bullet = GetBullet();			// 弾丸情報
+	ANTENNA* antenna = GetAntenna();
 	BASE* base = GetBase();					// 基地情報
 	p_pos = GetPlayer()->object.GetPositionFloat();
 	basepos = GetBase()->object.GetPositionFloat();
@@ -194,7 +195,8 @@ void CheckHit(void)
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
 		// 弾丸の使用フラグを確認、またペアレントされていれば当たり判定を行われない
-		if (!bullet[b].use || bullet[b].object.GetParent()) continue;
+		if (!bullet[b].use) continue;
+		b_pos = bullet[b].object.GetPositionFloat();
 
 		// バレット対デブリ当たり判定
 		for (int d = 0; d < MAX_DEBRIS; d++)
@@ -202,8 +204,7 @@ void CheckHit(void)
 			// デブリの使用フラグ確認
 			if (!debris[d].use) continue;
 			
-			// 弾丸とデブリの座標をゲット
-			b_pos = bullet[b].object.GetPositionFloat();
+			//使用フラグをチェックしたら座標をゲット
 			d_pos = debris[d].object.GetPositionFloat();
 
 			// 弾丸とデブリの当たり判定
@@ -213,11 +214,29 @@ void CheckHit(void)
 			bullet[b].spd = 0.0f;
 			debris[d].object.SetParent(&bullet[b].object);
 		}
+
+
+		//バレットとアンテナの当たり判定
+		for (int a = 0; a < MAX_ANTENNA; a++)
+		{
+			//アンテナの使用フラグをチェック
+			if (!antenna[a].use)continue;
+			//使用フラグをチェックしたら座標をゲット
+			a_pos = antenna[a].object.GetPositionFloat();
+
+			// 弾丸とアンテナの当たり判定
+			if (!CollisionBC(b_pos, a_pos, bullet[b].size, antenna[a].size))continue;
+			
+			bullet[b].spd = 0.0f;
+			antenna[a].object.SetParent(&antenna[a].object);
+			
+		}
 	}
 	//----------------------------------------------------------------------
 
-	// プレイヤーの当たり判定-------------------------------------------------
 
+
+	// プレイヤーの当たり判定-------------------------------------------------
 	bool unload = false;		// 保持しているデブリを回収
 	// プレイヤーと基地の当たり判定
 	if (CollisionBC(p_pos, basepos, player->size, base->size))
@@ -234,12 +253,16 @@ void CheckHit(void)
 		}
 	}
 
-	// デブリ毎に判定
+	// デブリとの処理
 	for (int d = 0; d < MAX_DEBRIS; d++)
 	{
 		// デブリの使用フラグ確認
 		if (!debris[d].use) continue;
+
+		//使用フラグをチェックしたら座標をゲット
 		d_pos = debris[d].object.GetPositionFloat();
+		
+		// プレイヤーとデブリの当たり判定
 		if (!CollisionBC(p_pos, d_pos, player->size, debris[d].size)) continue;
 		
 		// プレイヤーとデブリの当たり反応（真）
@@ -248,6 +271,8 @@ void CheckHit(void)
 			PlaySound(SOUND_LABEL_SE_ABSORB);
 			debris[d].use = false;
 			flag_score += 1;
+
+			// ペアレントしたバレットの解放処理
 			for (int b = 0; b < MAX_BULLET; b++)
 			{			
 				// 弾丸の使用フラグを確認
@@ -262,7 +287,39 @@ void CheckHit(void)
 		}
 		//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
 	}
-	//----------------------------------------------------------------------
+
+	// アンテナのと処理
+	for (int a = 0; a < MAX_ANTENNA; a++)
+	{
+		//アンテナの使用フラグをチェック
+		if (!antenna[a].use)continue;
+		//使用フラグをチェックしたら座標をゲット
+		a_pos = antenna[a].object.GetPositionFloat();
+
+		// プレイヤーとアンテナの当たり判定
+		if (!CollisionBC(p_pos, a_pos, player->size, antenna[a].size)) continue;
+		// プレイヤーとアンテナの当たり反応（真）
+		if (!antenna[a].object.GetParent() == NULL)
+		{
+			PlaySound(SOUND_LABEL_SE_ABSORB);
+			antenna[a].use = false;
+			flag_score += 5;
+			
+			// ペアレントしたバレットの解放処理
+			for (int b = 0; b < MAX_BULLET; b++)
+			{
+				// 弾丸の使用フラグを確認
+				if (!bullet[b].use)continue;
+				if (bullet[b].spd < 1.0f)
+				{
+					antenna[a].object.SetParent(NULL);
+					bullet[b].use = false;
+					bullet[b].spd = 1.0f;
+				}
+			}
+		}
+	}
+		//----------------------------------------------------------------------
 
 }
 
