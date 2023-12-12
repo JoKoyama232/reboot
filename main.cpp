@@ -21,6 +21,7 @@
 #include "solarpanel.h"
 #include "hatch.h"
 #include "pod.h"
+#include "satellite.h"
 #include "Intro.h"
 #include "light.h"
 //ÉVÅ[Éì

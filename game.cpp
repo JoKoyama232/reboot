@@ -21,6 +21,7 @@
 #include "solarpanel.h"
 #include "hatch.h"
 #include "pod.h"
+#include "satellite.h"
 #include "bullet.h"
 #include "base.h"
 #include "score.h"
@@ -65,6 +66,8 @@ HRESULT InitGame(void)
 
 	InitPod();
 
+	InitSatellite();
+
 	InitBase();
 
 	//’e(ƒ‚ƒ`)‚Ì‰Šú‰»
@@ -102,6 +105,8 @@ void UninitGame(void)
 
 	UninitPod();
 
+	UninitSatellite();
+
 	UninitBase();
 
 	UninitSkybox();
@@ -132,6 +137,8 @@ void UpdateGame(void)
 	UpdateHatch();
 
 	UpdatePod();
+
+	UpdateSatellite();
 
 	UpdateBase();
 	//’e(ƒ‚ƒ`)‚ÌXVˆ—
@@ -171,6 +178,8 @@ void DrawGame(void)
 	DrawHatch();
 
 	DrawPod();
+
+	DrawSatellite();
 
 	DrawBase();
 	//’e(ƒ‚ƒ`)‚Ì•`‰æˆ—
