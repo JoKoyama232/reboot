@@ -18,6 +18,11 @@
 #include "Player.h"
 #include "debris.h"
 #include "antenna.h"
+#include "solarpanel.h"
+#include "hatch.h"
+#include "pod.h"
+#include "satellite.h"
+#include "rocket.h"
 #include "Intro.h"
 #include "light.h"
 //ÉVÅ[Éì

@@ -76,6 +76,21 @@
     <ClCompile Include="antenna.cpp">
       <Filter>ソースファイル\Game</Filter>
     </ClCompile>
+    <ClCompile Include="solarpanel.cpp">
+      <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="hatch.cpp">
+      <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="pod.cpp">
+      <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="satellite.cpp">
+      <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="rocket.cpp">
+      <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -154,6 +169,21 @@
       <Filter>ヘッダーファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="antenna.h">
+      <Filter>ヘッダーファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="solarpanel.h">
+      <Filter>ヘッダーファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="hatch.h">
+      <Filter>ヘッダーファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="pod.h">
+      <Filter>ヘッダーファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="satellite.h">
+      <Filter>ヘッダーファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="rocket.h">
       <Filter>ヘッダーファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>

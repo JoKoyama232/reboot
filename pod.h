@@ -1,5 +1,5 @@
 //=============================================================================
-// デブリ処理 [antenna.h]
+// デブリ処理 [pod.h]
 // Author : 小井詰　礼
 //=============================================================================
 #pragma once
@@ -8,14 +8,14 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MAX_ANTENNA		(5)					// デブリの数
-#define	ANTENNA_SIZE		(10.0f)				// 当たり判定の大きさ
+#define MAX_POD		(5)					// デブリの数
+#define	POD_SIZE		(5.0f)				// 当たり判定の大きさ
 
 
 //*****************************************************************************
 // 構造体定義
 //*****************************************************************************
-struct ANTENNA
+struct POD
 {
 	WorldSpace			object;
 
@@ -33,10 +33,11 @@ struct ANTENNA
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitAntenna(void);
-void UninitAntenna(void);
-void UpdateAntenna(void);
-void DrawAntenna(void);
-ANTENNA* GetAntenna(void);
+HRESULT InitPod(void);
+void UninitPod(void);
+void UpdatePod(void);
+void DrawPod(void);
+POD* GetPod(void);
 XMFLOAT3 GetLerp(XMFLOAT3 initialPos, XMFLOAT3 endingPos, float percentage);
 float GetDistance3D(XMFLOAT3 pos1, XMFLOAT3 pos2);
+

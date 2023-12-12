@@ -18,6 +18,11 @@
 #include "Player.h"
 #include "debris.h"
 #include "antenna.h"
+#include "solarpanel.h"
+#include "hatch.h"
+#include "pod.h"
+#include "satellite.h"
+#include "rocket.h"
 #include "bullet.h"
 #include "base.h"
 #include "score.h"
@@ -56,6 +61,16 @@ HRESULT InitGame(void)
 
 	InitAntenna();
 
+	InitPanel();
+
+	InitHatch();
+
+	InitPod();
+
+	InitSatellite();
+
+	InitRocket();
+
 	InitBase();
 
 	//’e(ƒ‚ƒ`)‚Ì‰Šú‰»
@@ -87,6 +102,16 @@ void UninitGame(void)
 
 	UninitAntenna();
 
+	UninitPanel();
+
+	UninitHatch();
+
+	UninitPod();
+
+	UninitSatellite();
+
+	UninitRocket();
+
 	UninitBase();
 
 	UninitSkybox();
@@ -111,6 +136,16 @@ void UpdateGame(void)
 	UpdateDebris();
 
 	UpdateAntenna();
+
+	UpdatePanel();
+
+	UpdateHatch();
+
+	UpdatePod();
+
+	UpdateSatellite();
+
+	UpdateRocket();
 
 	UpdateBase();
 	//’e(ƒ‚ƒ`)‚ÌXVˆ—
@@ -144,6 +179,16 @@ void DrawGame(void)
 	DrawDebris();
 
 	DrawAntenna();
+
+	DrawPanel();
+
+	DrawHatch();
+
+	DrawPod();
+
+	DrawSatellite();
+
+	DrawRocket();
 
 	DrawBase();
 	//’e(ƒ‚ƒ`)‚Ì•`‰æˆ—
