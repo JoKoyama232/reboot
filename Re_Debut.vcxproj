@@ -164,6 +164,7 @@
     <ClCompile Include="result.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="solarpanel.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="title.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="result_tex.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="solarpanel.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="title.h" />
