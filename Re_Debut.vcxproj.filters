@@ -82,6 +82,9 @@
     <ClCompile Include="hatch.cpp">
       <Filter>ソースファイル\Game</Filter>
     </ClCompile>
+    <ClCompile Include="pod.cpp">
+      <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -166,6 +169,9 @@
       <Filter>ヘッダーファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="hatch.h">
+      <Filter>ヘッダーファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="pod.h">
       <Filter>ヘッダーファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,6 +20,7 @@
 #include "antenna.h"
 #include "solarpanel.h"
 #include "hatch.h"
+#include "pod.h"
 #include "Intro.h"
 #include "light.h"
 //ÉVÅ[Éì
