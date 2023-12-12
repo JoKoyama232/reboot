@@ -194,7 +194,7 @@ void CheckHit(void)
 	// 弾丸毎の当たり判定----------------------------------------------------
 	for (int b = 0; b < MAX_BULLET; b++)
 	{
-		// 弾丸の使用フラグを確認、またペアレントされていれば当たり判定を行われない
+		// 弾丸の使用フラグを確認
 		if (!bullet[b].use) continue;
 		b_pos = bullet[b].object.GetPositionFloat();
 
@@ -212,6 +212,7 @@ void CheckHit(void)
 			
 			// 弾丸とデブリの当たり反応（真）
 			bullet[b].spd = 0.0f;
+			debris[d].flag_rotate = false;
 			debris[d].object.SetParent(&bullet[b].object);
 		}
 
@@ -228,6 +229,7 @@ void CheckHit(void)
 			if (!CollisionBC(b_pos, a_pos, bullet[b].size, antenna[a].size))continue;
 			
 			bullet[b].spd = 0.0f;
+			antenna[a].flag_rotate = false;
 			antenna[a].object.SetParent(&antenna[a].object);
 			
 		}
@@ -246,7 +248,7 @@ void CheckHit(void)
 		flag_score = 0;
 		for (int i = 0; i < MAX_BULLET; i++)
 		{
-			if (!bullet[i].use)continue;
+			if (!bullet[i].spd == 1.0f)continue;
 			{
 				bullet[i].use = false;
 			}

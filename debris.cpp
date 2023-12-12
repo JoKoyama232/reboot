@@ -52,6 +52,7 @@ HRESULT InitDebris(void) {
 		g_Debris[i].time = 0.0f;
 		g_Debris[i].speed = 0.0f;			// 移動スピードクリア
 		g_Debris[i].use = true;
+		g_Debris[i].flag_rotate = true;
 		g_Debris[i].object.draw = true;
 		g_Debris[i].size = DEBRIS_SIZE;
 		g_LastUpdate = 0.0f;
@@ -88,12 +89,13 @@ void UpdateDebris(void) {
 		XMFLOAT3 position = g_Debris[i].object.GetPositionFloat();
 		XMFLOAT3 rotation = g_Debris[i].object.GetRotationFloat();
 
-		
-		
-		// ぐるぐる回転
-		rotation.x += (i + 1) * 0.005f;
-		rotation.y += ((rand() % 5) + 1) * 0.001f;
-		rotation.z += ((MAX_DEBRIS + 1) - i) * 0.005f;
+		if (!g_Debris[i].flag_rotate)continue;
+		{
+			// ぐるぐる回転
+			rotation.x += (i + 1) * 0.001f;
+			rotation.y += ((rand() % 5) + 1) * 0.001f;
+			rotation.z += ((MAX_DEBRIS + 1) - i) * 0.001f;
+		}
 
 		// 移動回転を反映
 		g_Debris[i].object.SetPosition(position);
