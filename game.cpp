@@ -224,14 +224,25 @@ void DrawGame(void)
 //=============================================================================
 void CheckHit(void)
 {
-	XMFLOAT3 p_pos, d_pos, b_pos, a_pos, basepos;
+	// 各オブジェクトの位置を定義
+	XMFLOAT3 podPos, basePos, hatchPos, panelPos, playerPos,
+		debrisPos, bulletPos, rokeckPos, antennaPos, satellitePos;
+
+	// 各オブジェクトの情報を取得
+	POD* pod = GetPod();					// ポッド情報
+	BASE* base = GetBase();					// 基地情報
+	HATCH* hatch = GetHatch();				// ハッチ情報
+	PANEL* panel = GetPanel();				// ソーラーパネル情報
 	PLAYER* player = GetPlayer();			// プレイヤー情報
 	DEBRIS* debris = GetDebris();			// デブリ情報
 	BULLET* bullet = GetBullet();			// 弾丸情報
-	ANTENNA* antenna = GetAntenna();
-	BASE* base = GetBase();					// 基地情報
-	p_pos = GetPlayer()->object.GetPositionFloat();
-	basepos = GetBase()->object.GetPositionFloat();
+	ROCKET* rocket = GetRocket();			// ロケット情報
+	ANTENNA* antenna = GetAntenna();		// アンテナ情報
+	SATELLITE* satellite = GetSatellite();  // サテライト情報
+	
+	// 1つしか使わないオブジェクトの位置をあらかじめ定義
+	playerPos = GetPlayer()->object.GetPositionFloat();
+	basePos = GetBase()->object.GetPositionFloat();
 
 	// プレイヤーが使われていないのなら当たり判定も必要ないためまずプレイヤーの使用フラグ確認
 	if (!player->use) return;
@@ -241,7 +252,7 @@ void CheckHit(void)
 	{
 		// 弾丸の使用フラグを確認
 		if (!bullet[b].use) continue;
-		b_pos = bullet[b].object.GetPositionFloat();
+		bulletPos = bullet[b].object.GetPositionFloat();
 
 		// バレット対デブリ当たり判定
 		for (int d = 0; d < MAX_DEBRIS; d++)
@@ -250,10 +261,10 @@ void CheckHit(void)
 			if (!debris[d].use) continue;
 			
 			//使用フラグをチェックしたら座標をゲット
-			d_pos = debris[d].object.GetPositionFloat();
+			debrisPos = debris[d].object.GetPositionFloat();
 
 			// 弾丸とデブリの当たり判定
-			if (!CollisionBC(b_pos, d_pos, bullet[b].size, debris[d].size)) continue;
+			if (!CollisionBC(bulletPos, debrisPos, bullet[b].size, debris[d].size)) continue;
 			
 			// 弾丸とデブリの当たり反応（真）
 			bullet[b].spd = 0.0f;
@@ -268,10 +279,10 @@ void CheckHit(void)
 			//アンテナの使用フラグをチェック
 			if (!antenna[a].use)continue;
 			//使用フラグをチェックしたら座標をゲット
-			a_pos = antenna[a].object.GetPositionFloat();
+			antennaPos = antenna[a].object.GetPositionFloat();
 
 			// 弾丸とアンテナの当たり判定
-			if (!CollisionBC(b_pos, a_pos, bullet[b].size, antenna[a].size))continue;
+			if (!CollisionBC(bulletPos, antennaPos, bullet[b].size, antenna[a].size))continue;
 			
 			bullet[b].spd = 0.0f;
 			antenna[a].flag_rotate = false;
@@ -286,7 +297,7 @@ void CheckHit(void)
 	// プレイヤーの当たり判定-------------------------------------------------
 	bool unload = false;		// 保持しているデブリを回収
 	// プレイヤーと基地の当たり判定
-	if (CollisionBC(p_pos, basepos, player->size, base->size))
+	if (CollisionBC(playerPos, basePos, player->size, base->size))
 	{
 		// プレイヤーと基地の当たり反応（真
 		if (!flag_score == 0)
@@ -312,10 +323,10 @@ void CheckHit(void)
 		if (!debris[d].use) continue;
 
 		//使用フラグをチェックしたら座標をゲット
-		d_pos = debris[d].object.GetPositionFloat();
+		debrisPos = debris[d].object.GetPositionFloat();
 		
 		// プレイヤーとデブリの当たり判定
-		if (!CollisionBC(p_pos, d_pos, player->size, debris[d].size)) continue;
+		if (!CollisionBC(playerPos, debrisPos, player->size, debris[d].size)) continue;
 		
 		// プレイヤーとデブリの当たり反応（真）
 		if (!debris[d].object.GetParent() == NULL)
@@ -346,10 +357,10 @@ void CheckHit(void)
 		//アンテナの使用フラグをチェック
 		if (!antenna[a].use)continue;
 		//使用フラグをチェックしたら座標をゲット
-		a_pos = antenna[a].object.GetPositionFloat();
+		antennaPos = antenna[a].object.GetPositionFloat();
 
 		// プレイヤーとアンテナの当たり判定
-		if (!CollisionBC(p_pos, a_pos, player->size, antenna[a].size)) continue;
+		if (!CollisionBC(playerPos, antennaPos, player->size, antenna[a].size)) continue;
 		// プレイヤーとアンテナの当たり反応（真）
 		if (!antenna[a].object.GetParent() == NULL)
 		{
