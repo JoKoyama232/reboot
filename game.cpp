@@ -22,6 +22,7 @@
 #include "hatch.h"
 #include "pod.h"
 #include "satellite.h"
+#include "rocket.h"
 #include "bullet.h"
 #include "base.h"
 #include "score.h"
@@ -68,6 +69,8 @@ HRESULT InitGame(void)
 
 	InitSatellite();
 
+	InitRocket();
+
 	InitBase();
 
 	//’e(ƒ‚ƒ`)‚Ì‰Šú‰»
@@ -107,6 +110,8 @@ void UninitGame(void)
 
 	UninitSatellite();
 
+	UninitRocket();
+
 	UninitBase();
 
 	UninitSkybox();
@@ -139,6 +144,8 @@ void UpdateGame(void)
 	UpdatePod();
 
 	UpdateSatellite();
+
+	UpdateRocket();
 
 	UpdateBase();
 	//’e(ƒ‚ƒ`)‚ÌXVˆ—
@@ -180,6 +187,8 @@ void DrawGame(void)
 	DrawPod();
 
 	DrawSatellite();
+
+	DrawRocket();
 
 	DrawBase();
 	//’e(ƒ‚ƒ`)‚Ì•`‰æˆ—

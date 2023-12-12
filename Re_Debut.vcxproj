@@ -164,6 +164,7 @@
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="rocket.cpp" />
     <ClCompile Include="satellite.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="Skybox.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="renderer.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="result_tex.h" />
+    <ClInclude Include="rocket.h" />
     <ClInclude Include="satellite.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="Skybox.h" />
