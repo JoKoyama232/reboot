@@ -153,6 +153,7 @@
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="hatch.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="light.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="hatch.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="light.h" />

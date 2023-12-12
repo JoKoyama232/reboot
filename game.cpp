@@ -19,6 +19,7 @@
 #include "debris.h"
 #include "antenna.h"
 #include "solarpanel.h"
+#include "hatch.h"
 #include "bullet.h"
 #include "base.h"
 #include "score.h"
@@ -59,6 +60,8 @@ HRESULT InitGame(void)
 
 	InitPanel();
 
+	InitHatch();
+
 	InitBase();
 
 	//’e(ƒ‚ƒ`)‚Ì‰Šú‰»
@@ -92,6 +95,8 @@ void UninitGame(void)
 
 	UninitPanel();
 
+	UninitHatch();
+
 	UninitBase();
 
 	UninitSkybox();
@@ -118,6 +123,8 @@ void UpdateGame(void)
 	UpdateAntenna();
 
 	UpdatePanel();
+
+	UpdateHatch();
 
 	UpdateBase();
 	//’e(ƒ‚ƒ`)‚ÌXVˆ—
@@ -153,6 +160,8 @@ void DrawGame(void)
 	DrawAntenna();
 
 	DrawPanel();
+
+	DrawHatch();
 
 	DrawBase();
 	//’e(ƒ‚ƒ`)‚Ì•`‰æˆ—

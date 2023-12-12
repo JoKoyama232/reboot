@@ -19,6 +19,7 @@
 #include "debris.h"
 #include "antenna.h"
 #include "solarpanel.h"
+#include "hatch.h"
 #include "Intro.h"
 #include "light.h"
 //ÉVÅ[Éì
