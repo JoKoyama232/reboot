@@ -230,7 +230,7 @@ void CheckHit(void)
 			
 			bullet[b].spd = 0.0f;
 			antenna[a].flag_rotate = false;
-			antenna[a].object.SetParent(&antenna[a].object);
+			antenna[a].object.SetParent(&bullet[b].object);
 			
 		}
 	}
@@ -244,6 +244,11 @@ void CheckHit(void)
 	if (CollisionBC(p_pos, basepos, player->size, base->size))
 	{
 		// プレイヤーと基地の当たり反応（真
+		if (!flag_score == 0)
+		{
+			PlaySound(SOUND_LABEL_SE_SCORE);
+		}
+
 		AddScore(flag_score * 100);
 		flag_score = 0;
 		for (int i = 0; i < MAX_BULLET; i++)
@@ -279,7 +284,7 @@ void CheckHit(void)
 			{			
 				// 弾丸の使用フラグを確認
 				if (!bullet[b].use)continue;
-				if (bullet[b].spd < 1.0f)
+				if (debris[d].object.GetParent())
 				{
 					debris[d].object.SetParent(NULL);
 					bullet[b].use = false;
@@ -312,7 +317,7 @@ void CheckHit(void)
 			{
 				// 弾丸の使用フラグを確認
 				if (!bullet[b].use)continue;
-				if (bullet[b].spd < 1.0f)
+				if (antenna[a].object.GetParent())
 				{
 					antenna[a].object.SetParent(NULL);
 					bullet[b].use = false;
