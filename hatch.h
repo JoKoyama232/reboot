@@ -1,5 +1,5 @@
 //=============================================================================
-// デブリ処理 [antenna.h]
+// デブリ処理 [hatch.h]
 // Author : 小井詰　礼
 //=============================================================================
 #pragma once
@@ -8,14 +8,14 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MAX_ANTENNA		(5)					// デブリの数
-#define	ANTENNA_SIZE		(10.0f)				// 当たり判定の大きさ
+#define MAX_HATCH		(5)					// デブリの数
+#define	HATCH_SIZE		(5.0f)				// 当たり判定の大きさ
 
 
 //*****************************************************************************
 // 構造体定義
 //*****************************************************************************
-struct ANTENNA
+struct HATCH
 {
 	WorldSpace			object;
 
@@ -23,7 +23,7 @@ struct ANTENNA
 	float				direction;		// 向き
 	float				size;
 	bool				use;			// 使用フラグ
-	bool				flag_rotate;	// 回転フラグ
+
 	// 階層アニメーション用のメンバー変数(今は使わないかな？)
 	float				time;				// 線形補間用
 	int					tblNo;				// 行動データのテーブル番号
@@ -33,10 +33,10 @@ struct ANTENNA
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitAntenna(void);
-void UninitAntenna(void);
-void UpdateAntenna(void);
-void DrawAntenna(void);
-ANTENNA* GetAntenna(void);
+HRESULT InitHatch(void);
+void UninitHatch(void);
+void UpdateHatch(void);
+void DrawHatch(void);
+HATCH* GetHatch(void);
 XMFLOAT3 GetLerp(XMFLOAT3 initialPos, XMFLOAT3 endingPos, float percentage);
 float GetDistance3D(XMFLOAT3 pos1, XMFLOAT3 pos2);
