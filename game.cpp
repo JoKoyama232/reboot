@@ -180,15 +180,15 @@ void DrawGame(void)
 
 	DrawAntenna();
 
-	DrawPanel();
+	//DrawPanel();
 
-	DrawHatch();
+	//DrawHatch();
 
-	DrawPod();
+	//DrawPod();
 
-	DrawSatellite();
+	//DrawSatellite();
 
-	DrawRocket();
+	//DrawRocket();
 
 	DrawBase();
 	//弾(モチ)の描画処理
@@ -239,7 +239,7 @@ void CheckHit(void)
 	ROCKET* rocket = GetRocket();			// ロケット情報
 	ANTENNA* antenna = GetAntenna();		// アンテナ情報
 	SATELLITE* satellite = GetSatellite();  // サテライト情報
-	
+
 	// 1つしか使わないオブジェクトの位置をあらかじめ定義
 	playerPos = GetPlayer()->object.GetPositionFloat();
 	basePos = GetBase()->object.GetPositionFloat();
@@ -259,13 +259,13 @@ void CheckHit(void)
 		{
 			// デブリの使用フラグ確認
 			if (!debris[d].use) continue;
-			
+
 			//使用フラグをチェックしたら座標をゲット
 			debrisPos = debris[d].object.GetPositionFloat();
 
 			// 弾丸とデブリの当たり判定
 			if (!CollisionBC(bulletPos, debrisPos, bullet[b].size, debris[d].size)) continue;
-			
+
 			// 弾丸とデブリの当たり反応（真）
 			bullet[b].spd = 0.0f;
 			debris[d].flag_rotate = false;
@@ -283,11 +283,11 @@ void CheckHit(void)
 
 			// 弾丸とアンテナの当たり判定
 			if (!CollisionBC(bulletPos, antennaPos, bullet[b].size, antenna[a].size))continue;
-			
+
 			bullet[b].spd = 0.0f;
 			antenna[a].flag_rotate = false;
 			antenna[a].object.SetParent(&bullet[b].object);
-			
+
 		}
 	}
 	//----------------------------------------------------------------------
@@ -315,65 +315,63 @@ void CheckHit(void)
 			}
 		}
 	}
-
-	// デブリとの処理
-	for (int d = 0; d < MAX_DEBRIS; d++)
+	// ペアレントしたバレットの解放処理
+	for (int b = 0; b < MAX_BULLET; b++)
 	{
-		// デブリの使用フラグ確認
-		if (!debris[d].use) continue;
+		// 弾丸の使用フラグを確認
+		if (!bullet[b].use)continue;
 
-		//使用フラグをチェックしたら座標をゲット
-		debrisPos = debris[d].object.GetPositionFloat();
-		
-		// プレイヤーとデブリの当たり判定
-		if (!CollisionBC(playerPos, debrisPos, player->size, debris[d].size)) continue;
-		
-		// プレイヤーとデブリの当たり反応（真）
-		if (!debris[d].object.GetParent() == NULL)
+		// デブリとの処理
+		for (int d = 0; d < MAX_DEBRIS; d++)
 		{
-			PlaySound(SOUND_LABEL_SE_ABSORB);
-			debris[d].use = false;
-			flag_score += 1;
+			// デブリの使用フラグ確認
+			if (!debris[d].use) continue;
 
-			// ペアレントしたバレットの解放処理
-			for (int b = 0; b < MAX_BULLET; b++)
-			{			
-				// 弾丸の使用フラグを確認
-				if (!bullet[b].use)continue;
-				if (debris[d].object.GetParent())
+			//使用フラグをチェックしたら座標をゲット
+			debrisPos = debris[d].object.GetPositionFloat();
+
+			// プレイヤーとデブリの当たり判定
+			if (!CollisionBC(playerPos, debrisPos, player->size, debris[d].size)) continue;
+
+			// プレイヤーとデブリの当たり反応（真）
+			if (!debris[d].object.GetParent() == NULL)
+			{
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				debris[d].use = false;
+				flag_score += 1;
+
+				if (debris[d].object.GetParent() == &bullet[b].object)
 				{
 					debris[d].object.SetParent(NULL);
 					bullet[b].use = false;
 					bullet[b].spd = 1.0f;
 				}
+				
 			}
+			//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
 		}
-		//エフェクトのイメージは吸い込まれる感じ(マイクラの経験値が近い)
-	}
+		//----------------------------------------------------------------------
 
-	// アンテナのと処理
-	for (int a = 0; a < MAX_ANTENNA; a++)
-	{
-		//アンテナの使用フラグをチェック
-		if (!antenna[a].use)continue;
-		//使用フラグをチェックしたら座標をゲット
-		antennaPos = antenna[a].object.GetPositionFloat();
-
-		// プレイヤーとアンテナの当たり判定
-		if (!CollisionBC(playerPos, antennaPos, player->size, antenna[a].size)) continue;
-		// プレイヤーとアンテナの当たり反応（真）
-		if (!antenna[a].object.GetParent() == NULL)
+		
+		// アンテナのと処理
+		for (int a = 0; a < MAX_ANTENNA; a++)
 		{
-			PlaySound(SOUND_LABEL_SE_ABSORB);
-			antenna[a].use = false;
-			flag_score += 5;
-			
-			// ペアレントしたバレットの解放処理
-			for (int b = 0; b < MAX_BULLET; b++)
+			//アンテナの使用フラグをチェック
+			if (!antenna[a].use)continue;
+			//使用フラグをチェックしたら座標をゲット
+			antennaPos = antenna[a].object.GetPositionFloat();
+
+			// プレイヤーとアンテナの当たり判定
+			if (!CollisionBC(playerPos, antennaPos, player->size, antenna[a].size)) continue;
+			// プレイヤーとアンテナの当たり反応（真）
+			if (!antenna[a].object.GetParent() == NULL)
 			{
-				// 弾丸の使用フラグを確認
-				if (!bullet[b].use)continue;
-				if (antenna[a].object.GetParent())
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				antenna[a].use = false;
+				flag_score += 5;
+
+
+				if (antenna[a].object.GetParent() == &bullet[b].object)
 				{
 					antenna[a].object.SetParent(NULL);
 					bullet[b].use = false;
@@ -381,10 +379,13 @@ void CheckHit(void)
 				}
 			}
 		}
-	}
 		//----------------------------------------------------------------------
 
+	}
 }
+
+		
+
 
 
 
