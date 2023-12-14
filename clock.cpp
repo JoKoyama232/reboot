@@ -191,6 +191,11 @@ void DrawClock(void)
 		float tx = x * tw;			// テクスチャの左上X座標
 		float ty = 0.0f;			// テクスチャの左上Y座標
 
+		if ((i == 2) || (i == 3))
+		{
+			px -= 10.0f;
+		}
+
 		// １枚のポリゴンの頂点とテクスチャ座標を設定
 		SetSpriteColor(g_VertexBuffer, px, py, pw, ph, tx, ty, tw, th,
 			XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -211,9 +216,9 @@ void DrawClock(void)
 void AddClock(int add)
 {
 	g_Clock -= add;
-	if (g_Clock > CLOCK_MAX)
+	if (g_Clock <= 0.0f)
 	{
-		g_Clock = CLOCK_MAX;
+		g_Clock = 0.0f;
 	}
 
 }

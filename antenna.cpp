@@ -52,6 +52,7 @@ HRESULT InitAntenna(void) {
 		g_Antenna[i].time = 0.0f;
 		g_Antenna[i].speed = 0.0f;			// 移動スピードクリア
 		g_Antenna[i].use = true;
+		g_Antenna[i].flag_rotate = true;
 		g_Antenna[i].object.draw = true;
 		g_Antenna[i].size = ANTENNA_SIZE;
 		g_LastUpdate = 0.0f;
@@ -89,12 +90,13 @@ void UpdateAntenna(void) {
 		XMFLOAT3 rotation = g_Antenna[i].object.GetRotationFloat();
 
 
-
-		// ぐるぐる回転
-		rotation.x += (i + 1) * 0.001f;
-		rotation.y += ((rand() % 5) + 1) * 0.001f;
-		rotation.z += ((MAX_ANTENNA + 1) - i) * 0.001f;
-
+		if (!g_Antenna[i].flag_rotate)continue;
+		{
+			// ぐるぐる回転
+			rotation.x += (i + 1) * 0.001f;
+			rotation.y += ((rand() % 5) + 1) * 0.001f;
+			rotation.z += ((MAX_ANTENNA + 1) - i) * 0.001f;
+		}
 		// 移動回転を反映
 		g_Antenna[i].object.SetPosition(position);
 		g_Antenna[i].object.SetRotation(rotation);
