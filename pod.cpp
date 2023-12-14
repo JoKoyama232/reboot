@@ -52,6 +52,7 @@ HRESULT InitPod(void) {
 		g_Pod[i].time = 0.0f;
 		g_Pod[i].speed = 0.0f;			// 移動スピードクリア
 		g_Pod[i].use = true;
+		g_Pod[i].flag_rotate = true;
 		g_Pod[i].object.draw = true;
 		g_Pod[i].size = POD_SIZE;
 		g_LastUpdate = 0.0f;
@@ -89,7 +90,7 @@ void UpdatePod(void) {
 		XMFLOAT3 rotation = g_Pod[i].object.GetRotationFloat();
 
 
-
+		if (!g_Pod[i].flag_rotate)continue;
 		// ぐるぐる回転
 		rotation.x += (i + 1) * 0.005f;
 		rotation.y += ((rand() % 5) + 1) * 0.001f;

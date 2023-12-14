@@ -180,7 +180,7 @@ void DrawGame(void)
 
 	DrawAntenna();
 
-	//DrawPanel();
+	DrawPanel();
 
 	//DrawHatch();
 
@@ -248,46 +248,63 @@ void CheckHit(void)
 	if (!player->use) return;
 
 	// 弾丸毎の当たり判定----------------------------------------------------
-	for (int b = 0; b < MAX_BULLET; b++)
+	for (int cntBullet = 0; cntBullet < MAX_BULLET; cntBullet++)
 	{
 		// 弾丸の使用フラグを確認
-		if (!bullet[b].use) continue;
-		bulletPos = bullet[b].object.GetPositionFloat();
+		if (!bullet[cntBullet].use) continue;
+		bulletPos = bullet[cntBullet].object.GetPositionFloat();
 
 		// バレット対デブリ当たり判定
-		for (int d = 0; d < MAX_DEBRIS; d++)
+		for (int cntDebris = 0; cntDebris < MAX_DEBRIS; cntDebris++)
 		{
 			// デブリの使用フラグ確認
-			if (!debris[d].use) continue;
+			if (!debris[cntDebris].use) continue;
 
 			//使用フラグをチェックしたら座標をゲット
-			debrisPos = debris[d].object.GetPositionFloat();
+			debrisPos = debris[cntDebris].object.GetPositionFloat();
 
 			// 弾丸とデブリの当たり判定
-			if (!CollisionBC(bulletPos, debrisPos, bullet[b].size, debris[d].size)) continue;
+			if (!CollisionBC(bulletPos, debrisPos, bullet[cntBullet].size, debris[cntDebris].size)) continue;
 
 			// 弾丸とデブリの当たり反応（真）
-			bullet[b].spd = 0.0f;
-			debris[d].flag_rotate = false;
-			debris[d].object.SetParent(&bullet[b].object);
+			bullet[cntBullet].spd = 0.0f;
+			debris[cntDebris].flag_rotate = false;
+			debris[cntDebris].object.SetParent(&bullet[cntBullet].object);
 		}
 
 
 		//バレットとアンテナの当たり判定
-		for (int a = 0; a < MAX_ANTENNA; a++)
+		for (int cntAntn = 0; cntAntn < MAX_ANTENNA; cntAntn++)
 		{
 			//アンテナの使用フラグをチェック
-			if (!antenna[a].use)continue;
+			if (!antenna[cntAntn].use)continue;
 			//使用フラグをチェックしたら座標をゲット
-			antennaPos = antenna[a].object.GetPositionFloat();
+			antennaPos = antenna[cntAntn].object.GetPositionFloat();
 
 			// 弾丸とアンテナの当たり判定
-			if (!CollisionBC(bulletPos, antennaPos, bullet[b].size, antenna[a].size))continue;
+			if (!CollisionBC(bulletPos, antennaPos, bullet[cntBullet].size, antenna[cntAntn].size))continue;
 
-			bullet[b].spd = 0.0f;
-			antenna[a].flag_rotate = false;
-			antenna[a].object.SetParent(&bullet[b].object);
+			bullet[cntBullet].spd = 0.0f;
+			antenna[cntAntn].flag_rotate = false;
+			antenna[cntAntn].object.SetParent(&bullet[cntBullet].object);
 
+		}
+
+		// バレットとポッドの当たり判定
+		for (int cntPod = 0; cntPod < MAX_POD; cntPod++)
+		{
+			// ポッドの仕様フラグをチェック
+			if (!pod[cntPod].use)continue;
+			//仕様フラグをチェックしたら座標をゲット
+			podPos = pod[cntPod].object.GetPositionFloat();
+
+			// バレットとポッドの当たり判定
+			if (!CollisionBC(bulletPos, podPos, bullet[cntBullet].size, pod[cntPod].size))continue;
+			{
+				bullet[cntBullet].spd = 0.0f;
+				pod[cntPod].flag_rotate = false;
+				pod[cntPod].object.SetParent(&bullet[cntBullet].object);
+			}
 		}
 	}
 	//----------------------------------------------------------------------
@@ -316,35 +333,35 @@ void CheckHit(void)
 		}
 	}
 	// ペアレントしたバレットの解放処理
-	for (int b = 0; b < MAX_BULLET; b++)
+	for (int cntBullet = 0; cntBullet < MAX_BULLET; cntBullet++)
 	{
 		// 弾丸の使用フラグを確認
-		if (!bullet[b].use)continue;
+		if (!bullet[cntBullet].use)continue;
 
 		// デブリとの処理
-		for (int d = 0; d < MAX_DEBRIS; d++)
+		for (int cntDebris = 0; cntDebris < MAX_DEBRIS; cntDebris++)
 		{
 			// デブリの使用フラグ確認
-			if (!debris[d].use) continue;
+			if (!debris[cntDebris].use) continue;
 
 			//使用フラグをチェックしたら座標をゲット
-			debrisPos = debris[d].object.GetPositionFloat();
+			debrisPos = debris[cntDebris].object.GetPositionFloat();
 
 			// プレイヤーとデブリの当たり判定
-			if (!CollisionBC(playerPos, debrisPos, player->size, debris[d].size)) continue;
+			if (!CollisionBC(playerPos, debrisPos, player->size, debris[cntDebris].size)) continue;
 
 			// プレイヤーとデブリの当たり反応（真）
-			if (!debris[d].object.GetParent() == NULL)
+			if (!debris[cntDebris].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				debris[d].use = false;
 				flag_score += 1;
 
-				if (debris[d].object.GetParent() == &bullet[b].object)
+				if (debris[cntDebris].object.GetParent() == &bullet[cntBullet].object)
 				{
-					debris[d].object.SetParent(NULL);
-					bullet[b].use = false;
-					bullet[b].spd = 1.0f;
+					debris[cntDebris].object.SetParent(NULL);
+					debris[cntDebris].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 1.0f;
 				}
 				
 			}
@@ -354,32 +371,63 @@ void CheckHit(void)
 
 		
 		// アンテナのと処理
-		for (int a = 0; a < MAX_ANTENNA; a++)
+		for (int cntAntn = 0; cntAntn < MAX_ANTENNA; cntAntn++)
 		{
 			//アンテナの使用フラグをチェック
-			if (!antenna[a].use)continue;
+			if (!antenna[cntAntn].use)continue;
 			//使用フラグをチェックしたら座標をゲット
-			antennaPos = antenna[a].object.GetPositionFloat();
+			antennaPos = antenna[cntAntn].object.GetPositionFloat();
 
 			// プレイヤーとアンテナの当たり判定
-			if (!CollisionBC(playerPos, antennaPos, player->size, antenna[a].size)) continue;
+			if (!CollisionBC(playerPos, antennaPos, player->size, antenna[cntAntn].size)) continue;
 			// プレイヤーとアンテナの当たり反応（真）
-			if (!antenna[a].object.GetParent() == NULL)
+			if (!antenna[cntAntn].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				antenna[a].use = false;
 				flag_score += 5;
 
-
-				if (antenna[a].object.GetParent() == &bullet[b].object)
+				if (antenna[cntAntn].object.GetParent() == &bullet[cntBullet].object)
 				{
-					antenna[a].object.SetParent(NULL);
-					bullet[b].use = false;
-					bullet[b].spd = 1.0f;
+					antenna[cntAntn].object.SetParent(NULL);
+					antenna[cntAntn].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 1.0f;
 				}
 			}
 		}
 		//----------------------------------------------------------------------
+
+
+
+		// ポッドとの処理
+		for (int cntPod = 0; cntPod < MAX_POD; cntPod++)
+		{
+			// ポッドの使用フラグをチェック
+			if (!pod[cntPod].use)continue;
+			//仕様フラグを確認したら座標をゲット
+			podPos = pod[cntPod].object.GetPositionFloat();
+
+			// プレイや―とポッドの当たり判定
+			if (!CollisionBC(playerPos, podPos, player->size, pod[cntPod].size)) continue;
+			// プレイや―とポッドの当たり判定(真)
+			if (!pod[cntPod].object.GetParent() == NULL)
+			{
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				flag_score += 3;
+
+				if (pod[cntPod].object.GetParent() == &bullet[cntBullet].object)
+				{
+					pod[cntPod].object.SetParent(NULL);
+					pod[cntPod].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 1.0f;
+				}
+			}
+		}
+		//----------------------------------------------------------------------
+
+
+		// ハッチ？との処理
 
 	}
 }
