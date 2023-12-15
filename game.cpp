@@ -288,7 +288,6 @@ void CheckHit(void)
 			bullet[cntBullet].spd = 0.0f;
 			antenna[cntAntn].flag_rotate = false;
 			antenna[cntAntn].object.SetParent(&bullet[cntBullet].object);
-
 		}
 
 		// バレットとポッドの当たり判定
@@ -302,11 +301,10 @@ void CheckHit(void)
 
 			// バレットとポッドの当たり判定
 			if (!CollisionBC(bulletPos, podPos, bullet[cntBullet].size, pod[cntPod].size))continue;
-			{
-				bullet[cntBullet].spd = 0.0f;
-				pod[cntPod].flag_rotate = false;
-				pod[cntPod].object.SetParent(&bullet[cntBullet].object);
-			}
+
+			bullet[cntBullet].spd = 0.0f;
+			pod[cntPod].flag_rotate = false;
+			pod[cntPod].object.SetParent(&bullet[cntBullet].object);
 		}
 
 		// バレットとソ－ラーパネルの当たり判定
@@ -314,16 +312,16 @@ void CheckHit(void)
 		{
 			// ソーラーパネルの仕様フラグをチェック
 			if (!panel[cntPanel].use)continue;
+			
 			// 仕様フラグをチェックしたら座標をゲット
 			panelPos = panel[cntPanel].object.GetPositionFloat();
 
 			// バレットとパネルの当たり判定
 			if (!CollisionBC(bulletPos, panelPos, bullet[cntBullet].size, panel[cntPanel].size))continue;
-			{
-				bullet[cntBullet].spd = 0.0f;
-				panel[cntPanel].flag_rotate = false;
-				panel[cntPanel].object.SetParent(&bullet[cntBullet].object);
-			}
+		
+			bullet[cntBullet].spd = 0.0f;
+			panel[cntPanel].flag_rotate = false;
+			panel[cntPanel].object.SetParent(&bullet[cntBullet].object);		
 		}
 
 		// バレットとハッチの当たり判定
@@ -337,12 +335,29 @@ void CheckHit(void)
 			
 			// バレットとハッチの当たり判定
 			if (!CollisionBC(bulletPos, hatchPos, bullet[cntBullet].size, hatch[cntHatch].size))continue;
-			{
-
-			}
+			
+			bullet[cntBullet].spd = 0.0f;
+			hatch[cntHatch].flag_rotate = false;
+			hatch[cntHatch].object.SetParent(&bullet[cntBullet].object);
+			
 		}
 
 		// バレットと人工衛星の当たり判定
+		for (int cntSL = 0; cntSL < MAX_SATELLITE; cntSL++)
+		{
+			// 人工衛星の使用フラグをチェック
+			if (!satellite[cntSL].use)continue;
+
+			// 仕様フラグをチェックしたら座標をゲット
+			satellitePos = satellite[cntSL].object.GetPositionFloat();
+
+			// バレットと人工衛星の当たり判定
+			if (!CollisionBC(bulletPos, satellitePos, bullet[cntBullet].size, satellite[cntSL].size))continue;
+
+			bullet[cntBullet].spd = 0.0f;
+			satellite[cntSL].flag_rotate = false;
+			satellite[cntSL].object.SetParent(&bullet[cntBullet].object);
+		}
 		
 	}
 
@@ -528,6 +543,33 @@ void CheckHit(void)
 
 
 		// 人工衛星との処理
+		for (int cntSL = 0; cntSL < MAX_SATELLITE; cntSL++)
+		{
+			// 人工衛星の使用フラグをチェック
+			if (!satellite[cntSL].use)continue;
+
+			// 仕様フラグをチェックしたら座標をゲット
+			satellitePos = satellite[cntSL].object.GetPositionFloat();
+
+			// プレイヤーと人工衛星の当たり判定
+			if (!satellite[cntSL].object.GetParent() == NULL)
+			{
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				flag_score += 3;
+
+				if (satellite[cntSL].object.GetParent() == &bullet[cntBullet].object)
+				{
+					satellite[cntSL].object.SetParent(NULL);
+					satellite[cntSL].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 1.0f;
+				}
+			}
+		}
+		//----------------------------------------------------------------------
+
+
+
 	}
 }
 

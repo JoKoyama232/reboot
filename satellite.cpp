@@ -52,6 +52,7 @@ HRESULT InitSatellite(void) {
 		g_Satellite[i].time = 0.0f;
 		g_Satellite[i].speed = 0.0f;			// 移動スピードクリア
 		g_Satellite[i].use = true;
+		g_Satellite[i].flag_rotate = true;
 		g_Satellite[i].object.draw = true;
 		g_Satellite[i].size = SATELLITE_SIZE;
 		g_LastUpdate = 0.0f;
@@ -88,12 +89,13 @@ void UpdateSatellite(void) {
 		XMFLOAT3 position = g_Satellite[i].object.GetPositionFloat();
 		XMFLOAT3 rotation = g_Satellite[i].object.GetRotationFloat();
 
-
-
-		// ぐるぐる回転
-		rotation.x += (i + 1) * 0.005f;
-		rotation.y += ((rand() % 5) + 1) * 0.001f;
-		rotation.z += ((MAX_SATELLITE + 1) - i) * 0.005f;
+		if (!g_Satellite[i].flag_rotate)continue;
+		{
+			// ぐるぐる回転
+			rotation.x += (i + 1) * 0.005f;
+			rotation.y += ((rand() % 5) + 1) * 0.001f;
+			rotation.z += ((MAX_SATELLITE + 1) - i) * 0.005f;
+		}
 
 		// 移動回転を反映
 		g_Satellite[i].object.SetPosition(position);
