@@ -186,9 +186,9 @@ void DrawGame(void)
 
 	DrawHatch();
 
-	//DrawSatellite();
+	DrawSatellite();
 
-	//DrawRocket();
+	DrawRocket();
 
 	DrawBase();
 	//弾(モチ)の描画処理
@@ -226,7 +226,7 @@ void CheckHit(void)
 {
 	// 各オブジェクトの位置を定義
 	XMFLOAT3 podPos, basePos, hatchPos, panelPos, playerPos,
-		debrisPos, bulletPos, rokeckPos, antennaPos, satellitePos;
+		debrisPos, bulletPos, rocketPos, antennaPos, satellitePos;
 
 	// 各オブジェクトの情報を取得
 	POD* pod = GetPod();					// ポッド情報
@@ -278,6 +278,7 @@ void CheckHit(void)
 		{
 			//アンテナの使用フラグをチェック
 			if (!antenna[cntAntn].use)continue;
+
 			//使用フラグをチェックしたら座標をゲット
 			antennaPos = antenna[cntAntn].object.GetPositionFloat();
 
@@ -287,7 +288,6 @@ void CheckHit(void)
 			bullet[cntBullet].spd = 0.0f;
 			antenna[cntAntn].flag_rotate = false;
 			antenna[cntAntn].object.SetParent(&bullet[cntBullet].object);
-
 		}
 
 		// バレットとポッドの当たり判定
@@ -295,16 +295,16 @@ void CheckHit(void)
 		{
 			// ポッドの仕様フラグをチェック
 			if (!pod[cntPod].use)continue;
+
 			//仕様フラグをチェックしたら座標をゲット
 			podPos = pod[cntPod].object.GetPositionFloat();
 
 			// バレットとポッドの当たり判定
 			if (!CollisionBC(bulletPos, podPos, bullet[cntBullet].size, pod[cntPod].size))continue;
-			{
-				bullet[cntBullet].spd = 0.0f;
-				pod[cntPod].flag_rotate = false;
-				pod[cntPod].object.SetParent(&bullet[cntBullet].object);
-			}
+
+			bullet[cntBullet].spd = 0.0f;
+			pod[cntPod].flag_rotate = false;
+			pod[cntPod].object.SetParent(&bullet[cntBullet].object);
 		}
 
 		// バレットとソ－ラーパネルの当たり判定
@@ -312,19 +312,69 @@ void CheckHit(void)
 		{
 			// ソーラーパネルの仕様フラグをチェック
 			if (!panel[cntPanel].use)continue;
+			
 			// 仕様フラグをチェックしたら座標をゲット
 			panelPos = panel[cntPanel].object.GetPositionFloat();
 
 			// バレットとパネルの当たり判定
 			if (!CollisionBC(bulletPos, panelPos, bullet[cntBullet].size, panel[cntPanel].size))continue;
-			{
-				bullet[cntBullet].spd = 0.0f;
-				panel[cntPanel].flag_rotate = false;
-				panel[cntPanel].object.SetParent(&bullet[cntBullet].object);
-			}
+		
+			bullet[cntBullet].spd = 0.0f;
+			panel[cntPanel].flag_rotate = false;
+			panel[cntPanel].object.SetParent(&bullet[cntBullet].object);		
 		}
 
 		// バレットとハッチの当たり判定
+		for (int cntHatch = 0; cntHatch < MAX_HATCH; cntHatch++)
+		{
+			// ハッチに仕様フラグをチェック
+			if (!hatch[cntHatch].use)continue;
+			
+			// 仕様フラグをチェックしたら座標をゲット
+			hatchPos = hatch[cntHatch].object.GetPositionFloat();
+			
+			// バレットとハッチの当たり判定
+			if (!CollisionBC(bulletPos, hatchPos, bullet[cntBullet].size, hatch[cntHatch].size))continue;
+			
+			bullet[cntBullet].spd = 0.0f;
+			hatch[cntHatch].flag_rotate = false;
+			hatch[cntHatch].object.SetParent(&bullet[cntBullet].object);
+			
+		}
+
+		// バレットと人工衛星の当たり判定
+		for (int cntSL = 0; cntSL < MAX_SATELLITE; cntSL++)
+		{
+			// 人工衛星の使用フラグをチェック
+			if (!satellite[cntSL].use)continue;
+
+			// 仕様フラグをチェックしたら座標をゲット
+			satellitePos = satellite[cntSL].object.GetPositionFloat();
+
+			// バレットと人工衛星の当たり判定
+			if (!CollisionBC(bulletPos, satellitePos, bullet[cntBullet].size, satellite[cntSL].size))continue;
+
+			bullet[cntBullet].spd = 0.0f;
+			satellite[cntSL].flag_rotate = false;
+			satellite[cntSL].object.SetParent(&bullet[cntBullet].object);
+		}
+		
+		// バレットとロケットの当たり判定
+		for (int cntRocket = 0; cntRocket < MAX_ROCKET; cntRocket++)
+		{
+			// ロケットの仕様フラグをチェック
+			if (!rocket[cntRocket].use)continue;
+
+			// 仕様フラグをチェックしたら座標をゲット
+			rocketPos = rocket[cntRocket].object.GetPositionFloat();
+
+			// バレットとロケットの当たり判定
+			if (!CollisionBC(bulletPos, rocketPos, bullet[cntBullet].size, rocket[cntRocket].size))continue;
+
+			bullet[cntBullet].spd = 0.0f;
+			rocket[cntRocket].flag_rotate = false;
+			rocket[cntRocket].object.SetParent(&bullet[cntBullet].object);
+		}
 	}
 
 	//----------------------------------------------------------------------
@@ -381,7 +431,7 @@ void CheckHit(void)
 					debris[cntDebris].object.SetParent(NULL);
 					debris[cntDebris].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 				
 			}
@@ -400,6 +450,7 @@ void CheckHit(void)
 
 			// プレイヤーとアンテナの当たり判定
 			if (!CollisionBC(playerPos, antennaPos, player->size, antenna[cntAntn].size)) continue;
+			
 			// プレイヤーとアンテナの当たり反応（真）
 			if (!antenna[cntAntn].object.GetParent() == NULL)
 			{
@@ -411,7 +462,7 @@ void CheckHit(void)
 					antenna[cntAntn].object.SetParent(NULL);
 					antenna[cntAntn].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 			}
 		}
@@ -429,6 +480,7 @@ void CheckHit(void)
 
 			// プレイや―とポッドの当たり判定
 			if (!CollisionBC(playerPos, podPos, player->size, pod[cntPod].size)) continue;
+			
 			// プレイや―とポッドの当たり判定(真)
 			if (!pod[cntPod].object.GetParent() == NULL)
 			{
@@ -440,7 +492,7 @@ void CheckHit(void)
 					pod[cntPod].object.SetParent(NULL);
 					pod[cntPod].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 			}
 		}
@@ -457,6 +509,7 @@ void CheckHit(void)
 
 			//プレイヤーとパネルの当たり判定
 			if (!CollisionBC(playerPos, panelPos, player->size, panel[cntPanel].size)) continue;
+			
 			//プレイヤーとパネルの当たり判定(真)
 			if (!panel[cntPanel].object.GetParent() == NULL)
 			{
@@ -468,7 +521,7 @@ void CheckHit(void)
 					panel[cntPanel].object.SetParent(NULL);
 					panel[cntPanel].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 			}
 		}
@@ -476,6 +529,93 @@ void CheckHit(void)
 
 
 		// ハッチとの処理
+		for (int cntHatch = 0; cntHatch < MAX_HATCH; cntHatch++)
+		{
+			// ハッチの仕様フラグをチェック
+			if (!hatch[cntHatch].use)continue;
+
+			// 仕様フラグをチェックしたら座標をゲット
+			hatchPos = hatch[cntHatch].object.GetPositionFloat();
+
+			// プレイヤーとハッチの当たり判定
+			if (!CollisionBC(playerPos, hatchPos, player->size, hatch[cntHatch].size)) continue;
+		
+			// プレイヤーとハッチの当たり判定(真)
+			if (!hatch[cntHatch].object.GetParent() == NULL)
+			{
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				flag_score += 3;
+
+				if (hatch[cntHatch].object.GetParent() == &bullet[cntBullet].object)
+				{
+					hatch[cntHatch].object.SetParent(NULL);
+					hatch[cntHatch].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 2.0f;
+				}
+			}
+		}
+		//----------------------------------------------------------------------
+
+
+		// 人工衛星との処理
+		for (int cntSL = 0; cntSL < MAX_SATELLITE; cntSL++)
+		{
+			// 人工衛星の使用フラグをチェック
+			if (!satellite[cntSL].use)continue;
+
+			// 仕様フラグをチェックしたら座標をゲット
+			satellitePos = satellite[cntSL].object.GetPositionFloat();
+
+			// プレイヤーと人工衛星の当たり判定
+			if (!CollisionBC(playerPos, satellitePos, player->size, satellite[cntSL].size)) continue;
+
+			// プレイヤーと人工衛星の当たり判定(真)
+			if (!satellite[cntSL].object.GetParent() == NULL)
+			{
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				flag_score += 3;
+
+				if (satellite[cntSL].object.GetParent() == &bullet[cntBullet].object)
+				{
+					satellite[cntSL].object.SetParent(NULL);
+					satellite[cntSL].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 2.0f;
+				}
+			}
+		}
+		//----------------------------------------------------------------------
+
+
+		for (int cntRocket = 0; cntRocket < MAX_ROCKET; cntRocket++)
+		{
+			// ロケットの使用フラグをチェック
+			if (!rocket[cntRocket].use)continue;
+
+			// 使用フラグをチェックしたら座標をゲット
+			rocketPos = rocket[cntRocket].object.GetPositionFloat();
+
+			// プレイヤーとロケットの当たり判定
+			if (!CollisionBC(playerPos, rocketPos, player->size, rocket[cntRocket].size)) continue;
+
+			// プレイヤーとロケットの当たり判定(真)
+			if (!rocket[cntRocket].object.GetParent() == NULL)
+			{
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				flag_score += 3;
+
+				if (rocket[cntRocket].object.GetParent() == &bullet[cntBullet].object)
+				{
+					rocket[cntRocket].object.SetParent(NULL);
+					rocket[cntRocket].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 2.0f;
+				}
+			}
+		}
+
+		//----------------------------------------------------------------------
 	}
 }
 

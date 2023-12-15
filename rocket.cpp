@@ -52,6 +52,7 @@ HRESULT InitRocket(void) {
 		g_Rocket[i].time = 0.0f;
 		g_Rocket[i].speed = 0.0f;			// 移動スピードクリア
 		g_Rocket[i].use = true;
+		g_Rocket[i].flag_rotate = true;
 		g_Rocket[i].object.draw = true;
 		g_Rocket[i].size = ROCKET_SIZE;
 		g_LastUpdate = 0.0f;
@@ -88,12 +89,13 @@ void UpdateRocket(void) {
 		XMFLOAT3 position = g_Rocket[i].object.GetPositionFloat();
 		XMFLOAT3 rotation = g_Rocket[i].object.GetRotationFloat();
 
-
-
-		// ぐるぐる回転
-		rotation.x += (i + 1) * 0.005f;
-		rotation.y += ((rand() % 5) + 1) * 0.001f;
-		rotation.z += ((MAX_ROCKET + 1) - i) * 0.005f;
+		if (!g_Rocket[i].flag_rotate)continue;
+		{
+			// ぐるぐる回転
+			rotation.x += (i + 1) * 0.005f;
+			rotation.y += ((rand() % 5) + 1) * 0.001f;
+			rotation.z += ((MAX_ROCKET + 1) - i) * 0.005f;
+		}
 
 		// 移動回転を反映
 		g_Rocket[i].object.SetPosition(position);
