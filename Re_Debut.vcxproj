@@ -150,6 +150,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="clock.cpp" />
     <ClCompile Include="debris.cpp" />
+    <ClCompile Include="DebugObject.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="clock.h" />
     <ClInclude Include="debris.h" />
+    <ClInclude Include="DebugObject.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />

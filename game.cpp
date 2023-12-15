@@ -655,3 +655,27 @@ BOOL CollisionBC(XMFLOAT3 pos1, XMFLOAT3 pos2, float r1, float r2)
 
 	return ans;
 }
+
+
+//=============================================================================
+// BCによる当たり判定処理
+// サイズは半径
+// 戻り値：当たってたらTRUE
+//=============================================================================
+BOOL CollisionBC2(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 s1, XMFLOAT3 s2)
+{
+	BOOL ans = FALSE;						// 外れをセットしておく
+
+	XMFLOAT3 len = { (s1.x + s2.x) * (s1.x + s2.x), (s1.y + s2.y) * (s1.y + s2.y), (s1.z + s2.z) * (s1.z + s2.z)};
+	XMVECTOR temp = XMLoadFloat3(&pos1) - XMLoadFloat3(&pos2);
+	temp = XMVector3LengthSq(temp);			// 2点間の距離（2乗した物）
+	XMFLOAT3 lenSq = XMFLOAT3{ 0.0f,0.0f,0.0f };
+
+	if ((len.x > lenSq.x) || (len.y > lenSq.y) || (len.z > lenSq.z))
+	{
+		ans = TRUE;	// 当たっている
+	}
+
+
+	return ans;
+}
