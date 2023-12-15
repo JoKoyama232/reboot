@@ -52,6 +52,7 @@ HRESULT InitPanel(void) {
 		g_Panel[i].time = 0.0f;
 		g_Panel[i].speed = 0.0f;			// 移動スピードクリア
 		g_Panel[i].use = true;
+		g_Panel[i].flag_rotate = true;
 		g_Panel[i].object.draw = true;
 		g_Panel[i].size = PANEL_SIZE;
 		g_LastUpdate = 0.0f;
@@ -88,12 +89,13 @@ void UpdatePanel(void) {
 		XMFLOAT3 position = g_Panel[i].object.GetPositionFloat();
 		XMFLOAT3 rotation = g_Panel[i].object.GetRotationFloat();
 
-
-
-		// ぐるぐる回転
-		rotation.x += (i + 1) * 0.005f;
-		rotation.y += ((rand() % 5) + 1) * 0.001f;
-		rotation.z += ((MAX_PANEL + 1) - i) * 0.005f;
+		if (!g_Panel[i].flag_rotate)continue;
+		{
+			// ぐるぐる回転
+			rotation.x += (i + 1) * 0.005f;
+			rotation.y += ((rand() % 5) + 1) * 0.001f;
+			rotation.z += ((MAX_PANEL + 1) - i) * 0.005f;
+		}
 
 		// 移動回転を反映
 		g_Panel[i].object.SetPosition(position);

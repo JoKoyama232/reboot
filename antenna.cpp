@@ -89,7 +89,6 @@ void UpdateAntenna(void) {
 		XMFLOAT3 position = g_Antenna[i].object.GetPositionFloat();
 		XMFLOAT3 rotation = g_Antenna[i].object.GetRotationFloat();
 
-
 		if (!g_Antenna[i].flag_rotate)continue;
 		{
 			// ‚®‚é‚®‚é‰ñ“]
@@ -97,6 +96,7 @@ void UpdateAntenna(void) {
 			rotation.y += ((rand() % 5) + 1) * 0.001f;
 			rotation.z += ((MAX_ANTENNA + 1) - i) * 0.001f;
 		}
+
 		// ˆÚ“®‰ñ“]‚ð”½‰f
 		g_Antenna[i].object.SetPosition(position);
 		g_Antenna[i].object.SetRotation(rotation);

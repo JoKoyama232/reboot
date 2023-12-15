@@ -180,11 +180,11 @@ void DrawGame(void)
 
 	DrawAntenna();
 
+	DrawPod();
+
 	DrawPanel();
 
-	//DrawHatch();
-
-	//DrawPod();
+	DrawHatch();
 
 	//DrawSatellite();
 
@@ -306,7 +306,27 @@ void CheckHit(void)
 				pod[cntPod].object.SetParent(&bullet[cntBullet].object);
 			}
 		}
+
+		// バレットとソ－ラーパネルの当たり判定
+		for (int cntPanel = 0; cntPanel < MAX_PANEL; cntPanel++)
+		{
+			// ソーラーパネルの仕様フラグをチェック
+			if (!panel[cntPanel].use)continue;
+			// 仕様フラグをチェックしたら座標をゲット
+			panelPos = panel[cntPanel].object.GetPositionFloat();
+
+			// バレットとパネルの当たり判定
+			if (!CollisionBC(bulletPos, panelPos, bullet[cntBullet].size, panel[cntPanel].size))continue;
+			{
+				bullet[cntBullet].spd = 0.0f;
+				panel[cntPanel].flag_rotate = false;
+				panel[cntPanel].object.SetParent(&bullet[cntBullet].object);
+			}
+		}
+
+		// バレットとハッチの当たり判定
 	}
+
 	//----------------------------------------------------------------------
 
 
@@ -427,8 +447,35 @@ void CheckHit(void)
 		//----------------------------------------------------------------------
 
 
-		// ハッチ？との処理
+		// ソーラーパネルとの処理
+		for (int cntPanel = 0; cntPanel < MAX_PANEL; cntPanel++)
+		{
+			// パネルの仕様フラグをチェック
+			if (!panel[cntPanel].use)continue;
+			// 仕様フラグをチェックしたら座標をゲット
+			panelPos = panel[cntPanel].object.GetPositionFloat();
 
+			//プレイヤーとパネルの当たり判定
+			if (!CollisionBC(playerPos, panelPos, player->size, panel[cntPanel].size)) continue;
+			//プレイヤーとパネルの当たり判定(真)
+			if (!panel[cntPanel].object.GetParent() == NULL)
+			{
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				flag_score += 3;
+
+				if (panel[cntPanel].object.GetParent() == &bullet[cntBullet].object)
+				{
+					panel[cntPanel].object.SetParent(NULL);
+					panel[cntPanel].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 1.0f;
+				}
+			}
+		}
+		//----------------------------------------------------------------------
+
+
+		// ハッチとの処理
 	}
 }
 
