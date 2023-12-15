@@ -188,7 +188,7 @@ void DrawGame(void)
 
 	DrawSatellite();
 
-	//DrawRocket();
+	DrawRocket();
 
 	DrawBase();
 	//弾(モチ)の描画処理
@@ -226,7 +226,7 @@ void CheckHit(void)
 {
 	// 各オブジェクトの位置を定義
 	XMFLOAT3 podPos, basePos, hatchPos, panelPos, playerPos,
-		debrisPos, bulletPos, rokeckPos, antennaPos, satellitePos;
+		debrisPos, bulletPos, rocketPos, antennaPos, satellitePos;
 
 	// 各オブジェクトの情報を取得
 	POD* pod = GetPod();					// ポッド情報
@@ -359,6 +359,22 @@ void CheckHit(void)
 			satellite[cntSL].object.SetParent(&bullet[cntBullet].object);
 		}
 		
+		// バレットとロケットの当たり判定
+		for (int cntRocket = 0; cntRocket < MAX_ROCKET; cntRocket++)
+		{
+			// ロケットの仕様フラグをチェック
+			if (!rocket[cntRocket].use)continue;
+
+			// 仕様フラグをチェックしたら座標をゲット
+			rocketPos = rocket[cntRocket].object.GetPositionFloat();
+
+			// バレットとロケットの当たり判定
+			if (!CollisionBC(bulletPos, rocketPos, bullet[cntBullet].size, rocket[cntRocket].size))continue;
+
+			bullet[cntBullet].spd = 0.0f;
+			rocket[cntRocket].flag_rotate = false;
+			rocket[cntRocket].object.SetParent(&bullet[cntBullet].object);
+		}
 	}
 
 	//----------------------------------------------------------------------
@@ -415,7 +431,7 @@ void CheckHit(void)
 					debris[cntDebris].object.SetParent(NULL);
 					debris[cntDebris].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 				
 			}
@@ -446,7 +462,7 @@ void CheckHit(void)
 					antenna[cntAntn].object.SetParent(NULL);
 					antenna[cntAntn].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 			}
 		}
@@ -476,7 +492,7 @@ void CheckHit(void)
 					pod[cntPod].object.SetParent(NULL);
 					pod[cntPod].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 			}
 		}
@@ -505,7 +521,7 @@ void CheckHit(void)
 					panel[cntPanel].object.SetParent(NULL);
 					panel[cntPanel].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 			}
 		}
@@ -535,7 +551,7 @@ void CheckHit(void)
 					hatch[cntHatch].object.SetParent(NULL);
 					hatch[cntHatch].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 			}
 		}
@@ -552,6 +568,9 @@ void CheckHit(void)
 			satellitePos = satellite[cntSL].object.GetPositionFloat();
 
 			// プレイヤーと人工衛星の当たり判定
+			if (!CollisionBC(playerPos, satellitePos, player->size, satellite[cntSL].size)) continue;
+
+			// プレイヤーと人工衛星の当たり判定(真)
 			if (!satellite[cntSL].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
@@ -562,14 +581,41 @@ void CheckHit(void)
 					satellite[cntSL].object.SetParent(NULL);
 					satellite[cntSL].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 1.0f;
+					bullet[cntBullet].spd = 2.0f;
 				}
 			}
 		}
 		//----------------------------------------------------------------------
 
 
+		for (int cntRocket = 0; cntRocket < MAX_ROCKET; cntRocket++)
+		{
+			// ロケットの使用フラグをチェック
+			if (!rocket[cntRocket].use)continue;
 
+			// 使用フラグをチェックしたら座標をゲット
+			rocketPos = rocket[cntRocket].object.GetPositionFloat();
+
+			// プレイヤーとロケットの当たり判定
+			if (!CollisionBC(playerPos, rocketPos, player->size, rocket[cntRocket].size)) continue;
+
+			// プレイヤーとロケットの当たり判定(真)
+			if (!rocket[cntRocket].object.GetParent() == NULL)
+			{
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				flag_score += 3;
+
+				if (rocket[cntRocket].object.GetParent() == &bullet[cntBullet].object)
+				{
+					rocket[cntRocket].object.SetParent(NULL);
+					rocket[cntRocket].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 2.0f;
+				}
+			}
+		}
+
+		//----------------------------------------------------------------------
 	}
 }
 
