@@ -394,14 +394,21 @@ void CheckHit(void)
 
 		AddScore(flag_score * 100);
 		flag_score = 0;
-		for (int i = 0; i < MAX_BULLET; i++)
+
+		// Eキー押したら弾補充させる
+		//if (GetKeyboardTrigger(DIK_E))
 		{
-			if (!bullet[i].spd == 1.0f)continue;
+			for (int i = 0; i < MAX_BULLET; i++)
 			{
-				bullet[i].use = false;
+				if (!bullet[i].spd == 1.0f)continue;
+				{
+					bullet[i].use = false;
+				}
 			}
 		}
 	}
+
+
 	// ペアレントしたバレットの解放処理
 	for (int cntBullet = 0; cntBullet < MAX_BULLET; cntBullet++)
 	{

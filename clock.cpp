@@ -126,14 +126,14 @@ void UpdateClock(void)
 		g_Clock = 0.0f;
 	}
 
-	if (g_Clock == 5000.0f)
+	if (g_Clock == 2500.0f)
 	{
 		g_falg = true;
 		PlaySound(SOUND_LABEL_SE_ALARM);
 		StopSound(SOUND_LABEL_BGM_stage1);
 	}
 
-	if (g_Clock == 4600.0f)
+	if (g_Clock == 2150.0f)
 	{
 		PlaySound(SOUND_LABEL_BGM_stage1);
 	}
