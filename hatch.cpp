@@ -52,6 +52,7 @@ HRESULT InitHatch(void) {
 		g_Hatch[i].time = 0.0f;
 		g_Hatch[i].speed = 0.0f;			// 移動スピードクリア
 		g_Hatch[i].use = true;
+		g_Hatch[i].flag_rotate = true;
 		g_Hatch[i].object.draw = true;
 		g_Hatch[i].size = HATCH_SIZE;
 		g_LastUpdate = 0.0f;
@@ -88,12 +89,13 @@ void UpdateHatch(void) {
 		XMFLOAT3 position = g_Hatch[i].object.GetPositionFloat();
 		XMFLOAT3 rotation = g_Hatch[i].object.GetRotationFloat();
 
-
-
-		// ぐるぐる回転
-		rotation.x += (i + 1) * 0.005f;
-		rotation.y += ((rand() % 5) + 1) * 0.001f;
-		rotation.z += ((MAX_HATCH + 1) - i) * 0.005f;
+		if (!g_Hatch[i].flag_rotate)continue;
+		{
+			// ぐるぐる回転
+			rotation.x += (i + 1) * 0.005f;
+			rotation.y += ((rand() % 5) + 1) * 0.001f;
+			rotation.z += ((MAX_HATCH + 1) - i) * 0.005f;
+		}
 
 		// 移動回転を反映
 		g_Hatch[i].object.SetPosition(position);

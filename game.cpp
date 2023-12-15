@@ -186,7 +186,7 @@ void DrawGame(void)
 
 	DrawHatch();
 
-	//DrawSatellite();
+	DrawSatellite();
 
 	//DrawRocket();
 
@@ -278,6 +278,7 @@ void CheckHit(void)
 		{
 			//アンテナの使用フラグをチェック
 			if (!antenna[cntAntn].use)continue;
+
 			//使用フラグをチェックしたら座標をゲット
 			antennaPos = antenna[cntAntn].object.GetPositionFloat();
 
@@ -295,6 +296,7 @@ void CheckHit(void)
 		{
 			// ポッドの仕様フラグをチェック
 			if (!pod[cntPod].use)continue;
+
 			//仕様フラグをチェックしたら座標をゲット
 			podPos = pod[cntPod].object.GetPositionFloat();
 
@@ -325,6 +327,23 @@ void CheckHit(void)
 		}
 
 		// バレットとハッチの当たり判定
+		for (int cntHatch = 0; cntHatch < MAX_HATCH; cntHatch++)
+		{
+			// ハッチに仕様フラグをチェック
+			if (!hatch[cntHatch].use)continue;
+			
+			// 仕様フラグをチェックしたら座標をゲット
+			hatchPos = hatch[cntHatch].object.GetPositionFloat();
+			
+			// バレットとハッチの当たり判定
+			if (!CollisionBC(bulletPos, hatchPos, bullet[cntBullet].size, hatch[cntHatch].size))continue;
+			{
+
+			}
+		}
+
+		// バレットと人工衛星の当たり判定
+		
 	}
 
 	//----------------------------------------------------------------------
@@ -400,6 +419,7 @@ void CheckHit(void)
 
 			// プレイヤーとアンテナの当たり判定
 			if (!CollisionBC(playerPos, antennaPos, player->size, antenna[cntAntn].size)) continue;
+			
 			// プレイヤーとアンテナの当たり反応（真）
 			if (!antenna[cntAntn].object.GetParent() == NULL)
 			{
@@ -429,6 +449,7 @@ void CheckHit(void)
 
 			// プレイや―とポッドの当たり判定
 			if (!CollisionBC(playerPos, podPos, player->size, pod[cntPod].size)) continue;
+			
 			// プレイや―とポッドの当たり判定(真)
 			if (!pod[cntPod].object.GetParent() == NULL)
 			{
@@ -457,6 +478,7 @@ void CheckHit(void)
 
 			//プレイヤーとパネルの当たり判定
 			if (!CollisionBC(playerPos, panelPos, player->size, panel[cntPanel].size)) continue;
+			
 			//プレイヤーとパネルの当たり判定(真)
 			if (!panel[cntPanel].object.GetParent() == NULL)
 			{
@@ -476,6 +498,36 @@ void CheckHit(void)
 
 
 		// ハッチとの処理
+		for (int cntHatch = 0; cntHatch < MAX_HATCH; cntHatch++)
+		{
+			// ハッチの仕様フラグをチェック
+			if (!hatch[cntHatch].use)continue;
+
+			// 仕様フラグをチェックしたら座標をゲット
+			hatchPos = hatch[cntHatch].object.GetPositionFloat();
+
+			// プレイヤーとハッチの当たり判定
+			if (!CollisionBC(playerPos, hatchPos, player->size, hatch[cntHatch].size)) continue;
+		
+			// プレイヤーとハッチの当たり判定(真)
+			if (!hatch[cntHatch].object.GetParent() == NULL)
+			{
+				PlaySound(SOUND_LABEL_SE_ABSORB);
+				flag_score += 3;
+
+				if (hatch[cntHatch].object.GetParent() == &bullet[cntBullet].object)
+				{
+					hatch[cntHatch].object.SetParent(NULL);
+					hatch[cntHatch].use = false;
+					bullet[cntBullet].use = false;
+					bullet[cntBullet].spd = 1.0f;
+				}
+			}
+		}
+		//----------------------------------------------------------------------
+
+
+		// 人工衛星との処理
 	}
 }
 
