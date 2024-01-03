@@ -173,6 +173,8 @@
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="title_antenna.cpp" />
+    <ClCompile Include="title_debris.cpp" />
     <ClCompile Include="title_tex.cpp" />
     <ClCompile Include="result_tex.cpp" />
   </ItemGroup>
@@ -207,6 +209,8 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="title_antenna.h" />
+    <ClInclude Include="title_debris.h" />
     <ClInclude Include="title_tex.h" />
     <ClInclude Include="WorldSpaceClass.h" />
   </ItemGroup>

@@ -139,14 +139,8 @@ void DrawBullet(void)
 
 		XMStoreFloat4x4(g_Bullet[b].object.GetWorldMatrixPointer(), mtxWorld);
 
-		// ‰æ‚è‚Ìİ’è
-		SetFuchi(1);
-
 		// ƒ‚ƒfƒ‹•`‰æ
 		DrawModel(&g_Bullet[b].object.modelInfo);
-
-		// ‰æ‚è‚Ìİ’è‚ğŒ³‚É–ß‚·
-		SetFuchi(0);
 
 		// ƒJƒŠƒ“ƒOİ’è‚ğ–ß‚·
 		SetCullingMode(CULL_MODE_BACK);

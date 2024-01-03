@@ -17,8 +17,8 @@
 #include "random"
 //*****************************************************************************
 // マクロ定義
-//*****************************************************************************
-#define	MODEL_PLAYER		"Data/model/robo_low.obj"			// 読み込むモデル名(まだ存在してないよ)
+//****************************************************************************
+#define	MODEL_PLAYER		"Data/model/robo_low.obj"		// 読み込むモデル名(まだ存在してないよ)
 
 #define	VALUE_MOVE			(3.0f)							// 移動量
 
@@ -67,7 +67,7 @@ HRESULT InitPlayer(void) {
 	GetModelDiffuse(&g_Player.object.modelInfo, g_Player.object.modelDiffuse);
 	g_Player.object.load = true;
 
-	g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
+	g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, -100.0f });
 	g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 	g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
 	g_Player.str = 100.0f;
@@ -296,15 +296,15 @@ void DrawPlayerUI(void)
 		SetMaterial(material);
 
 		//ゲージの位置やテクスチャー座標を反映
-		float px = 10.0f;		// ゲージの表示位置X
-		float py = 100.0f + (20.0f * i);		// ゲージの表示位置Y
-		float pw = 6.0f;		// ゲージの表示幅
-		float ph = 240.0f;		// ゲージの表示高さ
+		float px = 40.0f;						// ゲージの表示位置X
+		float py = 125.0f + (20.0f * i);		// ゲージの表示位置Y
+		float pw = 8.0f;						// ゲージの表示幅
+		float ph = 350.0f;						// ゲージの表示高さ
 
-		float tw = 50.0f;	// テクスチャの幅
-		float th = 1.0f;	// テクスチャの高さ
-		float tx = 0.0f;	// テクスチャの左上X座標
-		float ty = 0.0f;	// テクスチャの左上Y座標
+		float tw = 50.0f;						// テクスチャの幅
+		float th = 1.0f;						// テクスチャの高さ
+		float tx = 0.0f;						// テクスチャの左上X座標
+		float ty = 0.0f;						// テクスチャの左上Y座標
 
 		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
 
@@ -362,10 +362,10 @@ void DrawPlayerRestBullet(void)
 			SetMaterial(material);
 
 			//ゲージの位置やテクスチャー座標を反映
-			float px = 30.0f;		// ゲージの表示位置X
-			float py = 97.0f + (25.0f * i);		// ゲージの表示位置Y
-			float pw = 20.0f;		// ゲージの表示幅
-			float ph = 20.0f;		// ゲージの表示高さ
+			float px = 70.0f;		// ゲージの表示位置X
+			float py = 125.0f + (37.5f * i);		// ゲージの表示位置Y
+			float pw = 30.0f;		// ゲージの表示幅
+			float ph = 30.0f;		// ゲージの表示高さ
 
 			float tw = 1.0f;	// テクスチャの幅
 			float th = 1.0f;	// テクスチャの高さ
