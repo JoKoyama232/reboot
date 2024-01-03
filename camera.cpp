@@ -73,7 +73,7 @@ void UninitCamera(void)
 void UpdateCamera(void)
 {
 
-#ifdef _DEBUG
+
 	XMFLOAT2 screenCenter = XMFLOAT2((float)(g_windowPos.right - g_windowPos.left), (float)(g_windowPos.bottom - g_windowPos.top));
 	float mousex = (float)GetMouseX();
 	float mousey = (float)GetMouseY();
@@ -178,7 +178,7 @@ void UpdateCamera(void)
 		InitCamera();
 	}
 
-#endif
+
 
 
 

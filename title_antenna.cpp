@@ -29,7 +29,7 @@
 
 
 static float        g_LastUpdate;
-T_ANTENNA g_Antenna[MAX_ANTENNA];
+T_ANTENNA g_TAntenna[MAX_ANTENNA];
 static bool g_fire = false;
 static ID3D11Buffer* g_VertexBuffer = NULL;				// 頂点情報
 static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// テクスチャ情報
@@ -43,27 +43,27 @@ HRESULT InitTitleAntenna(void) {
 
 	for (int i = 0; i < MAX_ANTENNA; i++)
 	{
-		LoadModel(MODEL_ANTENNA, &g_Antenna[i].object.modelInfo);
-		GetModelDiffuse(&g_Antenna[i].object.modelInfo, g_Antenna[i].object.modelDiffuse);
-		g_Antenna[i].object.load = true;
-		g_Antenna[i].object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
-		g_Antenna[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
-		g_Antenna[i].object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
-		g_Antenna[i].time = 0.0f;
-		g_Antenna[i].speed = 0.0f;			// 移動スピードクリア
-		g_Antenna[i].use = true;
-		g_Antenna[i].flag_rotate = true;
-		g_Antenna[i].object.draw = true;
-		g_Antenna[i].size = ANTENNA_SIZE;
+		LoadModel(MODEL_ANTENNA, &g_TAntenna[i].object.modelInfo);
+		GetModelDiffuse(&g_TAntenna[i].object.modelInfo, g_TAntenna[i].object.modelDiffuse);
+		g_TAntenna[i].object.load = true;
+		g_TAntenna[i].object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
+		g_TAntenna[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
+		g_TAntenna[i].object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
+		g_TAntenna[i].time = 0.0f;
+		g_TAntenna[i].speed = 0.0f;			// 移動スピードクリア
+		g_TAntenna[i].use = true;
+		g_TAntenna[i].flag_rotate = true;
+		g_TAntenna[i].object.draw = true;
+		g_TAntenna[i].size = ANTENNA_SIZE;
 		g_LastUpdate = 0.0f;
 
 		//タイトルだけ位置の指定
-		g_Antenna[0].object.SetPosition(XMFLOAT3{ 100.0f,  20.0f, 100.0f });
-		g_Antenna[1].object.SetPosition(XMFLOAT3{ 200.0f,-100.0f, 200.0f });
-		g_Antenna[2].object.SetPosition(XMFLOAT3{ -75.0f,   0.0f,   0.0f });
-		g_Antenna[3].object.SetPosition(XMFLOAT3{-100.0f,   0.0f, 400.0f });
-		g_Antenna[4].object.SetPosition(XMFLOAT3{   0.0f,   0.0f, 100.0f });
-		g_Antenna[5].object.SetPosition(XMFLOAT3{ 100.0f,-100.0f, 100.0f });
+		g_TAntenna[0].object.SetPosition(XMFLOAT3{ 100.0f,  20.0f, 100.0f });
+		g_TAntenna[1].object.SetPosition(XMFLOAT3{ 200.0f,-100.0f, 200.0f });
+		g_TAntenna[2].object.SetPosition(XMFLOAT3{ -75.0f,   0.0f,   0.0f });
+		g_TAntenna[3].object.SetPosition(XMFLOAT3{-100.0f,   0.0f, 400.0f });
+		g_TAntenna[4].object.SetPosition(XMFLOAT3{   0.0f,   0.0f, 100.0f });
+		g_TAntenna[5].object.SetPosition(XMFLOAT3{ 100.0f,-100.0f, 100.0f });
 	}
 	return S_OK;
 
@@ -74,10 +74,10 @@ void UninitTitleAntenna(void) {
 	for (int i = 0; i < MAX_ANTENNA; i++)
 	{
 
-		if (g_Antenna[i].object.load)
+		if (g_TAntenna[i].object.load)
 		{
-			UnloadModel(&g_Antenna[i].object.modelInfo);
-			g_Antenna[i].object.load = false;
+			UnloadModel(&g_TAntenna[i].object.modelInfo);
+			g_TAntenna[i].object.load = false;
 		}
 	}
 }
@@ -87,16 +87,16 @@ void UpdateTitleAntenna(void) {
 	for (int i = 0; i < MAX_ANTENNA; i++)
 	{
 		// デブリの使用フラグを確認
-		if (!g_Antenna[i].use)
+		if (!g_TAntenna[i].use)
 		{
-			g_Antenna[i].object.draw = false;
+			g_TAntenna[i].object.draw = false;
 			continue;
 		}
 
-		XMFLOAT3 position = g_Antenna[i].object.GetPositionFloat();
-		XMFLOAT3 rotation = g_Antenna[i].object.GetRotationFloat();
+		XMFLOAT3 position = g_TAntenna[i].object.GetPositionFloat();
+		XMFLOAT3 rotation = g_TAntenna[i].object.GetRotationFloat();
 
-		if (!g_Antenna[i].flag_rotate)continue;
+		if (!g_TAntenna[i].flag_rotate)continue;
 		{
 			// ぐるぐる回転
 			rotation.x += (i + 1) * 0.001f;
@@ -105,8 +105,8 @@ void UpdateTitleAntenna(void) {
 		}
 
 		// 移動回転を反映
-		g_Antenna[i].object.SetPosition(position);
-		g_Antenna[i].object.SetRotation(rotation);
+		g_TAntenna[i].object.SetPosition(position);
+		g_TAntenna[i].object.SetRotation(rotation);
 	}
 
 }
@@ -120,32 +120,32 @@ void DrawTitleAntenna(void) {
 
 	for (int i = 0; i < MAX_ANTENNA; i++)
 	{
-		if (!g_Antenna[i].object.draw) continue;
+		if (!g_TAntenna[i].object.draw) continue;
 		// ワールドマトリックスの初期化
 		mtxWorld = XMMatrixIdentity();
 
 		// スケールを反映
-		XMFLOAT3 scale = g_Antenna[i].object.GetScaleFloat();
+		XMFLOAT3 scale = g_TAntenna[i].object.GetScaleFloat();
 		mtxScl = XMMatrixScaling(scale.x, scale.y, scale.z);
 		mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
 
 		// 回転を反映
-		XMFLOAT3 rotation = g_Antenna[i].object.GetRotationFloat();
+		XMFLOAT3 rotation = g_TAntenna[i].object.GetRotationFloat();
 		mtxRot = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y + XM_PI, rotation.z);
 		mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
 
 		// 移動を反映
-		XMFLOAT3 position = g_Antenna[i].object.GetPositionFloat();
+		XMFLOAT3 position = g_TAntenna[i].object.GetPositionFloat();
 		mtxTranslate = XMMatrixTranslation(position.x, position.y, position.z);
 		mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
 
 		// ワールドマトリックスの設定
 		SetWorldMatrix(&mtxWorld);
 
-		XMStoreFloat4x4(g_Antenna[i].object.GetWorldMatrixPointer(), mtxWorld);
+		XMStoreFloat4x4(g_TAntenna[i].object.GetWorldMatrixPointer(), mtxWorld);
 
 		// モデル描画
-		DrawModel(&g_Antenna[i].object.modelInfo);
+		DrawModel(&g_TAntenna[i].object.modelInfo);
 
 		SetFuchi(0);
 
@@ -157,6 +157,6 @@ void DrawTitleAntenna(void) {
 
 T_ANTENNA* GetTitleAntenna(void) {
 
-	return &g_Antenna[0];
+	return &g_TAntenna[0];
 }
 
