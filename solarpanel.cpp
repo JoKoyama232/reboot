@@ -46,7 +46,7 @@ HRESULT InitPanel(void) {
 		LoadModel(MODEL_PANEL, &g_Panel[i].object.modelInfo);
 		GetModelDiffuse(&g_Panel[i].object.modelInfo, g_Panel[i].object.modelDiffuse);
 		g_Panel[i].object.load = true;
-		g_Panel[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, 0.0f, rand() % 1000 + 0.0f });
+		g_Panel[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, rand() % 1000 - 500.0f, rand() % 1000 + 0.0f });
 		g_Panel[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Panel[i].object.SetScale(XMFLOAT3{ 0.4f, 0.4f, 0.4f });
 		g_Panel[i].time = 0.0f;

@@ -135,7 +135,7 @@ void UpdateClock(void)
 
 	if (g_Clock == 2150.0f)
 	{
-		PlaySound(SOUND_LABEL_BGM_stage1);
+		PlaySound(SOUND_LABEL_BGM_game2);
 	}
 
 

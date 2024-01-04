@@ -46,7 +46,7 @@ HRESULT InitPod(void) {
 		LoadModel(MODEL_POD, &g_Pod[i].object.modelInfo);
 		GetModelDiffuse(&g_Pod[i].object.modelInfo, g_Pod[i].object.modelDiffuse);
 		g_Pod[i].object.load = true;
-		g_Pod[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, 0.0f, rand() % 1000 + 0.0f });
+		g_Pod[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, rand() % 1000 - 500.0f, rand() % 1000 + 0.0f });
 		g_Pod[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Pod[i].object.SetScale(XMFLOAT3{ 3.0f, 3.0f, 3.0f });
 		g_Pod[i].time = 0.0f;

@@ -46,7 +46,7 @@ HRESULT InitRocket(void) {
 		LoadModel(MODEL_ROCKET, &g_Rocket[i].object.modelInfo);
 		GetModelDiffuse(&g_Rocket[i].object.modelInfo, g_Rocket[i].object.modelDiffuse);
 		g_Rocket[i].object.load = true;
-		g_Rocket[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, 0.0f, rand() % 1000 + 0.0f });
+		g_Rocket[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, rand() % 1000 - 500.0f, rand() % 1000 + 0.0f });
 		g_Rocket[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Rocket[i].object.SetScale(XMFLOAT3{ 0.3f, 0.3f, 0.3f });
 		g_Rocket[i].time = 0.0f;

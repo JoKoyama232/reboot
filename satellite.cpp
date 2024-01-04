@@ -46,7 +46,7 @@ HRESULT InitSatellite(void) {
 		LoadModel(MODEL_SATELLITE, &g_Satellite[i].object.modelInfo);
 		GetModelDiffuse(&g_Satellite[i].object.modelInfo, g_Satellite[i].object.modelDiffuse);
 		g_Satellite[i].object.load = true;
-		g_Satellite[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, 0.0f, rand() % 1000 + 0.0f });
+		g_Satellite[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, rand() % 1000 - 500.0f, rand() % 1000 + 0.0f });
 		g_Satellite[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Satellite[i].object.SetScale(XMFLOAT3{ 0.5f, 0.5f, 0.5f });
 		g_Satellite[i].time = 0.0f;

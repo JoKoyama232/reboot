@@ -16,7 +16,7 @@
 // マクロ定義
 //*****************************************************************************
 #define TEXTURE_MAX					(5)				// テクスチャの数
-#define BUTTON_MAX					(3)
+#define BUTTON_MAX					(2)
 
 #define GLITCH_INITIAL_OFFSET		(30.0f)
 #define GLITCH_ANIM_TIME			(5)
