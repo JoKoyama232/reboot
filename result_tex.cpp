@@ -149,14 +149,14 @@ void UpdateResultTex(void)
 		// マウルの位置が画像に当たっているかどうかの判定
 		if ((x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO * 0.5f) &&
 			(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO * 0.5f) &&
-			(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) &&
-			(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f))
+			(y + 15.0f > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) &&
+			(y + 15.0f < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f))
 		{
 
 			//点滅させる
 			if (g_Button[i].flag_alpha == true)
 			{
-				g_Button[i].alpha -= 0.01f;
+				g_Button[i].alpha -= 0.02f;
 				if (g_Button[i].alpha <= 0.0f)
 				{
 					g_Button[i].alpha = 0.0f;
@@ -165,7 +165,7 @@ void UpdateResultTex(void)
 			}
 			else
 			{
-				g_Button[i].alpha += 0.01f;
+				g_Button[i].alpha += 0.02f;
 				if (g_Button[i].alpha >= 1.0f)
 				{
 					g_Button[i].alpha = 1.0f;

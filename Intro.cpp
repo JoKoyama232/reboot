@@ -174,6 +174,9 @@ void UpdateIntro(void)
 
 	if (GetKeyState(VK_LBUTTON) & 0x80)
 	{	
+		sprite[logo].use = false;
+		sprite[credit].use = false;
+		sprite[introBackground].use = false;
 		setLoad(false);
 		SetFade(FADE_OUT, MODE_TITLE);
 	}

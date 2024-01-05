@@ -210,6 +210,13 @@ void DrawGame(void)
 		DrawPlayerUI();
 
 		DrawPlayerRestBullet();
+
+		DrawCapture();
+
+		DrawCollect();
+
+		DrawAttach();
+
 		// ライティングを有効に
 		SetLightEnable(true);
 
@@ -389,6 +396,7 @@ void CheckHit(void)
 		// プレイヤーと基地の当たり反応（真
 		if (!flag_score == 0)
 		{
+			player->C2alpha = 1.0f;
 			PlaySound(SOUND_LABEL_SE_SCORE);
 		}
 
@@ -435,6 +443,7 @@ void CheckHit(void)
 
 				if (debris[cntDebris].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					debris[cntDebris].object.SetParent(NULL);
 					debris[cntDebris].use = false;
 					bullet[cntBullet].use = false;
@@ -466,6 +475,7 @@ void CheckHit(void)
 
 				if (antenna[cntAntn].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					antenna[cntAntn].object.SetParent(NULL);
 					antenna[cntAntn].use = false;
 					bullet[cntBullet].use = false;
@@ -496,6 +506,7 @@ void CheckHit(void)
 
 				if (pod[cntPod].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					pod[cntPod].object.SetParent(NULL);
 					pod[cntPod].use = false;
 					bullet[cntBullet].use = false;
@@ -525,6 +536,7 @@ void CheckHit(void)
 
 				if (panel[cntPanel].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					panel[cntPanel].object.SetParent(NULL);
 					panel[cntPanel].use = false;
 					bullet[cntBullet].use = false;
@@ -555,6 +567,7 @@ void CheckHit(void)
 
 				if (hatch[cntHatch].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					hatch[cntHatch].object.SetParent(NULL);
 					hatch[cntHatch].use = false;
 					bullet[cntBullet].use = false;
@@ -585,6 +598,7 @@ void CheckHit(void)
 
 				if (satellite[cntSL].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					satellite[cntSL].object.SetParent(NULL);
 					satellite[cntSL].use = false;
 					bullet[cntBullet].use = false;
@@ -614,6 +628,7 @@ void CheckHit(void)
 
 				if (rocket[cntRocket].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					rocket[cntRocket].object.SetParent(NULL);
 					rocket[cntRocket].use = false;
 					bullet[cntBullet].use = false;

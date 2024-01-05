@@ -164,8 +164,8 @@ void UpdateTitleTex(void)
 		if (time > 0 &&
 			(!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO *0.5f) ||
 				!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO * 0.5f) ||
-				!(y + 15 > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) ||
-				!(y + 15 < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f)))
+				!(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) ||
+				!(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f)))
 		{
 			//マウスが画像の範囲外なら点滅せずに表示
 			g_Button[i].alpha = 1.0f;
