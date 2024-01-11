@@ -56,7 +56,7 @@ static int						glitchOffset;				// グリッチ表現の変更幅
 static int						glitchInterval;				// グリッチ表現の発動間隔
 float	alpha;
 bool	flag_alpha;
-static int selector = 0;
+static int mselector = 0;
 static BOOL						g_Load = FALSE;
 static BUTTON					g_Button[BUTTON_MAX];
 
@@ -106,7 +106,7 @@ HRESULT InitTitleTex(void)
 		g_Button[i].texNo = 1 + i;
 		g_Button[i].h = g_h;
 		g_Button[i].w = g_w;
-		g_Button[i].pos = XMFLOAT3(g_Button[i].w * 0.5f, g_Button[i].h * 0.5f + 125 + (75.0f * i), 0.0f);
+		g_Button[i].pos = XMFLOAT3(g_Button[i].w * 0.5f, g_Button[i].h * 0.5f + 125 + (100.0f * i), 0.0f);
 
 		g_Button[i].alpha = 1.0f;
 		g_Button[i].flag_alpha = true;
@@ -162,17 +162,18 @@ void UpdateTitleTex(void)
 
 		// マウルの位置が画像に当たっているかどうかの判定
 		if (time > 0 &&
-			(!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO *0.5f) ||
-				!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO * 0.5f) ||
-				!(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) ||
-				!(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f)))
+			((x < g_Button[i].pos.x - 180.0f) ||
+			 (x > g_Button[i].pos.x + 180.0f) ||
+			 (y < g_Button[i].pos.y - 50.0f) ||
+			 (y > g_Button[i].pos.y + 20.0f)))
+
 		{
 			//マウスが画像の範囲外なら点滅せずに表示
 			g_Button[i].alpha = 1.0f;
 			g_Button[i].flag_sound = true;
 		}
 		else {
-			selector = i;			
+			mselector = i;			
 			if (g_Button[i].flag_sound == true)
 			{
 				PlaySound(SOUND_LABEL_SE_ZIPPO);
@@ -181,7 +182,7 @@ void UpdateTitleTex(void)
 			//マウスの左ボタンが押されたら
 			if (GetKeyState(VK_LBUTTON) & 0x80)
 			{
-				switch (selector) {
+				switch (mselector) {
 				case 0:
 					SetFade(FADE_OUT, MODE_GAME);
 					PlaySound(SOUND_LABEL_SE_start);
