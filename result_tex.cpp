@@ -11,12 +11,13 @@
 #include "fade.h"
 #include "sound.h"
 #include "sprite.h"
+#include "score.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
 #define TEXTURE_MAX					(6)				// テクスチャの数
-#define BUTTON_MAX					(3)
+#define BUTTON_MAX					(2)
 
 
 #define TEXTURE_WIDTH_LOGO			(360)			// ロゴサイズ
@@ -34,9 +35,10 @@ static ID3D11Buffer* g_VertexBuffer = NULL;		// 頂点情報
 static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// テクスチャ情報
 
 static const char* g_TexturName[TEXTURE_MAX] = {
-	"data/TEXTURE/result_logo.png",
+	"data/TEXTURE/number.png",
 	"data/TEXTURE/replay_mission.png",
 	"data/TEXTURE/quit_game.png",
+	"data/TEXTURE/finish.png",
 
 
 };
@@ -93,7 +95,7 @@ HRESULT InitResultTex(void)
 		g_Button[i].texNo = 1 + i;
 		g_Button[i].h = SCREEN_HEIGHT;
 		g_Button[i].w = SCREEN_WIDTH;
-		g_Button[i].pos = XMFLOAT3(g_Button[i].w * 0.5f, g_Button[i].h * 0.5f + 100.0f * (i + 1), 0.0f);
+		g_Button[i].pos = XMFLOAT3(g_Button[i].w * 0.5f, g_Button[i].h * 0.5f + 150.0f * (i + 1), 0.0f);
 
 		g_Button[i].alpha = 1.0f;
 		g_Button[i].flag_alpha = true;
@@ -148,14 +150,14 @@ void UpdateResultTex(void)
 		// マウルの位置が画像に当たっているかどうかの判定
 		if ((x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO * 0.5f) &&
 			(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO * 0.5f) &&
-			(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) &&
-			(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f))
+			(y + 15.0f > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) &&
+			(y + 15.0f < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f))
 		{
 
 			//点滅させる
 			if (g_Button[i].flag_alpha == true)
 			{
-				g_Button[i].alpha -= 0.01f;
+				g_Button[i].alpha -= 0.02f;
 				if (g_Button[i].alpha <= 0.0f)
 				{
 					g_Button[i].alpha = 0.0f;
@@ -164,7 +166,7 @@ void UpdateResultTex(void)
 			}
 			else
 			{
-				g_Button[i].alpha += 0.01f;
+				g_Button[i].alpha += 0.02f;
 				if (g_Button[i].alpha >= 1.0f)
 				{
 					g_Button[i].alpha = 1.0f;
@@ -184,6 +186,8 @@ void UpdateResultTex(void)
 				switch (i) {
 				case 0:
 					SetFade(FADE_OUT, MODE_GAME);
+					//マウス非表示
+					ShowCursor(false);
 					//PlaySound();
 					break;
 				case 1:
@@ -257,16 +261,50 @@ void DrawResultTex(void)
 	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	SetMaterial(material);
 
-
-	// リザルトのロゴを描画
+	// スコア表示
 	{
 		// テクスチャ設定
 		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
 
-		// １枚のポリゴンの頂点とテクスチャ座標を設定
-		SetSprite(g_VertexBuffer, g_Pos.x, g_Pos.y, TEXTURE_WIDTH_LOGO, TEXTURE_HEIGHT_LOGO, 0.0f, 0.0f, 1.0f, 1.0f);
+		// 桁数分処理する
+		int number = GetScore();
+		for (int i = 0; i < SCORE_DIGIT; i++)
+		{
+			// 今回表示する桁の数字
+			float x = (float)(number % 10);
 
-		// ポリゴン描画
+			// スコアの位置やテクスチャー座標を反映
+			float pw = 16 * 4;			// スコアの表示幅
+			float ph = 32 * 4;			// スコアの表示高さ
+			float px = 1075.0f - i * pw;	// スコアの表示位置X
+			float py = 200.0f;			// スコアの表示位置Y
+
+			float tw = 1.0f / 10;		// テクスチャの幅
+			float th = 1.0f / 1;		// テクスチャの高さ
+			float tx = x * tw;			// テクスチャの左上X座標
+			float ty = 0.0f;			// テクスチャの左上Y座標
+
+			// １枚のポリゴンの頂点とテクスチャ座標を設定
+			SetSpriteColor(g_VertexBuffer, px, py, pw, ph, tx, ty, tw, th,
+				XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
+			// ポリゴン描画
+			GetDeviceContext()->Draw(4, 0);
+
+			// 次の桁へ
+			number /= 10;
+		}
+
+	}
+	
+	// congratulationsの表示
+	{
+		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[3]);
+
+		// １枚のポリゴンの頂点とテクスチャ座標を設定
+		SetSpriteColor(g_VertexBuffer, 950.0f, 400.0f, 1000, 32*4, 0.0f, 0.0f, 1.0f, 1.0f,
+			XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
 		GetDeviceContext()->Draw(4, 0);
 	}
 

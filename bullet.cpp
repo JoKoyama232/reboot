@@ -13,7 +13,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	MODEL_BULLET		"Data/model/cone.obj"			// 読み込むモデル名
+#define	MODEL_BULLET		"Data/model/ball.obj"			// 読み込むモデル名
 															// 今はモチがないので仮
 
 #define	VALUE_MOVE			(3.0f)							// 移動量
@@ -139,14 +139,8 @@ void DrawBullet(void)
 
 		XMStoreFloat4x4(g_Bullet[b].object.GetWorldMatrixPointer(), mtxWorld);
 
-		// 縁取りの設定
-		SetFuchi(1);
-
 		// モデル描画
 		DrawModel(&g_Bullet[b].object.modelInfo);
-
-		// 縁取りの設定を元に戻す
-		SetFuchi(0);
 
 		// カリング設定を戻す
 		SetCullingMode(CULL_MODE_BACK);

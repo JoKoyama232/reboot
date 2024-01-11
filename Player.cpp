@@ -17,13 +17,13 @@
 #include "random"
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
-//*****************************************************************************
-#define	MODEL_PLAYER		"Data/model/robo_low.obj"			// “Ç‚İ‚Şƒ‚ƒfƒ‹–¼(‚Ü‚¾‘¶İ‚µ‚Ä‚È‚¢‚æ)
+//****************************************************************************
+#define	MODEL_PLAYER		"Data/model/robo_low.obj"		// “Ç‚İ‚Şƒ‚ƒfƒ‹–¼(‚Ü‚¾‘¶İ‚µ‚Ä‚È‚¢‚æ)
 
 #define	VALUE_MOVE			(3.0f)							// ˆÚ“®—Ê
 
 #define PLAYER_UI_MAX		(1)								// ƒvƒŒƒCƒ„[‚ÌUI‚Ì”
-#define TEXTURE_MAX			(2)								// ƒeƒNƒXƒ`ƒƒ‚Ì”
+#define TEXTURE_MAX			(5)								// ƒeƒNƒXƒ`ƒƒ‚Ì”
 
 static float		roty = 0.0f;
 
@@ -39,6 +39,9 @@ static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// ƒeƒNƒXƒ`ƒ
 static const char* g_TexturName[TEXTURE_MAX] = {
 	"Data/texture/bar_white.png",
 	"Data/texture/ball_white.png",
+	"Data/texture/capture.png",
+	"Data/texture/attach.png",
+	"Data/texture/collect.png",
 
 };
 
@@ -67,14 +70,19 @@ HRESULT InitPlayer(void) {
 	GetModelDiffuse(&g_Player.object.modelInfo, g_Player.object.modelDiffuse);
 	g_Player.object.load = true;
 
-	g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
+	g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, -100.0f });
 	g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 	g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
 	g_Player.str = 100.0f;
 	g_Player.str_max = 100.0f;
+	g_Player.Aalpha - 0.0f;
+	g_Player.Calpha = 0.0f;
+	g_Player.C2alpha = 0.0f;
+	g_Player.Ralpha = 0.0f;
 	g_Player.time = 0.0f;
 	g_Player.speed = 0.0f;			// ˆÚ“®ƒXƒs[ƒhƒNƒŠƒA
 	g_Player.use = true;
+	g_Player.flag_Aalpha = false;
 	g_Player.size = PLAYER_SIZE;
 	g_LastUpdate = 0.0f;
 	roty = 0.0f;
@@ -209,7 +217,7 @@ void UpdatePlayer(void) {
 	// ’e”­Ëˆ—
 	if ((GetKeyboardTrigger(DIK_SPACE)) || IsMouseLeftTriggered())
 	{
- 		SetBullet(position, camRotation);
+		SetBullet(position, camRotation);
 		PlaySound(SOUND_LABEL_SE_BULLET); //ƒ‚ƒ`”­Ë‰¹
 	}
 	PrintDebugProc((char*)"Player Information\nMovement:   W\n            A  S  D\n  Shift    Space\nPosition:(%f, %f, %f)\nRotation:(%f, %f, %f)\n", position.x, position.y, position.z, rotation.x, rotation.y, rotation.z);
@@ -272,6 +280,217 @@ float GetDistance3D(XMFLOAT3 pos1, XMFLOAT3 pos2) {
 }
 
 //=============================================================================
+// // ƒAƒ^ƒbƒ`•\¦ˆ—
+//=============================================================================
+void DrawAttach(void)
+{
+	// ’¸“_ƒoƒbƒtƒ@İ’è
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+	// ƒ}ƒgƒŠƒNƒXİ’è
+	SetWorldViewProjection2D();
+
+	// ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒWİ’è
+	GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// ƒ}ƒeƒŠƒAƒ‹İ’è
+	MATERIAL material;
+	ZeroMemory(&material, sizeof(material));
+	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	SetMaterial(material);
+
+	//ƒQ[ƒW‚ÌˆÊ’u‚âƒeƒNƒXƒ`ƒƒ[À•W‚ğ”½‰f
+	float px = 1000.0f;						// ƒQ[ƒW‚Ì•\¦ˆÊ’uX
+	float py = 150.0f;						// ƒQ[ƒW‚Ì•\¦ˆÊ’uY
+	float pw = 400.0f;						// ƒQ[ƒW‚Ì•\¦•
+	float ph = 200.0f;						// ƒQ[ƒW‚Ì•\¦‚‚³
+
+	float tw = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì•
+	float th = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³
+	float tx = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãXÀ•W
+	float ty = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãYÀ•W
+
+
+	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[3]);
+	
+	if (g_Player.flag_Aalpha == true)
+	{
+		g_Player.Aalpha = 1.0f;
+		g_Player.flag_Aalpha = false;
+	}
+
+
+	if (g_Player.Aalpha >= 0.0f)
+	{
+		g_Player.Aalpha -= 0.01;
+	}
+
+
+	SetSpriteLTColor(g_VertexBuffer,
+		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
+		tx, ty, tw, th,
+		XMFLOAT4(1.0f, 1.0f, 1.0f, g_Player.Aalpha));
+
+	
+	// ƒ|ƒŠƒSƒ“•`‰æ
+	GetDeviceContext()->Draw(4, 0);
+
+}
+
+//=============================================================================
+// // ƒLƒƒƒvƒ`ƒƒ[•\¦ˆ—
+//=============================================================================
+void DrawCapture(void)
+{
+	// ’¸“_ƒoƒbƒtƒ@İ’è
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+	// ƒ}ƒgƒŠƒNƒXİ’è
+	SetWorldViewProjection2D();
+
+	// ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒWİ’è
+	GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// ƒ}ƒeƒŠƒAƒ‹İ’è
+	MATERIAL material;
+	ZeroMemory(&material, sizeof(material));
+	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	SetMaterial(material);
+
+	//ƒQ[ƒW‚ÌˆÊ’u‚âƒeƒNƒXƒ`ƒƒ[À•W‚ğ”½‰f
+	float px = 1000.0f;						// ƒQ[ƒW‚Ì•\¦ˆÊ’uX
+	float py = 150.0f;						// ƒQ[ƒW‚Ì•\¦ˆÊ’uY
+	float pw = 400.0f;						// ƒQ[ƒW‚Ì•\¦•
+	float ph = 200.0f;						// ƒQ[ƒW‚Ì•\¦‚‚³
+
+	float tw = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì•
+	float th = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³
+	float tx = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãXÀ•W
+	float ty = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãYÀ•W
+
+
+	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[2]);
+	
+	if (g_Player.Calpha >= 0.0f)
+	{
+		g_Player.Calpha -= 0.01;
+	}
+
+
+	SetSpriteLTColor(g_VertexBuffer,
+		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
+		tx, ty, tw, th,
+		XMFLOAT4(1.0f, 1.0f, 1.0f, g_Player.Calpha));
+
+	
+	// ƒ|ƒŠƒSƒ“•`‰æ
+	GetDeviceContext()->Draw(4, 0);
+
+}
+
+//=============================================================================
+// ƒRƒŒƒNƒg•\¦ˆ—
+//=============================================================================
+void DrawCollect(void)
+{
+	// ’¸“_ƒoƒbƒtƒ@İ’è
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+	// ƒ}ƒgƒŠƒNƒXİ’è
+	SetWorldViewProjection2D();
+
+	// ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒWİ’è
+	GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// ƒ}ƒeƒŠƒAƒ‹İ’è
+	MATERIAL material;
+	ZeroMemory(&material, sizeof(material));
+	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	SetMaterial(material);
+
+	//ƒQ[ƒW‚ÌˆÊ’u‚âƒeƒNƒXƒ`ƒƒ[À•W‚ğ”½‰f
+	float px = 670.0f;						// ƒQ[ƒW‚Ì•\¦ˆÊ’uX
+	float py = 150.0f;						// ƒQ[ƒW‚Ì•\¦ˆÊ’uY
+	float pw = 600.0f;						// ƒQ[ƒW‚Ì•\¦•
+	float ph = 200.0f;						// ƒQ[ƒW‚Ì•\¦‚‚³
+
+	float tw = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì•
+	float th = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³
+	float tx = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãXÀ•W
+	float ty = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãYÀ•W
+
+
+	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[4]);
+
+	if (g_Player.C2alpha >= 0.0f)
+	{
+		g_Player.C2alpha -= 0.01;
+	}
+
+
+	SetSpriteLTColor(g_VertexBuffer,
+		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
+		tx, ty, tw, th,
+		XMFLOAT4(1.0f, 1.0f, 1.0f, g_Player.C2alpha));
+
+
+	// ƒ|ƒŠƒSƒ“•`‰æ
+	GetDeviceContext()->Draw(4, 0);
+	
+}
+
+//=============================================================================
+// ƒRƒŒƒNƒg•\¦ˆ—
+//=============================================================================
+void DrawReload(void)
+{
+	// ’¸“_ƒoƒbƒtƒ@İ’è
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+	// ƒ}ƒgƒŠƒNƒXİ’è
+	SetWorldViewProjection2D();
+
+	// ƒvƒŠƒ~ƒeƒBƒuƒgƒ|ƒƒWİ’è
+	GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// ƒ}ƒeƒŠƒAƒ‹İ’è
+	MATERIAL material;
+	ZeroMemory(&material, sizeof(material));
+	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	SetMaterial(material);
+
+	//ƒQ[ƒW‚ÌˆÊ’u‚âƒeƒNƒXƒ`ƒƒ[À•W‚ğ”½‰f
+	float px = 67.0f;						// ƒQ[ƒW‚Ì•\¦ˆÊ’uX
+	float py = 150.0f;						// ƒQ[ƒW‚Ì•\¦ˆÊ’uY
+	float pw = 600.0f;						// ƒQ[ƒW‚Ì•\¦•
+	float ph = 200.0f;						// ƒQ[ƒW‚Ì•\¦‚‚³
+
+	float tw = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì•
+	float th = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³
+	float tx = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãXÀ•W
+	float ty = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãYÀ•W
+
+
+	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[4]);
+
+	SetSpriteLTColor(g_VertexBuffer,
+		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
+		tx, ty, tw, th,
+		XMFLOAT4(1.0f, 1.0f, 1.0f, g_Player.Ralpha));
+
+	// ƒ|ƒŠƒSƒ“•`‰æ
+	GetDeviceContext()->Draw(4, 0);
+}
+
+//=============================================================================
 // // ƒvƒŒƒCƒ„[‚ÌUI•\¦ˆ—
 //=============================================================================
 void DrawPlayerUI(void)
@@ -282,7 +501,7 @@ void DrawPlayerUI(void)
 		UINT stride = sizeof(VERTEX_3D);
 		UINT offset = 0;
 		GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
-
+		
 		// ƒ}ƒgƒŠƒNƒXİ’è
 		SetWorldViewProjection2D();
 
@@ -296,15 +515,15 @@ void DrawPlayerUI(void)
 		SetMaterial(material);
 
 		//ƒQ[ƒW‚ÌˆÊ’u‚âƒeƒNƒXƒ`ƒƒ[À•W‚ğ”½‰f
-		float px = 10.0f;		// ƒQ[ƒW‚Ì•\¦ˆÊ’uX
-		float py = 100.0f + (20.0f * i);		// ƒQ[ƒW‚Ì•\¦ˆÊ’uY
-		float pw = 6.0f;		// ƒQ[ƒW‚Ì•\¦•
-		float ph = 240.0f;		// ƒQ[ƒW‚Ì•\¦‚‚³
+		float px = 40.0f;						// ƒQ[ƒW‚Ì•\¦ˆÊ’uX
+		float py = 125.0f + (20.0f * i);		// ƒQ[ƒW‚Ì•\¦ˆÊ’uY
+		float pw = 8.0f;						// ƒQ[ƒW‚Ì•\¦•
+		float ph = 350.0f;						// ƒQ[ƒW‚Ì•\¦‚‚³
 
-		float tw = 50.0f;	// ƒeƒNƒXƒ`ƒƒ‚Ì•
-		float th = 1.0f;	// ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³
-		float tx = 0.0f;	// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãXÀ•W
-		float ty = 0.0f;	// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãYÀ•W
+		float tw = 50.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì•
+		float th = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³
+		float tx = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãXÀ•W
+		float ty = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãYÀ•W
 
 		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
 
@@ -362,10 +581,10 @@ void DrawPlayerRestBullet(void)
 			SetMaterial(material);
 
 			//ƒQ[ƒW‚ÌˆÊ’u‚âƒeƒNƒXƒ`ƒƒ[À•W‚ğ”½‰f
-			float px = 30.0f;		// ƒQ[ƒW‚Ì•\¦ˆÊ’uX
-			float py = 97.0f + (25.0f * i);		// ƒQ[ƒW‚Ì•\¦ˆÊ’uY
-			float pw = 20.0f;		// ƒQ[ƒW‚Ì•\¦•
-			float ph = 20.0f;		// ƒQ[ƒW‚Ì•\¦‚‚³
+			float px = 70.0f;		// ƒQ[ƒW‚Ì•\¦ˆÊ’uX
+			float py = 125.0f + (37.5f * i);		// ƒQ[ƒW‚Ì•\¦ˆÊ’uY
+			float pw = 30.0f;		// ƒQ[ƒW‚Ì•\¦•
+			float ph = 30.0f;		// ƒQ[ƒW‚Ì•\¦‚‚³
 
 			float tw = 1.0f;	// ƒeƒNƒXƒ`ƒƒ‚Ì•
 			float th = 1.0f;	// ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³

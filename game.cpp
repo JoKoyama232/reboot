@@ -210,6 +210,15 @@ void DrawGame(void)
 		DrawPlayerUI();
 
 		DrawPlayerRestBullet();
+
+		DrawAttach();
+
+		DrawCapture();
+
+		DrawCollect();
+
+		DrawReload();
+
 		// ライティングを有効に
 		SetLightEnable(true);
 
@@ -266,7 +275,7 @@ void CheckHit(void)
 			// 弾丸とデブリの当たり判定
 			if (!CollisionBC(bulletPos, debrisPos, bullet[cntBullet].size, debris[cntDebris].size)) continue;
 
-			// 弾丸とデブリの当たり反応（真）
+			// 弾丸とデブリの当たり反応（真
 			bullet[cntBullet].spd = 0.0f;
 			debris[cntDebris].flag_rotate = false;
 			debris[cntDebris].object.SetParent(&bullet[cntBullet].object);
@@ -284,7 +293,6 @@ void CheckHit(void)
 
 			// 弾丸とアンテナの当たり判定
 			if (!CollisionBC(bulletPos, antennaPos, bullet[cntBullet].size, antenna[cntAntn].size))continue;
-
 			bullet[cntBullet].spd = 0.0f;
 			antenna[cntAntn].flag_rotate = false;
 			antenna[cntAntn].object.SetParent(&bullet[cntBullet].object);
@@ -301,7 +309,6 @@ void CheckHit(void)
 
 			// バレットとポッドの当たり判定
 			if (!CollisionBC(bulletPos, podPos, bullet[cntBullet].size, pod[cntPod].size))continue;
-
 			bullet[cntBullet].spd = 0.0f;
 			pod[cntPod].flag_rotate = false;
 			pod[cntPod].object.SetParent(&bullet[cntBullet].object);
@@ -318,7 +325,6 @@ void CheckHit(void)
 
 			// バレットとパネルの当たり判定
 			if (!CollisionBC(bulletPos, panelPos, bullet[cntBullet].size, panel[cntPanel].size))continue;
-		
 			bullet[cntBullet].spd = 0.0f;
 			panel[cntPanel].flag_rotate = false;
 			panel[cntPanel].object.SetParent(&bullet[cntBullet].object);		
@@ -335,7 +341,6 @@ void CheckHit(void)
 			
 			// バレットとハッチの当たり判定
 			if (!CollisionBC(bulletPos, hatchPos, bullet[cntBullet].size, hatch[cntHatch].size))continue;
-			
 			bullet[cntBullet].spd = 0.0f;
 			hatch[cntHatch].flag_rotate = false;
 			hatch[cntHatch].object.SetParent(&bullet[cntBullet].object);
@@ -353,7 +358,6 @@ void CheckHit(void)
 
 			// バレットと人工衛星の当たり判定
 			if (!CollisionBC(bulletPos, satellitePos, bullet[cntBullet].size, satellite[cntSL].size))continue;
-
 			bullet[cntBullet].spd = 0.0f;
 			satellite[cntSL].flag_rotate = false;
 			satellite[cntSL].object.SetParent(&bullet[cntBullet].object);
@@ -370,7 +374,6 @@ void CheckHit(void)
 
 			// バレットとロケットの当たり判定
 			if (!CollisionBC(bulletPos, rocketPos, bullet[cntBullet].size, rocket[cntRocket].size))continue;
-
 			bullet[cntBullet].spd = 0.0f;
 			rocket[cntRocket].flag_rotate = false;
 			rocket[cntRocket].object.SetParent(&bullet[cntBullet].object);
@@ -389,19 +392,29 @@ void CheckHit(void)
 		// プレイヤーと基地の当たり反応（真
 		if (!flag_score == 0)
 		{
+			player->C2alpha = 1.0f;
 			PlaySound(SOUND_LABEL_SE_SCORE);
 		}
-
 		AddScore(flag_score * 100);
 		flag_score = 0;
-		for (int i = 0; i < MAX_BULLET; i++)
+		player->Ralpha = 1.0f;
+		// Eキー押したら弾補充させる
+		if (GetKeyboardTrigger(DIK_R))
 		{
-			if (!bullet[i].spd == 1.0f)continue;
+			for (int i = 0; i < MAX_BULLET; i++)
 			{
-				bullet[i].use = false;
+				if (!bullet[i].spd == 1.0f)continue;
+				{
+					bullet[i].use = false;
+				}
 			}
 		}
 	}
+	else
+	{
+		player->Ralpha = 0.0f;
+	}
+
 	// ペアレントしたバレットの解放処理
 	for (int cntBullet = 0; cntBullet < MAX_BULLET; cntBullet++)
 	{
@@ -428,6 +441,7 @@ void CheckHit(void)
 
 				if (debris[cntDebris].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					debris[cntDebris].object.SetParent(NULL);
 					debris[cntDebris].use = false;
 					bullet[cntBullet].use = false;
@@ -459,6 +473,7 @@ void CheckHit(void)
 
 				if (antenna[cntAntn].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					antenna[cntAntn].object.SetParent(NULL);
 					antenna[cntAntn].use = false;
 					bullet[cntBullet].use = false;
@@ -489,6 +504,7 @@ void CheckHit(void)
 
 				if (pod[cntPod].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					pod[cntPod].object.SetParent(NULL);
 					pod[cntPod].use = false;
 					bullet[cntBullet].use = false;
@@ -518,6 +534,7 @@ void CheckHit(void)
 
 				if (panel[cntPanel].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					panel[cntPanel].object.SetParent(NULL);
 					panel[cntPanel].use = false;
 					bullet[cntBullet].use = false;
@@ -548,6 +565,7 @@ void CheckHit(void)
 
 				if (hatch[cntHatch].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					hatch[cntHatch].object.SetParent(NULL);
 					hatch[cntHatch].use = false;
 					bullet[cntBullet].use = false;
@@ -578,6 +596,7 @@ void CheckHit(void)
 
 				if (satellite[cntSL].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					satellite[cntSL].object.SetParent(NULL);
 					satellite[cntSL].use = false;
 					bullet[cntBullet].use = false;
@@ -607,6 +626,7 @@ void CheckHit(void)
 
 				if (rocket[cntRocket].object.GetParent() == &bullet[cntBullet].object)
 				{
+					player->Calpha = 1.0f;
 					rocket[cntRocket].object.SetParent(NULL);
 					rocket[cntRocket].use = false;
 					bullet[cntBullet].use = false;
@@ -618,10 +638,6 @@ void CheckHit(void)
 		//----------------------------------------------------------------------
 	}
 }
-
-		
-
-
 
 
 
@@ -645,6 +661,30 @@ BOOL CollisionBC(XMFLOAT3 pos1, XMFLOAT3 pos2, float r1, float r2)
 	{
 		ans = TRUE;	// 当たっている
 	}
+
+	return ans;
+}
+
+
+//=============================================================================
+// BCによる当たり判定処理
+// サイズは半径
+// 戻り値：当たってたらTRUE
+//=============================================================================
+BOOL CollisionBC2(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 s1, XMFLOAT3 s2)
+{
+	BOOL ans = FALSE;						// 外れをセットしておく
+
+	XMFLOAT3 len = { (s1.x + s2.x) * (s1.x + s2.x), (s1.y + s2.y) * (s1.y + s2.y), (s1.z + s2.z) * (s1.z + s2.z)};
+	XMVECTOR temp = XMLoadFloat3(&pos1) - XMLoadFloat3(&pos2);
+	temp = XMVector3LengthSq(temp);			// 2点間の距離（2乗した物）
+	XMFLOAT3 lenSq = XMFLOAT3{ 0.0f,0.0f,0.0f };
+
+	if ((len.x > lenSq.x) || (len.y > lenSq.y) || (len.z > lenSq.z))
+	{
+		ans = TRUE;	// 当たっている
+	}
+
 
 	return ans;
 }

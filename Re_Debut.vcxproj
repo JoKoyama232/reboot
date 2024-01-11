@@ -150,6 +150,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="clock.cpp" />
     <ClCompile Include="debris.cpp" />
+    <ClCompile Include="DebugObject.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
@@ -172,6 +173,8 @@
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="title_antenna.cpp" />
+    <ClCompile Include="title_debris.cpp" />
     <ClCompile Include="title_tex.cpp" />
     <ClCompile Include="result_tex.cpp" />
   </ItemGroup>
@@ -182,6 +185,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="clock.h" />
     <ClInclude Include="debris.h" />
+    <ClInclude Include="DebugObject.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
@@ -205,6 +209,8 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="title_antenna.h" />
+    <ClInclude Include="title_debris.h" />
     <ClInclude Include="title_tex.h" />
     <ClInclude Include="WorldSpaceClass.h" />
   </ItemGroup>

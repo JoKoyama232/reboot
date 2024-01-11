@@ -13,6 +13,8 @@
 #include "sprite.h"
 #include "title.h"
 #include "title_tex.h"
+#include "title_debris.h"
+#include "title_antenna.h"
 #include "Skybox.h"
 
 //=============================================================================
@@ -22,6 +24,10 @@
 HRESULT InitTitle(void)
 {
 	InitTitleTex();
+
+	InitTitleDebris();
+
+	InitTitleAntenna();
 
 	InitSkybox();
 	return S_OK;
@@ -35,6 +41,10 @@ void UninitTitle(void)
 {
 	UninitTitleTex();
 
+	UninitTitleDebris();
+
+	UninitTitleAntenna();
+
 	UninitSkybox();
 }
 
@@ -46,6 +56,10 @@ void UpdateTitle(void)
 {
 	UpdateTitleTex();
 
+	UpdateTitleDebris();
+
+	UpdateTitleAntenna();
+
 	UpdateSkybox();
 }
 
@@ -56,7 +70,12 @@ void UpdateTitle(void)
 //=============================================================================
 void DrawTitle(void)
 {
+	DrawTitleDebris();
+
+	DrawTitleAntenna();
+
 	DrawSkybox();
+
 	// 2DÇÃï®Çï`âÊÇ∑ÇÈèàóù
 	{
 		// Zî‰ärÇ»Çµ

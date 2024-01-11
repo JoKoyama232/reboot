@@ -65,7 +65,7 @@ struct MATERIAL
 	XMFLOAT4	Specular;
 	XMFLOAT4	Emission;
 	float		Shininess;
-	int			noTexSampling;
+	int			noTexSampling = 1;
 };
 
 // ÉâÉCÉgç\ë¢ëÃ

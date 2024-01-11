@@ -16,7 +16,7 @@
 // マクロ定義
 //*****************************************************************************
 #define TEXTURE_MAX					(5)				// テクスチャの数
-#define BUTTON_MAX					(3)
+#define BUTTON_MAX					(2)
 
 #define GLITCH_INITIAL_OFFSET		(30.0f)
 #define GLITCH_ANIM_TIME			(5)
@@ -164,8 +164,8 @@ void UpdateTitleTex(void)
 		if (time > 0 &&
 			(!(x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO *0.5f) ||
 				!(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO * 0.5f) ||
-				!(y + 15 > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) ||
-				!(y + 15 < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f)))
+				!(y > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) ||
+				!(y < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f)))
 		{
 			//マウスが画像の範囲外なら点滅せずに表示
 			g_Button[i].alpha = 1.0f;

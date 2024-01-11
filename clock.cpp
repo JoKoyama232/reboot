@@ -14,8 +14,8 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define TEXTURE_WIDTH				(32)	// キャラサイズ
-#define TEXTURE_HEIGHT				(64)	// 
+#define TEXTURE_WIDTH				(48)	// キャラサイズ
+#define TEXTURE_HEIGHT				(96)	// 
 #define TEXTURE_MAX					(1)		// テクスチャの数
 #define CLOCK_MAX			(6000)		// 制限時間(秒数)
 #define CLOCK_DIGIT			(4)			// 桁数
@@ -81,7 +81,7 @@ HRESULT InitClock(void)
 	g_Use = true;
 	g_w = TEXTURE_WIDTH + 10;
 	g_h = TEXTURE_HEIGHT + 10;
-	g_Pos = { 200.0f, 40.0f, 0.0f };
+	g_Pos = { 250.0f, 60.0f, 0.0f };
 	g_TexNo = 0;
 	g_falg = false;
 	g_Clock = CLOCK_MAX;	// スコアの初期化
@@ -123,19 +123,21 @@ void UpdateClock(void)
 	if (g_Clock <= 0.0f)	//3600フレーム(約1分)たったらゲームリザルトに行く
 	{
 		SetFade(FADE_OUT, MODE_RESULT);
+		//マウス非表示
+		ShowCursor(true);
 		g_Clock = 0.0f;
 	}
 
-	if (g_Clock == 5000.0f)
+	if (g_Clock == 2500.0f)
 	{
 		g_falg = true;
 		PlaySound(SOUND_LABEL_SE_ALARM);
 		StopSound(SOUND_LABEL_BGM_stage1);
 	}
 
-	if (g_Clock == 4600.0f)
+	if (g_Clock == 2150.0f)
 	{
-		PlaySound(SOUND_LABEL_BGM_stage1);
+		PlaySound(SOUND_LABEL_BGM_game2);
 	}
 
 

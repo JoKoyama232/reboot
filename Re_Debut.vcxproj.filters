@@ -25,9 +25,6 @@
     <ClCompile Include="result.cpp">
       <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="result_tex.cpp">
-      <Filter>ソースファイル\Result</Filter>
-    </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>ソースファイル\Object</Filter>
     </ClCompile>
@@ -90,6 +87,18 @@
     </ClCompile>
     <ClCompile Include="rocket.cpp">
       <Filter>ソースファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugObject.cpp">
+      <Filter>ソースファイル\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="result_tex.cpp">
+      <Filter>ソースファイル\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="title_debris.cpp">
+      <Filter>ソースファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="title_antenna.cpp">
+      <Filter>ソースファイル\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +194,15 @@
     </ClInclude>
     <ClInclude Include="rocket.h">
       <Filter>ヘッダーファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugObject.h">
+      <Filter>ヘッダーファイル\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="title_debris.h">
+      <Filter>ヘッダーファイル\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="title_antenna.h">
+      <Filter>ヘッダーファイル\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

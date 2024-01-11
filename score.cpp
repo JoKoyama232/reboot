@@ -12,8 +12,8 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define TEXTURE_WIDTH				(32)	// キャラサイズ
-#define TEXTURE_HEIGHT				(80)	// 
+#define TEXTURE_WIDTH				(64)	// キャラサイズ
+#define TEXTURE_HEIGHT				(160)	// 
 #define TEXTURE_MAX					(1)		// テクスチャの数
 
 
@@ -29,7 +29,7 @@ static ID3D11Buffer* g_VertexBuffer = NULL;		// 頂点情報
 static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// テクスチャ情報
 
 static const char* g_TexturName[TEXTURE_MAX] = {
-	"data/TEXTURE/number.png",
+	"data/TEXTURE/number16x32.png",
 };
 
 
@@ -74,7 +74,7 @@ HRESULT InitScore(void)
 	g_Use = true;
 	g_w = TEXTURE_WIDTH;
 	g_h = TEXTURE_HEIGHT;
-	g_Pos = { 1800.0f, 45.0f, 0.0f };
+	g_Pos = { 1800.0f, 120.0f, 0.0f };
 	g_TexNo = 0;
 
 	g_Score = 0;	// スコアの初期化

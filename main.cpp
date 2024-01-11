@@ -32,7 +32,7 @@
 // マクロ定義
 //*****************************************************************************
 #define CLASS_NAME		"AppClass"			// ウインドウのクラス名
-#define WINDOW_NAME		"Flight"		// ウインドウのキャプション名
+#define WINDOW_NAME		"ORBITAL CAPTURE"		// ウインドウのキャプション名
 
 // カメラ位置定数群
 #define CAMERA_OFFSET_BACK	 (100.0f)	// プレイヤーからの後ろへのカメラのオフセット

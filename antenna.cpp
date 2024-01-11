@@ -46,7 +46,7 @@ HRESULT InitAntenna(void) {
 		LoadModel(MODEL_ANTENNA, &g_Antenna[i].object.modelInfo);
 		GetModelDiffuse(&g_Antenna[i].object.modelInfo, g_Antenna[i].object.modelDiffuse);
 		g_Antenna[i].object.load = true;
-		g_Antenna[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, 0.0f, rand() % 1000 + 0.0f });
+		g_Antenna[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, rand() % 1000 - 500.0f, rand() % 1000 + 0.0f });
 		g_Antenna[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Antenna[i].object.SetScale(XMFLOAT3{ 3.0f, 3.0f, 3.0f });
 		g_Antenna[i].time = 0.0f;

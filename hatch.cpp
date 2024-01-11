@@ -46,7 +46,7 @@ HRESULT InitHatch(void) {
 		LoadModel(MODEL_HATCH, &g_Hatch[i].object.modelInfo);
 		GetModelDiffuse(&g_Hatch[i].object.modelInfo, g_Hatch[i].object.modelDiffuse);
 		g_Hatch[i].object.load = true;
-		g_Hatch[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, 0.0f, rand() % 1000 + 0.0f });
+		g_Hatch[i].object.SetPosition(XMFLOAT3{ rand() % 1000 + 0.0f, rand() % 1000 + 0.0f, rand() % 1000 + 0.0f });
 		g_Hatch[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_Hatch[i].object.SetScale(XMFLOAT3{ 0.6f, 0.6f, 0.6f });
 		g_Hatch[i].time = 0.0f;
