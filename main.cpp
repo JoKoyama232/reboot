@@ -106,8 +106,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,																		// ウィンドウの左座標
 		CW_USEDEFAULT,																		// ウィンドウの上座標
-		SCREEN_WIDTH + GetSystemMetrics(SM_CXDLGFRAME) * 2,									// ウィンドウ横幅
-		SCREEN_HEIGHT + GetSystemMetrics(SM_CXDLGFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION),	// ウィンドウ縦幅
+		SCREEN_WIDTH,																		// ウィンドウ横幅
+		SCREEN_HEIGHT,																		// ウィンドウ縦幅
 		NULL,
 		NULL,
 		hInstance,
