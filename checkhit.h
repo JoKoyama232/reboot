@@ -10,9 +10,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-
-HRESULT InitGame(void);
-void UninitGame(void);
-void UpdateGame(void);
-void DrawGame(void);
+void CheckHit(void);
+BOOL CollisionBC(XMFLOAT3 pos1, XMFLOAT3 pos2, float r1, float r2);
+BOOL CheckBase(XMFLOAT3 pos1, XMFLOAT3 scale1, XMFLOAT3 pos2, XMFLOAT3 scale2);
 

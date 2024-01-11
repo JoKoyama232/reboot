@@ -148,6 +148,7 @@
     <ClCompile Include="base.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="checkhit.cpp" />
     <ClCompile Include="clock.cpp" />
     <ClCompile Include="debris.cpp" />
     <ClCompile Include="DebugObject.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="base.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="checkhit.h" />
     <ClInclude Include="clock.h" />
     <ClInclude Include="debris.h" />
     <ClInclude Include="DebugObject.h" />

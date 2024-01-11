@@ -13,9 +13,6 @@
     <ClCompile Include="Intro.cpp">
       <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="title.cpp">
-      <Filter>ソースファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
@@ -99,6 +96,12 @@
     </ClCompile>
     <ClCompile Include="title_antenna.cpp">
       <Filter>ソースファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>ソースファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="checkhit.cpp">
+      <Filter>ソースファイル\Tool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="title_antenna.h">
       <Filter>ヘッダーファイル\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="checkhit.h">
+      <Filter>ヘッダーファイル\Tool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
