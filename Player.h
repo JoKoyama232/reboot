@@ -27,8 +27,10 @@ struct PLAYER
 	float				Calpha;
 	float				C2alpha;
 	float				Aalpha;
+	float				Ralpha;
 	bool				use;
-	bool				flag_alpha;
+	bool				flag_Aalpha;
+
 	// 階層アニメーション用のメンバー変数(今は使わないかな？)
 	float				time;				// 線形補間用
 	int					tblNo;				// 行動データのテーブル番号
@@ -45,6 +47,7 @@ void DrawPlayer(void);
 void DrawAttach(void);
 void DrawCapture(void);
 void DrawCollect(void);
+void DrawReload(void);
 void DrawPlayerUI(void);
 void DrawPlayerRestBullet(void);
 PLAYER* GetPlayer(void);

@@ -29,8 +29,6 @@ HRESULT InitResult(void)
 
 	InitSkybox();
 
-	//マウス表示
-	ShowCursor(true);
 	return S_OK;
 }
 

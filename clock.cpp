@@ -123,6 +123,8 @@ void UpdateClock(void)
 	if (g_Clock <= 0.0f)	//3600フレーム(約1分)たったらゲームリザルトに行く
 	{
 		SetFade(FADE_OUT, MODE_RESULT);
+		//マウス非表示
+		ShowCursor(true);
 		g_Clock = 0.0f;
 	}
 

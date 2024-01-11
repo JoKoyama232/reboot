@@ -78,10 +78,11 @@ HRESULT InitPlayer(void) {
 	g_Player.Aalpha - 0.0f;
 	g_Player.Calpha = 0.0f;
 	g_Player.C2alpha = 0.0f;
+	g_Player.Ralpha = 0.0f;
 	g_Player.time = 0.0f;
 	g_Player.speed = 0.0f;			// 移動スピードクリア
 	g_Player.use = true;
-	g_Player.flag_alpha = false;
+	g_Player.flag_Aalpha = false;
 	g_Player.size = PLAYER_SIZE;
 	g_LastUpdate = 0.0f;
 	roty = 0.0f;
@@ -314,6 +315,13 @@ void DrawAttach(void)
 
 	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[3]);
 	
+	if (g_Player.flag_Aalpha == true)
+	{
+		g_Player.Aalpha = 1.0f;
+		g_Player.flag_Aalpha = false;
+	}
+
+
 	if (g_Player.Aalpha >= 0.0f)
 	{
 		g_Player.Aalpha -= 0.01;
@@ -434,7 +442,52 @@ void DrawCollect(void)
 
 	// ポリゴン描画
 	GetDeviceContext()->Draw(4, 0);
+	
+}
 
+//=============================================================================
+// コレクト表示処理
+//=============================================================================
+void DrawReload(void)
+{
+	// 頂点バッファ設定
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+	// マトリクス設定
+	SetWorldViewProjection2D();
+
+	// プリミティブトポロジ設定
+	GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// マテリアル設定
+	MATERIAL material;
+	ZeroMemory(&material, sizeof(material));
+	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	SetMaterial(material);
+
+	//ゲージの位置やテクスチャー座標を反映
+	float px = 67.0f;						// ゲージの表示位置X
+	float py = 150.0f;						// ゲージの表示位置Y
+	float pw = 600.0f;						// ゲージの表示幅
+	float ph = 200.0f;						// ゲージの表示高さ
+
+	float tw = 1.0f;						// テクスチャの幅
+	float th = 1.0f;						// テクスチャの高さ
+	float tx = 0.0f;						// テクスチャの左上X座標
+	float ty = 0.0f;						// テクスチャの左上Y座標
+
+
+	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[4]);
+
+	SetSpriteLTColor(g_VertexBuffer,
+		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
+		tx, ty, tw, th,
+		XMFLOAT4(1.0f, 1.0f, 1.0f, g_Player.Ralpha));
+
+	// ポリゴン描画
+	GetDeviceContext()->Draw(4, 0);
 }
 
 //=============================================================================

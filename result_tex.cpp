@@ -17,7 +17,7 @@
 // マクロ定義
 //*****************************************************************************
 #define TEXTURE_MAX					(6)				// テクスチャの数
-#define BUTTON_MAX					(3)
+#define BUTTON_MAX					(2)
 
 
 #define TEXTURE_WIDTH_LOGO			(360)			// ロゴサイズ
@@ -38,6 +38,7 @@ static const char* g_TexturName[TEXTURE_MAX] = {
 	"data/TEXTURE/number.png",
 	"data/TEXTURE/replay_mission.png",
 	"data/TEXTURE/quit_game.png",
+	"data/TEXTURE/finish.png",
 
 
 };
@@ -185,6 +186,8 @@ void UpdateResultTex(void)
 				switch (i) {
 				case 0:
 					SetFade(FADE_OUT, MODE_GAME);
+					//マウス非表示
+					ShowCursor(false);
 					//PlaySound();
 					break;
 				case 1:
@@ -294,6 +297,17 @@ void DrawResultTex(void)
 
 	}
 	
+	// congratulationsの表示
+	{
+		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[3]);
+
+		// １枚のポリゴンの頂点とテクスチャ座標を設定
+		SetSpriteColor(g_VertexBuffer, 950.0f, 400.0f, 1000, 32*4, 0.0f, 0.0f, 1.0f, 1.0f,
+			XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
+		GetDeviceContext()->Draw(4, 0);
+	}
+
 	for (int i = 0; i < BUTTON_MAX; i++)
 	{
 		// テクスチャ設定
