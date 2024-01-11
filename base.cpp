@@ -45,7 +45,7 @@ HRESULT InitBase(void)
 
 		g_Base[i].object.SetPosition(XMFLOAT3{ 100.0f,0.0f,500.0f });
 		g_Base[i].object.SetRotation(XMFLOAT3{ 0.0f,0.0f,0.0f });
-		g_Base[i].object.SetScale(XMFLOAT3{ 4.5f,6.5f,4.5f });
+		g_Base[i].object.SetScale(XMFLOAT3{ 6.5f,8.5f,6.5f });
 		g_Base[i].use = true;
 		g_Base[i].size = BASE_SIZE;
 	}
