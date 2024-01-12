@@ -18,7 +18,6 @@
 // マクロ定義
 //*****************************************************************************
 #define	MODEL_DEBRIS		"Data/model/home.obj"			// 読み込むモデル名
-#define TEXTURE_MAX			(1)								// テクスチャの数
 
 
 //*****************************************************************************
@@ -28,12 +27,6 @@ static float        g_LastUpdate;
 BASE g_Base[MAX_BASE];
 static bool g_fire = false;
 static ID3D11Buffer* g_VertexBuffer = NULL;				// 頂点情報
-static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// テクスチャ情報
-
-static const char* g_TexturName[TEXTURE_MAX] = {
-	"data/TEXTURE/fade_black.png",
-
-};
 
 HRESULT InitBase(void)
 {

@@ -162,16 +162,15 @@ void UpdatePlayer(void) {
 	if (GetKeyboardPress(DIK_Q))
 	{
 		position.y += 1.0f;
-		camat.y += 1.0f;
 		g_Player.str -= 0.3f;
 	}
 
 	else if (GetKeyboardPress(DIK_Z))
 	{
 		position.y -= 1.0f;
-		camat.y -= 1.0f;
 	}
 
+	
 
 	//スタミナゲージ処理&移動中のSE処理
 	if (g_Player.speed == VALUE_MOVE)
@@ -215,6 +214,11 @@ void UpdatePlayer(void) {
 	g_Player.object.SetRotation(rotation);
 
 	// 弾発射処理
+
+	
+
+
+
 	if ((GetKeyboardTrigger(DIK_SPACE)) || IsMouseLeftTriggered())
 	{
 		SetBullet(position, camRotation);
