@@ -26,6 +26,7 @@
 #include "bullet.h"
 #include "base.h"
 #include "score.h"
+#include "basearrow.h"
 
 #include "game.h"
 #include "checkhit.h"
@@ -82,6 +83,8 @@ HRESULT InitGame(void)
 
 	InitSkybox();
 
+	InitArrow();
+
 	//マウス非表示
 	ShowCursor(false);
 
@@ -123,6 +126,7 @@ void UninitGame(void)
 
 	UninitScore();
 
+	UninitArrow();
 }
 
 //=============================================================================
@@ -154,6 +158,8 @@ void UpdateGame(void)
 	UpdateClock();
 
 	UpdateSkybox();
+
+	UpdateArrow();
 
 	//当たり判定
 	CheckHit();
@@ -192,6 +198,8 @@ void DrawGame(void)
 	DrawBase();
 	//弾(モチ)の描画処理
 	DrawBullet();
+
+	DrawArrow();
 
 	// 2Dの物を描画する処理
 	{

@@ -110,14 +110,12 @@ void UpdateCamera(void)
 			g_Camera.rot.x = -XM_PI / 2;
 		}
 	}
-
 	// カメラを初期に戻す
 	if (GetKeyboardPress(DIK_R))
 	{
 		UninitCamera();
 		InitCamera();
 	}
-
 
 
 
@@ -248,6 +246,7 @@ void SetCameraAT(XMFLOAT3 pos)
 	// カメラの視点をカメラのY軸回転に対応させている
 	g_Camera.pos.x = g_Camera.at.x - sinf(g_Camera.rot.y) * g_Camera.len;
 	g_Camera.pos.z = g_Camera.at.z - cosf(g_Camera.rot.y) * g_Camera.len;
+
 
 }
 

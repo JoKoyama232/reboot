@@ -16,7 +16,7 @@
 //*****************************************************************************
 #define TEXTURE_WIDTH				(48)	// ƒLƒƒƒ‰ƒTƒCƒY
 #define TEXTURE_HEIGHT				(96)	// 
-#define TEXTURE_MAX					(1)		// ƒeƒNƒXƒ`ƒƒ‚Ì”
+#define TEXTURE_MAX					(2)		// ƒeƒNƒXƒ`ƒƒ‚Ì”
 #define CLOCK_MAX			(6000)		// §ŒÀŽžŠÔ(•b”)
 #define CLOCK_DIGIT			(4)			// Œ…”
 
@@ -33,6 +33,7 @@ static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// ƒeƒNƒXƒ`ƒ
 
 static const char* g_TexturName[TEXTURE_MAX] = {
 	"data/TEXTURE/number16x32.png",
+	"data/TEXTURE/colon.png",
 };
 
 
@@ -81,7 +82,7 @@ HRESULT InitClock(void)
 	g_Use = true;
 	g_w = TEXTURE_WIDTH + 10;
 	g_h = TEXTURE_HEIGHT + 10;
-	g_Pos = { 250.0f, 60.0f, 0.0f };
+	g_Pos = { 275.0f, 60.0f, 0.0f };
 	g_TexNo = 0;
 	g_falg = false;
 	g_Clock = CLOCK_MAX;	// ƒXƒRƒA‚Ì‰Šú‰»
@@ -173,7 +174,7 @@ void DrawClock(void)
 	SetMaterial(material);
 
 	// ƒeƒNƒXƒ`ƒƒÝ’è
-	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[g_TexNo]);
+	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
 
 	// Œ…”•ªˆ—‚·‚é
 	int number = g_Clock;
@@ -195,7 +196,7 @@ void DrawClock(void)
 
 		if ((i == 2) || (i == 3))
 		{
-			px -= 10.0f;
+			px -= 40.0f;
 		}
 
 		// ‚P–‡‚Ìƒ|ƒŠƒSƒ“‚Ì’¸“_‚ÆƒeƒNƒXƒ`ƒƒÀ•W‚ðÝ’è
@@ -208,6 +209,33 @@ void DrawClock(void)
 		// ŽŸ‚ÌŒ…‚Ö
 		number /= 10;
 	}
+
+	// ƒRƒƒ“‚Ì•`‰æ
+	{
+		//ƒQ[ƒW‚ÌˆÊ’u‚âƒeƒNƒXƒ`ƒƒ[À•W‚ð”½‰f
+		float px = 165.0f;						// ƒQ[ƒW‚Ì•\Ž¦ˆÊ’uX
+		float py = 40.0f;						// ƒQ[ƒW‚Ì•\Ž¦ˆÊ’uY
+		float pw = 13.0f;						// ƒQ[ƒW‚Ì•\Ž¦•
+		float ph = 50.0f;						// ƒQ[ƒW‚Ì•\Ž¦‚‚³
+
+		float tw = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì•
+		float th = 1.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì‚‚³
+		float tx = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãXÀ•W
+		float ty = 0.0f;						// ƒeƒNƒXƒ`ƒƒ‚Ì¶ãYÀ•W
+
+		// ƒeƒNƒXƒ`ƒƒÝ’è
+		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[1]);
+
+		SetSpriteLTColor(g_VertexBuffer,
+			px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
+			tx, ty, tw, th,
+			XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
+		// ƒ|ƒŠƒSƒ“•`‰æ
+		GetDeviceContext()->Draw(4, 0);
+	}
+
+	
 }
 
 

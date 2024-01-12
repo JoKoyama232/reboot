@@ -479,9 +479,7 @@ BOOL CollisionBC(XMFLOAT3 pos1, XMFLOAT3 pos2, float r1, float r2)
 
 
 //=============================================================================
-// BCによる当たり判定処理
-// サイズは半径
-// 戻り値：当たってたらTRUE
+// 拠点とプレイヤーの当たり判定の計算
 //=============================================================================
 BOOL CheckBase(XMFLOAT3 pos1, XMFLOAT3 scale1, XMFLOAT3 pos2, XMFLOAT3 scale2)
 {

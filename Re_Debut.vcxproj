@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="antenna.cpp" />
     <ClCompile Include="base.cpp" />
+    <ClCompile Include="basearrow.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="checkhit.cpp" />
@@ -182,6 +183,7 @@
   <ItemGroup>
     <ClInclude Include="antenna.h" />
     <ClInclude Include="base.h" />
+    <ClInclude Include="basearrow.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="checkhit.h" />
