@@ -12,7 +12,7 @@
 // マクロ定義
 enum sky {
 	SkyBG = 0,
-	CloudBG,
+	Earth,
 	Clouds,
 	SkyObjectMax
 };
@@ -21,8 +21,8 @@ enum sky {
 static WorldSpace g_Sky[3];		// 空のオブジェクト（独自変数がいらないためモデルクラスを使用）
 
 static char* skyModelAdr[3]{	// 空のオブジェクトのモデルアドレス
-	(char*)"Data/Model/Skysphere.obj",	// 空の背景球体
-	(char*)"Data/Model/CloudBG.obj",	// 上下の雲
+	(char*)"Data/Model/Skysphere_blue.obj",	// 空の背景球体
+	(char*)"Data/Model/earth_half.obj",	// 地球
 	(char*)"Data/Model/Cloud.obj"		// 横に回転している雲
 };
 
@@ -41,8 +41,12 @@ HRESULT InitSkybox(void) {
 		g_Sky[idx].SetScale(XMFLOAT3(15.0f, 15.0f, 15.0f));
 
 	}
-	g_Sky[CloudBG].SetScale(XMFLOAT3(190.0f, 190.0f, 190.0f));
-	g_Sky[Clouds].SetScale(XMFLOAT3(190.0f, 190.0f, 190.0f));
+
+	g_Sky[Earth].SetPosition(XMFLOAT3(0.0f, -4000.0f, 0.0f));
+	g_Sky[Earth].SetScale(XMFLOAT3(40.0f, 40.0f, 40.0f));
+	g_Sky[SkyBG].SetScale(XMFLOAT3(15.0f, 15.0f, 15.0f));
+	g_Sky[Clouds].SetPosition(XMFLOAT3(0.0f, -1600.0f, 0.0f));
+	g_Sky[Clouds].SetScale(XMFLOAT3(130.0f, 130.0f, 130.0f));
 	return S_OK;
 }
 
@@ -67,12 +71,12 @@ void UpdateSkybox(void) {
 	g_Sky[SkyBG].SetRotation(rotation);
 
 	// 変数rotationは雲の背景回転に再定義
-	rotation = g_Sky[CloudBG].GetRotationFloat();
+	rotation = g_Sky[Earth].GetRotationFloat();
 	rotation.y += XM_PI * 0.0007f;
 	if (rotation.y > XM_PI * 2.0f) {
 		rotation.y - XM_PI * 2.0f;
 	}
-	g_Sky[CloudBG].SetRotation(rotation);
+	g_Sky[Earth].SetRotation(rotation);
 
 	// 変数rotationは雲の背景回転に再定義
 	rotation = g_Sky[Clouds].GetRotationFloat();
