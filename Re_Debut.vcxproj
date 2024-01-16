@@ -163,6 +163,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="playerUI.cpp" />
     <ClCompile Include="pod.cpp" />
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="renderer.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="playerUI.h" />
     <ClInclude Include="pod.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="renderer.h" />
