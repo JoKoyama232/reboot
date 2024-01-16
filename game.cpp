@@ -16,6 +16,7 @@
 #include "Skybox.h"
 #include "clock.h"
 #include "Player.h"
+#include "playerUI.h"
 #include "debris.h"
 #include "antenna.h"
 #include "solarpanel.h"
@@ -56,6 +57,8 @@ static RECT	g_windowPos;
 HRESULT InitGame(void)
 {
 	InitPlayer();
+
+	InitPlayerUI();
 
 	InitDebris();
 
@@ -175,7 +178,7 @@ void DrawGame(void)
 	// プレイヤー視点
 	pos = GetPlayer()->object.GetPositionFloat();
 	SetCameraAT(pos);
-	SetCamera();
+	//SetCamera();
 
 	DrawSkybox();
 

@@ -1,0 +1,32 @@
+newmtl SphereSG
+illum 4
+Kd 0.01 0.38 0.68
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.00 0.09 0.17
+Ns 23.00
+newmtl SphereSG1
+illum 4
+Kd 0.04 0.82 0.12
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.01 0.20 0.03
+Ns 23.00
+newmtl SphereSG2
+illum 4
+Kd 0.06 0.24 0.10
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.01 0.06 0.03
+Ns 23.00
+newmtl SphereSG4
+illum 4
+Kd 0.64 0.76 0.81
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.16 0.19 0.20
+Ns 23.00

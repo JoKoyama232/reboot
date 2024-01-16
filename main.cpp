@@ -36,7 +36,7 @@
 
 // カメラ位置定数群
 #define CAMERA_OFFSET_BACK	 (100.0f)	// プレイヤーからの後ろへのカメラのオフセット
-#define CAMERA_OFFSET_RIGHT	 (30.0f)	// プレイヤーからの右へのカメラのオフセット
+#define CAMERA_OFFSET_RIGHT	 (20.0f)	// プレイヤーからの右へのカメラのオフセット
 #define CAMERA_OFFSET_HEIGHT (15.0f)	// プレイヤーからの上へのカメラのオフセット
 #define CAMERA_PITCH_RADIUSZ (30.0f)	// プレイヤーからのオフセット位置を軸としたx軸の楕円の横距離
 #define CAMERA_PITCH_RADIUSY (100.0f)	// プレイヤーからのオフセット位置を軸としたy軸の楕円の横距離

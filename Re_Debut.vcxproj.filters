@@ -106,6 +106,7 @@
     <ClCompile Include="basearrow.cpp">
       <Filter>ソースファイル\Game</Filter>
     </ClCompile>
+    <ClCompile Include="playerUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -216,6 +217,7 @@
     <ClInclude Include="basearrow.h">
       <Filter>ヘッダーファイル\Game</Filter>
     </ClInclude>
+    <ClInclude Include="playerUI.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ソースファイル">
