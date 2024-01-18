@@ -529,12 +529,12 @@ BOOL CheckDebris(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 dPos, XMFLOAT3 dScale)
 	BOOL ans = FALSE;	// はずれのセット
 
 	//素の数値だと小さすぎるので計算内だけスケールを増やす
-	bScale.x *= 5.0f;
-	bScale.y *= 5.0f;
-	bScale.z *= 5.0f;
-	dScale.x *= 5.0f;
-	dScale.y *= 5.0f;
-	dScale.z *= 5.0f;
+	bScale.x *= 3.0f;
+	bScale.y *= 3.0f;
+	bScale.z *= 3.0f;
+	dScale.x *= 3.0f;
+	dScale.y *= 3.0f;
+	dScale.z *= 3.0f;
 
 	if ((bPos.x + bScale.x > dPos.x - dScale.x) &&
 		(bPos.x - bScale.x < dPos.x + dScale.x) &&
@@ -557,10 +557,10 @@ BOOL CheckLX(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 xPos, XMFLOAT3 xScale)
 	BOOL ans = FALSE;	// はずれのセット
 
 	// x軸に長いのでそれを調節
-	bScale.x *= 20.0f;
+	bScale.x *= 10.0f;
 	bScale.y *= 2.0f;
 	bScale.z *= 2.0f;
-	xScale.x *= 20.0f;
+	xScale.x *= 10.0f;
 	xScale.y *= 2.0f;
 	xScale.z *= 2.0f;
 
@@ -585,11 +585,11 @@ BOOL CheckLY(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 yPos, XMFLOAT3 yScale)
 	BOOL ans = FALSE;	// はずれのセット
 
 	// x軸に長いのでそれを調節
-	bScale.x *= 20.0f;
-	bScale.y *= 2.0f;
+	bScale.x *= 2.0f;
+	bScale.y *= 10.0f;
 	bScale.z *= 2.0f;
-	yScale.x *= 20.0f;
-	yScale.y *= 2.0f;
+	yScale.x *= 2.0f;
+	yScale.y *= 10.0f;
 	yScale.z *= 2.0f;
 
 	if ((bPos.x + bScale.x > yPos.x - yScale.x) &&
@@ -616,10 +616,10 @@ BOOL CheckLZ(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 zPos, XMFLOAT3 zScale)
 	// z軸に長いのでそれを調節
 	bScale.x *= 2.0f;
 	bScale.y *= 2.0f;
-	bScale.z *= 20.0f;
+	bScale.z *= 10.0f;
 	zScale.x *= 2.0f;
 	zScale.y *= 2.0f;
-	zScale.z *= 20.0f;
+	zScale.z *= 10.0f;
 
 	if ((bPos.x + bScale.x > zPos.x - zScale.x) &&
 		(bPos.x - bScale.x < zPos.x + zScale.x) &&
