@@ -38,7 +38,9 @@ static const char* g_TexturName[TEXTURE_MAX] = {
 	"data/TEXTURE/number.png",
 	"data/TEXTURE/replay_mission.png",
 	"data/TEXTURE/quit_game.png",
-	"data/TEXTURE/finish.png",
+	"data/TEXTURE/mission_complete_result.png",
+	"data/TEXTURE/result.png",
+	"data/TEXTURE/mission_fail_result.png",
 
 
 };
@@ -95,7 +97,7 @@ HRESULT InitResultTex(void)
 		g_Button[i].texNo = 1 + i;
 		g_Button[i].h = SCREEN_HEIGHT;
 		g_Button[i].w = SCREEN_WIDTH;
-		g_Button[i].pos = XMFLOAT3(g_Button[i].w * 0.5f, g_Button[i].h * 0.5f + 150.0f * (i + 1), 0.0f);
+		g_Button[i].pos = XMFLOAT3(1600, g_Button[i].h * 0.5f + 150.0f * (i + 1), 0.0f);
 
 		g_Button[i].alpha = 1.0f;
 		g_Button[i].flag_alpha = true;
@@ -261,6 +263,17 @@ void DrawResultTex(void)
 	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	SetMaterial(material);
 
+	// result表の表示
+	{
+		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[4]);
+
+		// １枚のポリゴンの頂点とテクスチャ座標を設定
+		SetSpriteColor(g_VertexBuffer, 950.0f, 500.0f, 1059*0.8, 1074*0.8, 0.0f, 0.0f, 1.0f, 1.0f,
+			XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
+		GetDeviceContext()->Draw(4, 0);
+	}
+
 	// スコア表示
 	{
 		// テクスチャ設定
@@ -276,8 +289,8 @@ void DrawResultTex(void)
 			// スコアの位置やテクスチャー座標を反映
 			float pw = 16 * 4;			// スコアの表示幅
 			float ph = 32 * 4;			// スコアの表示高さ
-			float px = 1075.0f - i * pw;	// スコアの表示位置X
-			float py = 200.0f;			// スコアの表示位置Y
+			float px = 1200.0f - i * pw;	// スコアの表示位置X
+			float py = 260.0f;			// スコアの表示位置Y
 
 			float tw = 1.0f / 10;		// テクスチャの幅
 			float th = 1.0f / 1;		// テクスチャの高さ
@@ -299,13 +312,29 @@ void DrawResultTex(void)
 	
 	// congratulationsの表示
 	{
-		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[3]);
+		int score = GetScore();
+		
+		if (score < 1000)
+		{
+			GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[5]);
 
-		// １枚のポリゴンの頂点とテクスチャ座標を設定
-		SetSpriteColor(g_VertexBuffer, 950.0f, 400.0f, 1000, 32*4, 0.0f, 0.0f, 1.0f, 1.0f,
-			XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+			// １枚のポリゴンの頂点とテクスチャ座標を設定
+			SetSpriteColor(g_VertexBuffer, 950.0f, 850.0f, 889 * 0.5, 80 * 0.5, 0.0f, 0.0f, 1.0f, 1.0f,
+				XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 
-		GetDeviceContext()->Draw(4, 0);
+			GetDeviceContext()->Draw(4, 0);
+		}
+
+		if (score >= 1000)
+		{
+			GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[3]);
+
+			// １枚のポリゴンの頂点とテクスチャ座標を設定
+			SetSpriteColor(g_VertexBuffer, 950.0f, 850.0f, 1279 * 0.5, 80 * 0.5, 0.0f, 0.0f, 1.0f, 1.0f,
+				XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
+			GetDeviceContext()->Draw(4, 0);
+		}
 	}
 
 	for (int i = 0; i < BUTTON_MAX; i++)

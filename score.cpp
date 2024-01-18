@@ -40,6 +40,9 @@ static int						g_TexNo;					// テクスチャ番号
 
 static int						g_Score;					// スコア
 
+static int						g_Flag;						// クリア判定
+
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -79,6 +82,8 @@ HRESULT InitScore(void)
 
 	g_Score = 0;	// スコアの初期化
 
+	g_Flag = 0;		// クリアフラグの初期化
+
 	return S_OK;
 }
 
@@ -109,7 +114,6 @@ void UninitScore(void)
 //=============================================================================
 void UpdateScore(void)
 {
-
 
 #ifdef _DEBUG	// デバッグ情報を表示する
 	//char *str = GetDebugStr();
@@ -200,5 +204,6 @@ void SetScore(int score)
 {
 	g_Score = score;
 }
+
 
 
