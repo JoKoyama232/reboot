@@ -45,8 +45,11 @@ void CheckHit(void)
 {
 	// 各オブジェクトの位置を定義
 	XMFLOAT3 podPos, basePos, hatchPos, panelPos, playerPos,
-		debrisPos, bulletPos, rocketPos, antennaPos, satellitePos,
-		playerScale , baseScale;
+		debrisPos, bulletPos, rocketPos, antennaPos, satellitePos;
+
+	//各オブジェクトのスケールを定義
+	XMFLOAT3 playerScale, baseScale, bulletScale, debriScale,
+		antennaScale, podScale, panelScale, hatchScale, satelliteScale, rocketScale;
 
 	// 各オブジェクトの情報を取得
 	POD* pod = GetPod();					// ポッド情報
@@ -74,6 +77,7 @@ void CheckHit(void)
 		// 弾丸の使用フラグを確認
 		if (!bullet[cntBullet].use) continue;
 		bulletPos = bullet[cntBullet].object.GetPositionFloat();
+		bulletScale = bullet[cntBullet].object.GetScaleFloat();
 
 		// バレット対デブリ当たり判定
 		for (int cntDebris = 0; cntDebris < MAX_DEBRIS; cntDebris++)
@@ -81,11 +85,11 @@ void CheckHit(void)
 			// デブリの使用フラグ確認
 			if (!debris[cntDebris].use) continue;
 
-			//使用フラグをチェックしたら座標をゲット
+			//使用フラグをチェックしたら座標とスケールをゲット
 			debrisPos = debris[cntDebris].object.GetPositionFloat();
-
+			debriScale = debris[cntDebris].object.GetScaleFloat();
 			// 弾丸とデブリの当たり判定
-			if (!CollisionBC(bulletPos, debrisPos, bullet[cntBullet].size, debris[cntDebris].size)) continue;
+			if (!CheckDebris(bulletPos, bulletScale, debrisPos, debriScale)) continue;
 
 			// 弾丸とデブリの当たり反応（真
 			bullet[cntBullet].spd = 0.0f;
@@ -102,9 +106,11 @@ void CheckHit(void)
 
 			//使用フラグをチェックしたら座標をゲット
 			antennaPos = antenna[cntAntn].object.GetPositionFloat();
+			antennaScale = antenna[cntAntn].object.GetScaleFloat();
 
 			// 弾丸とアンテナの当たり判定
-			if (!CollisionBC(bulletPos, antennaPos, bullet[cntBullet].size, antenna[cntAntn].size))continue;
+			// X軸だけ長いためCheckLXを使用
+			if (!CheckLX(bulletPos, bulletScale, antennaPos, antennaScale))continue;
 			bullet[cntBullet].spd = 0.0f;
 			antenna[cntAntn].flag_rotate = false;
 			antenna[cntAntn].object.SetParent(&bullet[cntBullet].object);
@@ -118,9 +124,10 @@ void CheckHit(void)
 
 			//仕様フラグをチェックしたら座標をゲット
 			podPos = pod[cntPod].object.GetPositionFloat();
+			podScale = pod[cntPod].object.GetScaleFloat();
 
 			// バレットとポッドの当たり判定
-			if (!CollisionBC(bulletPos, podPos, bullet[cntBullet].size, pod[cntPod].size))continue;
+			if (!CheckDebris(bulletPos, bulletScale, podPos, podScale))continue;
 			bullet[cntBullet].spd = 0.0f;
 			pod[cntPod].flag_rotate = false;
 			pod[cntPod].object.SetParent(&bullet[cntBullet].object);
@@ -134,9 +141,10 @@ void CheckHit(void)
 
 			// 仕様フラグをチェックしたら座標をゲット
 			panelPos = panel[cntPanel].object.GetPositionFloat();
+			panelScale = panel[cntPanel].object.GetScaleFloat();
 
 			// バレットとパネルの当たり判定
-			if (!CollisionBC(bulletPos, panelPos, bullet[cntBullet].size, panel[cntPanel].size))continue;
+			if (!CheckDebris(bulletPos, bulletScale, panelPos, panelScale))continue;
 			bullet[cntBullet].spd = 0.0f;
 			panel[cntPanel].flag_rotate = false;
 			panel[cntPanel].object.SetParent(&bullet[cntBullet].object);
@@ -150,9 +158,10 @@ void CheckHit(void)
 
 			// 仕様フラグをチェックしたら座標をゲット
 			hatchPos = hatch[cntHatch].object.GetPositionFloat();
+			hatchScale = hatch[cntHatch].object.GetScaleFloat();
 
 			// バレットとハッチの当たり判定
-			if (!CollisionBC(bulletPos, hatchPos, bullet[cntBullet].size, hatch[cntHatch].size))continue;
+			if (!CheckDebris(bulletPos, bulletScale, hatchPos, hatchScale))continue;
 			bullet[cntBullet].spd = 0.0f;
 			hatch[cntHatch].flag_rotate = false;
 			hatch[cntHatch].object.SetParent(&bullet[cntBullet].object);
@@ -167,9 +176,11 @@ void CheckHit(void)
 
 			// 仕様フラグをチェックしたら座標をゲット
 			satellitePos = satellite[cntSL].object.GetPositionFloat();
+			satelliteScale = satellite[cntSL].object.GetScaleFloat();
 
 			// バレットと人工衛星の当たり判定
-			if (!CollisionBC(bulletPos, satellitePos, bullet[cntBullet].size, satellite[cntSL].size))continue;
+			// Z軸だけ長いためCheckLZを使用
+			if (!CheckLZ(bulletPos, bulletScale, satellitePos, satelliteScale))continue;
 			bullet[cntBullet].spd = 0.0f;
 			satellite[cntSL].flag_rotate = false;
 			satellite[cntSL].object.SetParent(&bullet[cntBullet].object);
@@ -183,9 +194,10 @@ void CheckHit(void)
 
 			// 仕様フラグをチェックしたら座標をゲット
 			rocketPos = rocket[cntRocket].object.GetPositionFloat();
+			rocketScale = rocket[cntRocket].object.GetScaleFloat();
 
 			// バレットとロケットの当たり判定
-			if (!CollisionBC(bulletPos, rocketPos, bullet[cntBullet].size, rocket[cntRocket].size))continue;
+			if (!CheckLY(bulletPos, bulletScale, rocketPos, rocketScale))continue;
 			bullet[cntBullet].spd = 0.0f;
 			rocket[cntRocket].flag_rotate = false;
 			rocket[cntRocket].object.SetParent(&bullet[cntBullet].object);
@@ -211,7 +223,7 @@ void CheckHit(void)
 		flag_score = 0;
 		player->Ralpha = 1.0f;
 		// Eキー押したら弾補充させる
-		if (GetKeyboardTrigger(DIK_R))
+		if (GetKeyboardTrigger(DIK_E))
 		{
 			for (int i = 0; i < MAX_BULLET; i++)
 			{
@@ -226,6 +238,8 @@ void CheckHit(void)
 	{
 		player->Ralpha = 0.0f;
 	}
+
+
 
 	// ペアレントしたバレットの解放処理
 	for (int cntBullet = 0; cntBullet < MAX_BULLET; cntBullet++)
@@ -486,10 +500,10 @@ BOOL CheckBase(XMFLOAT3 pos1, XMFLOAT3 scale1, XMFLOAT3 pos2, XMFLOAT3 scale2)
 	BOOL ans = FALSE;		//はずれのセット
 	
 	// baseに合うようにスケールを調整
-	scale1.x *= 16.0f;
+	scale1.x *= 20.0f;
 	scale1.y *= 4.0f;
 	scale1.z *= 2.0f;
-	scale2.x *= 16.0f;
+	scale2.x *= 20.0f;
 	scale2.y *= 4.0f;
 	scale2.z *= 6.0f;
 
@@ -501,6 +515,120 @@ BOOL CheckBase(XMFLOAT3 pos1, XMFLOAT3 scale1, XMFLOAT3 pos2, XMFLOAT3 scale2)
 		(pos1.z - scale1.z < pos2.z + scale2.z))
 	{
 		ans = TRUE;	// 当たっている
+	}
+
+	return ans;
+}
+
+//=============================================================================
+// トリモチとデブリの当たり判定の計算
+// 四角いやつはだいたいこれ
+//=============================================================================
+BOOL CheckDebris(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 dPos, XMFLOAT3 dScale)
+{
+	BOOL ans = FALSE;	// はずれのセット
+
+	//素の数値だと小さすぎるので計算内だけスケールを増やす
+	bScale.x *= 3.0f;
+	bScale.y *= 3.0f;
+	bScale.z *= 3.0f;
+	dScale.x *= 3.0f;
+	dScale.y *= 3.0f;
+	dScale.z *= 3.0f;
+
+	if ((bPos.x + bScale.x > dPos.x - dScale.x) &&
+		(bPos.x - bScale.x < dPos.x + dScale.x) &&
+		(bPos.y + bScale.y > dPos.y - dScale.y) &&
+		(bPos.y - bScale.y < dPos.y + dScale.y) &&
+		(bPos.z + bScale.z > dPos.z - dScale.z) &&
+		(bPos.z - bScale.z < dPos.z + dScale.z))
+	{
+		ans = TRUE;
+	}
+
+	return ans;
+}
+
+//=============================================================================
+// LongX(X軸が長いもの)の当たり判定
+//=============================================================================
+BOOL CheckLX(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 xPos, XMFLOAT3 xScale)
+{
+	BOOL ans = FALSE;	// はずれのセット
+
+	// x軸に長いのでそれを調節
+	bScale.x *= 10.0f;
+	bScale.y *= 2.0f;
+	bScale.z *= 2.0f;
+	xScale.x *= 10.0f;
+	xScale.y *= 2.0f;
+	xScale.z *= 2.0f;
+
+	if ((bPos.x + bScale.x > xPos.x - xScale.x) &&
+		(bPos.x - bScale.x < xPos.x + xScale.x) &&
+		(bPos.y + bScale.y > xPos.y - xScale.y) &&
+		(bPos.y - bScale.y < xPos.y + xScale.y) &&
+		(bPos.z + bScale.z > xPos.z - xScale.z) &&
+		(bPos.z - bScale.z < xPos.z + xScale.z))
+	{
+		ans = TRUE;
+	}
+
+	return ans;
+}
+
+//=============================================================================
+// LongY(Y軸が長いもの)の当たり判定
+//=============================================================================
+BOOL CheckLY(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 yPos, XMFLOAT3 yScale)
+{
+	BOOL ans = FALSE;	// はずれのセット
+
+	// x軸に長いのでそれを調節
+	bScale.x *= 2.0f;
+	bScale.y *= 10.0f;
+	bScale.z *= 2.0f;
+	yScale.x *= 2.0f;
+	yScale.y *= 10.0f;
+	yScale.z *= 2.0f;
+
+	if ((bPos.x + bScale.x > yPos.x - yScale.x) &&
+		(bPos.x - bScale.x < yPos.x + yScale.x) &&
+		(bPos.y + bScale.y > yPos.y - yScale.y) &&
+		(bPos.y - bScale.y < yPos.y + yScale.y) &&
+		(bPos.z + bScale.z > yPos.z - yScale.z) &&
+		(bPos.z - bScale.z < yPos.z + yScale.z))
+	{
+		ans = TRUE;
+	}
+
+	return ans;
+}
+
+
+//=============================================================================
+// LongZ(Z軸が長いもの)の当たり判定
+//=============================================================================
+BOOL CheckLZ(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 zPos, XMFLOAT3 zScale)
+{
+	BOOL ans = FALSE;	// はずれのセット
+
+	// z軸に長いのでそれを調節
+	bScale.x *= 2.0f;
+	bScale.y *= 2.0f;
+	bScale.z *= 10.0f;
+	zScale.x *= 2.0f;
+	zScale.y *= 2.0f;
+	zScale.z *= 10.0f;
+
+	if ((bPos.x + bScale.x > zPos.x - zScale.x) &&
+		(bPos.x - bScale.x < zPos.x + zScale.x) &&
+		(bPos.y + bScale.y > zPos.y - zScale.y) &&
+		(bPos.y - bScale.y < zPos.y + zScale.y) &&
+		(bPos.z + bScale.z > zPos.z - zScale.z) &&
+		(bPos.z - bScale.z < zPos.z + zScale.z))
+	{
+		ans = TRUE;
 	}
 
 	return ans;
