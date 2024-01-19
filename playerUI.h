@@ -19,3 +19,4 @@ void DrawCollect(void);
 void DrawReload(void);
 void DrawPlayerUI(void);
 void DrawPlayerRestBullet(void);
+void DrawReticle(void);
