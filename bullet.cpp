@@ -15,9 +15,6 @@
 //*****************************************************************************
 #define	MODEL_BULLET		"Data/model/ball.obj"			// 読み込むモデル名
 															// 今はモチがないので仮
-
-#define	VALUE_MOVE			(3.0f)							// 移動量
-
 static int		    g_bulletIdx = 0;						// 最後に発射された弾のインデックス
 
 //*****************************************************************************
@@ -40,7 +37,7 @@ HRESULT InitBullet(void)
 		g_Bullet[b].object.SetRotation(XMFLOAT3{ 0.0f,0.0f,0.0f });
 		g_Bullet[b].object.SetScale(XMFLOAT3{ 1.0f,1.0f,1.0f });
 		g_Bullet[b].time = 0.0f;
-		g_Bullet[b].spd = 2.0f;
+		g_Bullet[b].spd = 5.0f;
 		g_Bullet[b].use = true;
 		g_Bullet[b].object.draw = false;
 		g_Bullet[b].size = BULLET_SIZE;

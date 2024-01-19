@@ -74,7 +74,7 @@ HRESULT InitPlayer(void) {
 	GetModelDiffuse(&g_Player.object.modelInfo, g_Player.object.modelDiffuse);
 	g_Player.object.load = true;
 
-	g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, -100.0f });
+	g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 	g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 	g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
 	g_Player.str = 100.0f;
@@ -165,13 +165,12 @@ void UpdatePlayer(void) {
 
 	if (GetKeyboardPress(DIK_Q))
 	{
-		position.y += 1.0f;
-		g_Player.str -= 0.3f;
+		position.y += 2.0f;
 	}
 
 	else if (GetKeyboardPress(DIK_Z))
 	{
-		position.y -= 1.0f;
+		position.y -= 2.0f;
 	}
 
 	
