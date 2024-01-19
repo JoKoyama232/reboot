@@ -12,7 +12,7 @@
 //*****************************************************************************
 // マクロ定義
 //****************************************************************************
-#define TEXTURE_MAX			(8)								// テクスチャの数
+#define TEXTURE_MAX			(9)								// テクスチャの数
 #define PLAYER_UI_MAX		(1)								// プレイヤーのUIの数
 
 //*****************************************************************************
@@ -30,6 +30,7 @@ static const char* g_TexturName[TEXTURE_MAX] = {
 	"Data/texture/meter_base.png",
 	"Data/texture/reticle.png",
 	"Data/texture/meter_base.png",
+	"Data/texture/reroad.png",
 };
 
 HRESULT InitPlayerUI(void)
@@ -249,10 +250,13 @@ void DrawReload(void)
 	SetMaterial(material);
 
 	//ゲージの位置やテクスチャー座標を反映
-	float px = 67.0f;						// ゲージの表示位置X
-	float py = 150.0f;						// ゲージの表示位置Y
-	float pw = 600.0f;						// ゲージの表示幅
-	float ph = 200.0f;						// ゲージの表示高さ
+	float reroad_x = 975.0f * 0.2;
+	float reroad_y = 250.0f * 0.2;
+
+	float px = SCREEN_CENTER_X - reroad_x/2;						// ゲージの表示位置X
+	float py = SCREEN_CENTER_Y - reroad_y/2 - 200.0f;						// ゲージの表示位置Y
+	float pw = reroad_x;						// ゲージの表示幅
+	float ph = reroad_y;						// ゲージの表示高さ
 
 	float tw = 1.0f;						// テクスチャの幅
 	float th = 1.0f;						// テクスチャの高さ
@@ -261,7 +265,7 @@ void DrawReload(void)
 
 	PLAYER* player = GetPlayer();
 
-	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[4]);
+	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[8]);
 
 	SetSpriteLTColor(g_VertexBuffer,
 		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
