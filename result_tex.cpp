@@ -289,8 +289,8 @@ void DrawResultTex(void)
 			// スコアの位置やテクスチャー座標を反映
 			float pw = 16 * 4;			// スコアの表示幅
 			float ph = 32 * 4;			// スコアの表示高さ
-			float px = 1200.0f - i * pw;	// スコアの表示位置X
-			float py = 260.0f;			// スコアの表示位置Y
+			float px = 1250.0f - i * pw;	// スコアの表示位置X
+			float py = 265.0f;			// スコアの表示位置Y
 
 			float tw = 1.0f / 10;		// テクスチャの幅
 			float th = 1.0f / 1;		// テクスチャの高さ
@@ -310,6 +310,79 @@ void DrawResultTex(void)
 
 	}
 	
+	// ボーナスの表示
+	{
+		// テクスチャ設定
+		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
+
+		// 桁数分処理する
+		int bonus = GetBonus();
+		for (int i = 0; i < SCORE_DIGIT; i++)
+		{
+			// 今回表示する桁の数字
+			float x = (float)(bonus % 10);
+
+			// スコアの位置やテクスチャー座標を反映
+			float pw = 16 * 4;			// スコアの表示幅
+			float ph = 32 * 4;			// スコアの表示高さ
+			float px = 1250.0f - i * pw;	// スコアの表示位置X
+			float py = 450.0f;			// スコアの表示位置Y
+
+			float tw = 1.0f / 10;		// テクスチャの幅
+			float th = 1.0f / 1;		// テクスチャの高さ
+			float tx = x * tw;			// テクスチャの左上X座標
+			float ty = 0.0f;			// テクスチャの左上Y座標
+
+			// １枚のポリゴンの頂点とテクスチャ座標を設定
+			SetSpriteColor(g_VertexBuffer, px, py, pw, ph, tx, ty, tw, th,
+				XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
+			// ポリゴン描画
+			GetDeviceContext()->Draw(4, 0);
+
+			// 次の桁へ
+			bonus /= 10;
+		}
+	}
+
+	// 合計スコアの表示
+	{
+		// テクスチャ設定
+		GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[0]);
+
+		// 桁数分処理する
+		int number = GetScore();
+		int bonus = GetBonus();
+		int score = number + bonus;
+		for (int i = 0; i < SCORE_DIGIT; i++)
+		{
+			// 今回表示する桁の数字
+			float x = (float)(score % 10);
+
+			// スコアの位置やテクスチャー座標を反映
+			float pw = 16 * 4;			// スコアの表示幅
+			float ph = 32 * 4;			// スコアの表示高さ
+			float px = 1250.0f - i * pw;	// スコアの表示位置X
+			float py = 660.0f;			// スコアの表示位置Y
+
+			float tw = 1.0f / 10;		// テクスチャの幅
+			float th = 1.0f / 1;		// テクスチャの高さ
+			float tx = x * tw;			// テクスチャの左上X座標
+			float ty = 0.0f;			// テクスチャの左上Y座標
+
+			// １枚のポリゴンの頂点とテクスチャ座標を設定
+			SetSpriteColor(g_VertexBuffer, px, py, pw, ph, tx, ty, tw, th,
+				XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
+			// ポリゴン描画
+			GetDeviceContext()->Draw(4, 0);
+
+			// 次の桁へ
+			score /= 10;
+		}
+	}
+
+
 	// congratulationsの表示
 	{
 		int score = GetScore();

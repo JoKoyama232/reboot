@@ -51,6 +51,14 @@ void UpdateResult(void)
 	UpdateResultTex();
 
 	UpdateSkybox();
+
+#ifdef _DEBUG
+	if (GetKeyState(VK_RBUTTON) & 0x80)
+	{
+		SetFade(FADE_OUT, MODE_GAME);
+	}
+#endif // _DEBUG
+
 }
 
 

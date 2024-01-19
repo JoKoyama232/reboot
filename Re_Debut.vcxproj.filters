@@ -88,9 +88,6 @@
     <ClCompile Include="DebugObject.cpp">
       <Filter>ソースファイル\Tool</Filter>
     </ClCompile>
-    <ClCompile Include="result_tex.cpp">
-      <Filter>ソースファイル\Result</Filter>
-    </ClCompile>
     <ClCompile Include="title_debris.cpp">
       <Filter>ソースファイル\Title</Filter>
     </ClCompile>
@@ -107,6 +104,9 @@
       <Filter>ソースファイル\Game</Filter>
     </ClCompile>
     <ClCompile Include="playerUI.cpp" />
+    <ClCompile Include="result_tex.cpp">
+      <Filter>ソースファイル\Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

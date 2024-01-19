@@ -39,7 +39,7 @@ static XMFLOAT3					g_Pos;						// ポリゴンの座標
 static int						g_TexNo;					// テクスチャ番号
 
 static int						g_Score;					// スコア
-
+static int						g_Bonus;
 static int						g_Flag;						// クリア判定
 
 
@@ -81,7 +81,7 @@ HRESULT InitScore(void)
 	g_TexNo = 0;
 
 	g_Score = 0;	// スコアの初期化
-
+	g_Bonus = 0;
 	g_Flag = 0;		// クリアフラグの初期化
 
 	return S_OK;
@@ -193,12 +193,30 @@ void AddScore(int add)
 
 }
 
+//=============================================================================
+// ボーナスを加算する
+// 引数:plus :追加する点数。マイナスも可能
+//=============================================================================
+void AddBonus(int plus)
+{
+	g_Bonus += plus;
+	if (g_Bonus > BONUS_MAX)
+	{
+		g_Bonus = BONUS_MAX;
+	}
+
+}
+
 
 int GetScore(void)
 {
 	return g_Score;
 }
 
+int GetBonus(void)
+{
+	return g_Bonus;
+}
 
 void SetScore(int score)
 {
