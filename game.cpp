@@ -229,6 +229,8 @@ void DrawGame(void)
 
 		DrawReload();
 
+		DrawReticle();
+
 		// ライティングを有効に
 		SetLightEnable(true);
 
