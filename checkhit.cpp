@@ -258,9 +258,10 @@ void CheckHit(void)
 
 			//使用フラグをチェックしたら座標をゲット
 			debrisPos = debris[cntDebris].object.GetPositionFloat();
+			debriScale = debris[cntDebris].object.GetScaleFloat();
 
 			// プレイヤーとデブリの当たり判定
-			if (!CollisionBC(playerPos, debrisPos, player->size, debris[cntDebris].size)) continue;
+			if (!CheckPlayer(playerPos, playerScale, debrisPos, debriScale)) continue;
 
 			// プレイヤーとデブリの当たり反応（真）
 			if (!debris[cntDebris].object.GetParent() == NULL)
@@ -290,9 +291,10 @@ void CheckHit(void)
 			if (!antenna[cntAntn].use)continue;
 			//使用フラグをチェックしたら座標をゲット
 			antennaPos = antenna[cntAntn].object.GetPositionFloat();
+			antennaScale = antenna[cntAntn].object.GetScaleFloat();
 
 			// プレイヤーとアンテナの当たり判定
-			if (!CollisionBC(playerPos, antennaPos, player->size, antenna[cntAntn].size)) continue;
+			if (!CheckPlayer(playerPos, playerScale, antennaPos, antennaScale)) continue;
 
 			// プレイヤーとアンテナの当たり反応（真）
 			if (!antenna[cntAntn].object.GetParent() == NULL)
@@ -322,9 +324,10 @@ void CheckHit(void)
 			if (!pod[cntPod].use)continue;
 			//仕様フラグを確認したら座標をゲット
 			podPos = pod[cntPod].object.GetPositionFloat();
+			podScale = pod[cntPod].object.GetScaleFloat();
 
 			// プレイや―とポッドの当たり判定
-			if (!CollisionBC(playerPos, podPos, player->size, pod[cntPod].size)) continue;
+			if (!CheckPlayer(playerPos, playerScale, podPos, podScale)) continue;
 
 			// プレイや―とポッドの当たり判定(真)
 			if (!pod[cntPod].object.GetParent() == NULL)
@@ -353,9 +356,10 @@ void CheckHit(void)
 			if (!panel[cntPanel].use)continue;
 			// 仕様フラグをチェックしたら座標をゲット
 			panelPos = panel[cntPanel].object.GetPositionFloat();
+			panelScale = panel[cntPanel].object.GetScaleFloat();
 
 			//プレイヤーとパネルの当たり判定
-			if (!CollisionBC(playerPos, panelPos, player->size, panel[cntPanel].size)) continue;
+			if (!CheckPlayer(playerPos, playerScale, panelPos, panelScale)) continue;
 
 			//プレイヤーとパネルの当たり判定(真)
 			if (!panel[cntPanel].object.GetParent() == NULL)
@@ -385,9 +389,10 @@ void CheckHit(void)
 
 			// 仕様フラグをチェックしたら座標をゲット
 			hatchPos = hatch[cntHatch].object.GetPositionFloat();
+			hatchScale = hatch[cntHatch].object.GetScaleFloat();
 
 			// プレイヤーとハッチの当たり判定
-			if (!CollisionBC(playerPos, hatchPos, player->size, hatch[cntHatch].size)) continue;
+			if (!CheckPlayer(playerPos, hatchPos, playerScale, hatchScale)) continue;
 
 			// プレイヤーとハッチの当たり判定(真)
 			if (!hatch[cntHatch].object.GetParent() == NULL)
@@ -417,9 +422,10 @@ void CheckHit(void)
 
 			// 仕様フラグをチェックしたら座標をゲット
 			satellitePos = satellite[cntSL].object.GetPositionFloat();
+			satelliteScale = satellite[cntSL].object.GetScaleFloat();
 
 			// プレイヤーと人工衛星の当たり判定
-			if (!CollisionBC(playerPos, satellitePos, player->size, satellite[cntSL].size)) continue;
+			if (!CheckPlayer(playerPos, playerScale, satellitePos, satelliteScale)) continue;
 
 			// プレイヤーと人工衛星の当たり判定(真)
 			if (!satellite[cntSL].object.GetParent() == NULL)
@@ -448,9 +454,10 @@ void CheckHit(void)
 
 			// 使用フラグをチェックしたら座標をゲット
 			rocketPos = rocket[cntRocket].object.GetPositionFloat();
+			rocketScale = rocket[cntRocket].object.GetScaleFloat();
 
 			// プレイヤーとロケットの当たり判定
-			if (!CollisionBC(playerPos, rocketPos, player->size, rocket[cntRocket].size)) continue;
+			if (!CheckPlayer(playerPos, playerScale, rocketPos, rocketScale)) continue;
 
 			// プレイヤーとロケットの当たり判定(真)
 			if (!rocket[cntRocket].object.GetParent() == NULL)
@@ -528,6 +535,36 @@ BOOL CheckBase(XMFLOAT3 pos1, XMFLOAT3 scale1, XMFLOAT3 pos2, XMFLOAT3 scale2)
 
 	return ans;
 }
+
+//=============================================================================
+// トリモチとデブリの当たり判定の計算
+// 四角いやつはだいたいこれ
+//=============================================================================
+BOOL CheckPlayer(XMFLOAT3 ppos, XMFLOAT3 pscale, XMFLOAT3 dpos, XMFLOAT3 dscale)
+{
+	BOOL ans = FALSE;	// はずれのセット
+
+	//素の数値だと小さすぎるので計算内だけスケールを増やす
+	pscale.x *= 10.0f;
+	pscale.y *= 10.0f;
+	pscale.z *= 10.0f;
+	dscale.x *= 10.0f;
+	dscale.y *= 10.0f;
+	dscale.z *= 10.0f;
+
+	if ((ppos.x + pscale.x > dpos.x - dscale.x) &&
+		(ppos.x - pscale.x < dpos.x + dscale.x) &&
+		(ppos.y + pscale.y > dpos.y - dscale.y) &&
+		(ppos.y - pscale.y < dpos.y + dscale.y) &&
+		(ppos.z + pscale.z > dpos.z - dscale.z) &&
+		(ppos.z - pscale.z < dpos.z + dscale.z))
+	{
+		ans = TRUE;
+	}
+
+	return ans;
+}
+
 
 //=============================================================================
 // トリモチとデブリの当たり判定の計算
