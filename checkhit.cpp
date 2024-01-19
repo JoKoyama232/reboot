@@ -37,6 +37,7 @@
 //*****************************************************************************
 
 static int flag_score = 0;
+static int flag_bonus = 0;
 
 //=============================================================================
 // “–‚½‚è”»’èˆ—
@@ -218,9 +219,11 @@ void CheckHit(void)
 		{
 			player->C2alpha = 1.0f;
 			PlaySound(SOUND_LABEL_SE_SCORE);
+			AddScore(flag_score * 100);
+			AddBonus(flag_bonus * 50);
+			flag_score = 0;
 		}
-		AddScore(flag_score * 100);
-		flag_score = 0;
+		
 		player->Ralpha = 1.0f;
 		// EƒL[‰Ÿ‚µ‚½‚ç’e•â[‚³‚¹‚é
 		if (GetKeyboardTrigger(DIK_E))
@@ -263,10 +266,10 @@ void CheckHit(void)
 			if (!debris[cntDebris].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 1;
-
 				if (debris[cntDebris].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 1;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					debris[cntDebris].object.SetParent(NULL);
 					debris[cntDebris].use = false;
@@ -295,10 +298,11 @@ void CheckHit(void)
 			if (!antenna[cntAntn].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 5;
 
 				if (antenna[cntAntn].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 5;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					antenna[cntAntn].object.SetParent(NULL);
 					antenna[cntAntn].use = false;
@@ -326,10 +330,11 @@ void CheckHit(void)
 			if (!pod[cntPod].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (pod[cntPod].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					pod[cntPod].object.SetParent(NULL);
 					pod[cntPod].use = false;
@@ -356,10 +361,11 @@ void CheckHit(void)
 			if (!panel[cntPanel].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (panel[cntPanel].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					panel[cntPanel].object.SetParent(NULL);
 					panel[cntPanel].use = false;
@@ -387,10 +393,11 @@ void CheckHit(void)
 			if (!hatch[cntHatch].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (hatch[cntHatch].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					hatch[cntHatch].object.SetParent(NULL);
 					hatch[cntHatch].use = false;
@@ -418,10 +425,11 @@ void CheckHit(void)
 			if (!satellite[cntSL].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (satellite[cntSL].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					satellite[cntSL].object.SetParent(NULL);
 					satellite[cntSL].use = false;
@@ -448,10 +456,11 @@ void CheckHit(void)
 			if (!rocket[cntRocket].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (rocket[cntRocket].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					rocket[cntRocket].object.SetParent(NULL);
 					rocket[cntRocket].use = false;
