@@ -416,11 +416,13 @@ void DrawReticle(void)
 	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	SetMaterial(material);
 
+	float reticle_size = 800.0f * 0.4;			//	レティクルのサイズ
+
 	//ゲージの位置やテクスチャー座標を反映
-	float px = SCREEN_CENTER_X;				// ゲージの表示位置X
-	float py = SCREEN_CENTER_Y;				// ゲージの表示位置Y
-	float pw = 800.0f*0.4;						// ゲージの表示幅
-	float ph = 800.0f*0.4;						// ゲージの表示高さ
+	float px = SCREEN_CENTER_X - reticle_size / 2;				// ゲージの表示位置X
+	float py = SCREEN_CENTER_Y - reticle_size / 2;				// ゲージの表示位置Y
+	float pw = reticle_size;						// ゲージの表示幅
+	float ph = reticle_size;						// ゲージの表示高さ
 
 	float tw = 1.0f;						// テクスチャの幅
 	float th = 1.0f;						// テクスチャの高さ
@@ -434,10 +436,12 @@ void DrawReticle(void)
 	SetSpriteLTColor(g_VertexBuffer,
 		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
 		tx, ty, tw, th,
-		XMFLOAT4(0.0f, 1.0f, 0.0f, 0.5f));
+		XMFLOAT4(1.0f, 1.0f, 1.0f, 0.5f));
 
 	// ポリゴン描画
 	GetDeviceContext()->Draw(4, 0);
 
 }
+
+
 
