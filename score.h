@@ -11,6 +11,7 @@
 // マクロ定義
 //*****************************************************************************
 #define SCORE_MAX			(99999)		// スコアの最大値
+#define BONUS_MAX			(99999)		// ボーナスの最大値
 #define SCORE_DIGIT			(5)			// 桁数
 
 
@@ -25,7 +26,9 @@ void UpdateScore(void);
 void DrawScore(void);
 
 void AddScore(int add);
+void AddBonus(int plus);
 int GetScore(void);
+int GetBonus(void);
 void SetScore(int score);
 
 

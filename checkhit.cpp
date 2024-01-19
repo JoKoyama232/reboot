@@ -37,6 +37,7 @@
 //*****************************************************************************
 
 static int flag_score = 0;
+static int flag_bonus = 0;
 
 //=============================================================================
 // 当たり判定処理
@@ -218,9 +219,11 @@ void CheckHit(void)
 		{
 			player->C2alpha = 1.0f;
 			PlaySound(SOUND_LABEL_SE_SCORE);
+			AddScore(flag_score * 100);
+			AddBonus(flag_bonus * 50);
+			flag_score = 0;
 		}
-		AddScore(flag_score * 100);
-		flag_score = 0;
+		
 		player->Ralpha = 1.0f;
 		// Eキー押したら弾補充させる
 		if (GetKeyboardTrigger(DIK_E))
@@ -263,10 +266,10 @@ void CheckHit(void)
 			if (!debris[cntDebris].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 1;
-
 				if (debris[cntDebris].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 1;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					debris[cntDebris].object.SetParent(NULL);
 					debris[cntDebris].use = false;
@@ -295,10 +298,11 @@ void CheckHit(void)
 			if (!antenna[cntAntn].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 5;
 
 				if (antenna[cntAntn].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 5;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					antenna[cntAntn].object.SetParent(NULL);
 					antenna[cntAntn].use = false;
@@ -326,10 +330,11 @@ void CheckHit(void)
 			if (!pod[cntPod].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (pod[cntPod].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					pod[cntPod].object.SetParent(NULL);
 					pod[cntPod].use = false;
@@ -356,10 +361,11 @@ void CheckHit(void)
 			if (!panel[cntPanel].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (panel[cntPanel].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					panel[cntPanel].object.SetParent(NULL);
 					panel[cntPanel].use = false;
@@ -387,10 +393,11 @@ void CheckHit(void)
 			if (!hatch[cntHatch].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (hatch[cntHatch].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					hatch[cntHatch].object.SetParent(NULL);
 					hatch[cntHatch].use = false;
@@ -418,10 +425,11 @@ void CheckHit(void)
 			if (!satellite[cntSL].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (satellite[cntSL].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					satellite[cntSL].object.SetParent(NULL);
 					satellite[cntSL].use = false;
@@ -448,10 +456,11 @@ void CheckHit(void)
 			if (!rocket[cntRocket].object.GetParent() == NULL)
 			{
 				PlaySound(SOUND_LABEL_SE_ABSORB);
-				flag_score += 3;
 
 				if (rocket[cntRocket].object.GetParent() == &bullet[cntBullet].object)
 				{
+					flag_score += 3;
+					flag_bonus += 1;
 					player->Calpha = 1.0f;
 					rocket[cntRocket].object.SetParent(NULL);
 					rocket[cntRocket].use = false;
@@ -529,12 +538,12 @@ BOOL CheckDebris(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 dPos, XMFLOAT3 dScale)
 	BOOL ans = FALSE;	// はずれのセット
 
 	//素の数値だと小さすぎるので計算内だけスケールを増やす
-	bScale.x *= 3.0f;
-	bScale.y *= 3.0f;
-	bScale.z *= 3.0f;
-	dScale.x *= 3.0f;
-	dScale.y *= 3.0f;
-	dScale.z *= 3.0f;
+	bScale.x *= 5.0f;
+	bScale.y *= 5.0f;
+	bScale.z *= 5.0f;
+	dScale.x *= 5.0f;
+	dScale.y *= 5.0f;
+	dScale.z *= 5.0f;
 
 	if ((bPos.x + bScale.x > dPos.x - dScale.x) &&
 		(bPos.x - bScale.x < dPos.x + dScale.x) &&
@@ -558,11 +567,11 @@ BOOL CheckLX(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 xPos, XMFLOAT3 xScale)
 
 	// x軸に長いのでそれを調節
 	bScale.x *= 10.0f;
-	bScale.y *= 2.0f;
-	bScale.z *= 2.0f;
+	bScale.y *= 3.0f;
+	bScale.z *= 3.0f;
 	xScale.x *= 10.0f;
-	xScale.y *= 2.0f;
-	xScale.z *= 2.0f;
+	xScale.y *= 3.0f;
+	xScale.z *= 3.0f;
 
 	if ((bPos.x + bScale.x > xPos.x - xScale.x) &&
 		(bPos.x - bScale.x < xPos.x + xScale.x) &&
@@ -585,12 +594,12 @@ BOOL CheckLY(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 yPos, XMFLOAT3 yScale)
 	BOOL ans = FALSE;	// はずれのセット
 
 	// x軸に長いのでそれを調節
-	bScale.x *= 2.0f;
+	bScale.x *= 3.0f;
 	bScale.y *= 10.0f;
-	bScale.z *= 2.0f;
-	yScale.x *= 2.0f;
+	bScale.z *= 3.0f;
+	yScale.x *= 3.0f;
 	yScale.y *= 10.0f;
-	yScale.z *= 2.0f;
+	yScale.z *= 3.0f;
 
 	if ((bPos.x + bScale.x > yPos.x - yScale.x) &&
 		(bPos.x - bScale.x < yPos.x + yScale.x) &&
@@ -614,11 +623,11 @@ BOOL CheckLZ(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 zPos, XMFLOAT3 zScale)
 	BOOL ans = FALSE;	// はずれのセット
 
 	// z軸に長いのでそれを調節
-	bScale.x *= 2.0f;
-	bScale.y *= 2.0f;
+	bScale.x *= 3.0f;
+	bScale.y *= 3.0f;
 	bScale.z *= 10.0f;
-	zScale.x *= 2.0f;
-	zScale.y *= 2.0f;
+	zScale.x *= 3.0f;
+	zScale.y *= 3.0f;
 	zScale.z *= 10.0f;
 
 	if ((bPos.x + bScale.x > zPos.x - zScale.x) &&
