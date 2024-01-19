@@ -250,6 +250,14 @@ void UpdateTitleTex(void)
 		glitchOffset = GLITCH_INITIAL_OFFSET;
 	}
 	glitchRow = (glitchRow + 1) % 20;
+
+#ifdef _DEBUG
+	if (GetKeyState(VK_RBUTTON) & 0x80)
+	{
+		SetFade(FADE_OUT, MODE_GAME);
+	}
+#endif // _DEBUG
+
 }
 
 //=============================================================================
