@@ -275,7 +275,7 @@ void CheckHit(void)
 					debris[cntDebris].object.SetParent(NULL);
 					debris[cntDebris].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 2.0f;
+					bullet[cntBullet].spd = 5.0f;
 				}
 
 			}
@@ -309,7 +309,7 @@ void CheckHit(void)
 					antenna[cntAntn].object.SetParent(NULL);
 					antenna[cntAntn].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 2.0f;
+					bullet[cntBullet].spd = 5.0f;
 				}
 			}
 		}
@@ -342,7 +342,7 @@ void CheckHit(void)
 					pod[cntPod].object.SetParent(NULL);
 					pod[cntPod].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 2.0f;
+					bullet[cntBullet].spd = 5.0f;
 				}
 			}
 		}
@@ -374,7 +374,7 @@ void CheckHit(void)
 					panel[cntPanel].object.SetParent(NULL);
 					panel[cntPanel].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 2.0f;
+					bullet[cntBullet].spd = 5.0f;
 				}
 			}
 		}
@@ -407,7 +407,7 @@ void CheckHit(void)
 					hatch[cntHatch].object.SetParent(NULL);
 					hatch[cntHatch].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 2.0f;
+					bullet[cntBullet].spd = 5.0f;
 				}
 			}
 		}
@@ -440,7 +440,7 @@ void CheckHit(void)
 					satellite[cntSL].object.SetParent(NULL);
 					satellite[cntSL].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 2.0f;
+					bullet[cntBullet].spd = 5.0f;
 				}
 			}
 		}
@@ -472,7 +472,7 @@ void CheckHit(void)
 					rocket[cntRocket].object.SetParent(NULL);
 					rocket[cntRocket].use = false;
 					bullet[cntBullet].use = false;
-					bullet[cntBullet].spd = 2.0f;
+					bullet[cntBullet].spd = 5.0f;
 				}
 			}
 		}
