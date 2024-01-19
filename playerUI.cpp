@@ -12,7 +12,7 @@
 //*****************************************************************************
 // マクロ定義
 //****************************************************************************
-#define TEXTURE_MAX			(7)								// テクスチャの数
+#define TEXTURE_MAX			(8)								// テクスチャの数
 #define PLAYER_UI_MAX		(1)								// プレイヤーのUIの数
 
 //*****************************************************************************
@@ -29,6 +29,7 @@ static const char* g_TexturName[TEXTURE_MAX] = {
 	"Data/texture/collect.png",
 	"Data/texture/meter_base.png",
 	"Data/texture/reticle.png",
+	"Data/texture/meter_base.png",
 };
 
 HRESULT InitPlayerUI(void)
@@ -443,5 +444,53 @@ void DrawReticle(void)
 
 }
 
+//=============================================================================
+// // パラメータ表示処理
+//=============================================================================
+void DrawMeterBase(void)
+{
+	// 頂点バッファ設定
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+	// マトリクス設定
+	SetWorldViewProjection2D();
+
+	// プリミティブトポロジ設定
+	GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// マテリアル設定
+	MATERIAL material;
+	ZeroMemory(&material, sizeof(material));
+	material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	SetMaterial(material);
+
+	float meter_size = 1275.0f * 0.4;			//	レティクルのサイズ
+
+	//ゲージの位置やテクスチャー座標を反映
+	float px = SCREEN_CENTER_X - meter_size / 2;				// ゲージの表示位置X
+	float py = SCREEN_CENTER_Y - meter_size / 2;				// ゲージの表示位置Y
+	float pw = meter_size;						// ゲージの表示幅
+	float ph = meter_size;						// ゲージの表示高さ
+
+	float tw = 1.0f;						// テクスチャの幅
+	float th = 1.0f;						// テクスチャの高さ
+	float tx = 0.0f;						// テクスチャの左上X座標
+	float ty = 0.0f;						// テクスチャの左上Y座標
+
+	PLAYER* player = GetPlayer();
+
+	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[7]);
+
+	SetSpriteLTColor(g_VertexBuffer,
+		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
+		tx, ty, tw, th,
+		XMFLOAT4(1.0f, 1.0f, 1.0f, 0.3f));
+
+	// ポリゴン描画
+	GetDeviceContext()->Draw(4, 0);
+
+}
 
 
