@@ -12,7 +12,7 @@
 //*****************************************************************************
 // マクロ定義
 //****************************************************************************
-#define TEXTURE_MAX			(9)								// テクスチャの数
+#define TEXTURE_MAX			(10)								// テクスチャの数
 #define PLAYER_UI_MAX		(1)								// プレイヤーのUIの数
 
 //*****************************************************************************
@@ -20,6 +20,7 @@
 //*****************************************************************************
 static ID3D11Buffer* g_VertexBuffer = NULL;				// 頂点情報
 static ID3D11ShaderResourceView* g_Texture[TEXTURE_MAX] = { NULL };	// テクスチャ情報
+playerUI g_Hit;
 
 static const char* g_TexturName[TEXTURE_MAX] = {
 	"Data/texture/bar_white.png",
@@ -31,6 +32,7 @@ static const char* g_TexturName[TEXTURE_MAX] = {
 	"Data/texture/reticle.png",
 	"Data/texture/meter_base.png",
 	"Data/texture/reroad.png",
+	"Data/texture/hit.png",
 };
 
 HRESULT InitPlayerUI(void)
@@ -94,13 +96,6 @@ void DrawAttach(void)
 	PLAYER* player = GetPlayer();
 
 	GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[3]);
-
-	if (player->flag_Aalpha == true)
-	{
-		player->Aalpha = 1.0f;
-		player->flag_Aalpha = false;
-	}
-
 
 	if (player->Aalpha >= 0.0f)
 	{
@@ -226,6 +221,70 @@ void DrawCollect(void)
 	GetDeviceContext()->Draw(4, 0);
 
 }
+
+//=============================================================================
+// ヒット表示処理
+//=============================================================================
+void DrawHit(void)
+{
+	PLAYER* player = GetPlayer();
+	BULLET* bullet = GetBullet();
+	for (int i = 0; i < MAX_BULLET; i++)
+	{
+		if (bullet[i].flag_Halpha)
+		{
+			// 頂点バッファ設定
+			UINT stride = sizeof(VERTEX_3D);
+			UINT offset = 0;
+			GetDeviceContext()->IASetVertexBuffers(0, 1, &g_VertexBuffer, &stride, &offset);
+
+			// マトリクス設定
+			SetWorldViewProjection2D();
+
+			// プリミティブトポロジ設定
+			GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+			// マテリアル設定
+			MATERIAL material;
+			ZeroMemory(&material, sizeof(material));
+			material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+			SetMaterial(material);
+
+			//ゲージの位置やテクスチャー座標を反映
+			float px = 670.0f;					// ゲージの表示位置X
+			float py = 150.0f;						// ゲージの表示位置Y
+			float pw = 600.0f;						// ゲージの表示幅
+			float ph = 200.0f;						// ゲージの表示高さ
+
+			float tw = 1.0f;						// テクスチャの幅
+			float th = 1.0f;						// テクスチャの高さ
+			float tx = 0.0f;						// テクスチャの左上X座標
+			float ty = 0.0f;						// テクスチャの左上Y座標
+
+			if (bullet[i].flag_Halpha == true)
+			{
+				bullet[i].Halpha -= 0.01f;
+			}
+
+			else if(bullet[i].flag_Halpha == false)
+			{
+				bullet[i].Halpha = 1.0f;
+			}
+
+			GetDeviceContext()->PSSetShaderResources(0, 1, &g_Texture[9]);
+
+			SetSpriteLTColor(g_VertexBuffer,
+				px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
+				tx, ty, tw, th,
+				XMFLOAT4(1.0f, 1.0f, 1.0f, bullet[i].Halpha));
+
+
+			// ポリゴン描画
+			GetDeviceContext()->Draw(4, 0);
+		}
+	}
+}
+
 
 //=============================================================================
 // リロード表示処理
@@ -498,3 +557,7 @@ void DrawMeterBase(void)
 }
 
 
+playerUI* GetHit(void)
+{
+	return &g_Hit;
+}

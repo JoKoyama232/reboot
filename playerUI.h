@@ -1,19 +1,16 @@
 //プレイヤーのUI表示
 #pragma once
 
-class playerUI
+struct playerUI
 {
-	float				Calpha;
-	float				C2alpha;
-	float				Aalpha;
-	float				Ralpha;
-	bool				flag_Aalpha;
+	bool				hflag;
 
 };
 
 //プロトタイプ宣言
 HRESULT InitPlayerUI(void);
 void DrawAttach(void);
+void DrawHit(void);
 void DrawCapture(void);
 void DrawCollect(void);
 void DrawReload(void);

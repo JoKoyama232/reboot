@@ -152,8 +152,8 @@ void UpdateResultTex(void)
 		// マウルの位置が画像に当たっているかどうかの判定
 		if ((x > g_Button[i].pos.x - TEXTURE_WIDTH_LOGO * 0.5f) &&
 			(x < g_Button[i].pos.x + TEXTURE_WIDTH_LOGO * 0.5f) &&
-			(y + 15.0f > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) &&
-			(y + 15.0f < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f))
+			(y + 25.0f > g_Button[i].pos.y - TEXTURE_HEIGHT_LOGO * 0.5f) &&
+			(y + 30.0f < g_Button[i].pos.y + TEXTURE_HEIGHT_LOGO * 0.5f))
 		{
 
 			//点滅させる

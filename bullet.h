@@ -22,6 +22,8 @@ struct BULLET
 	float				spd;		// 移動スピード
 	float				dir;		// 向き
 	float				size;
+	float				Halpha;
+	bool				flag_Halpha;
 	bool				use;		// 使用フラグ
 
 	// 階層アニメーション用のメンバー変数
