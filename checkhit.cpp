@@ -583,11 +583,11 @@ BOOL CheckBase(XMFLOAT3 pos1, XMFLOAT3 scale1, XMFLOAT3 pos2, XMFLOAT3 scale2)
 	
 	// base‚É‡‚¤‚æ‚¤‚ÉƒXƒP[ƒ‹‚ð’²®
 	scale1.x *= 20.0f;
-	scale1.y *= 4.0f;
-	scale1.z *= 2.0f;
+	scale1.y *= 5.0f;
+	scale1.z *= 8.0f;
 	scale2.x *= 20.0f;
-	scale2.y *= 4.0f;
-	scale2.z *= 6.0f;
+	scale2.y *= 5.0f;
+	scale2.z *= 8.0f;
 
 	if ((pos1.x + scale1.x > pos2.x - scale2.x) &&
 		(pos1.x - scale1.x < pos2.x + scale2.x) &&

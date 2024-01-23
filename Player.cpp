@@ -74,7 +74,7 @@ HRESULT InitPlayer(void) {
 	GetModelDiffuse(&g_Player.object.modelInfo, g_Player.object.modelDiffuse);
 	g_Player.object.load = true;
 
-	g_Player.object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
+	g_Player.object.SetPosition(XMFLOAT3{ 500.0f, 0.0f, 0.0f });
 	g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 	g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
 	g_Player.str = 100.0f;
