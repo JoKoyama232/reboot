@@ -21,6 +21,7 @@
 #define	MODEL_PLAYER			"Data/model/robo_low.obj"		// 読み込むモデル名(まだ存在してないよ)
 
 #define	VALUE_MOVE			(3.0f)							// 移動量
+#define	BOOST_SPD			(6.0f)							// ブースト時のスピード
 
 #define PLAYER_UI_MAX		(1)								// プレイヤーのUIの数
 #define TEXTURE_MAX			(5)								// テクスチャの数
@@ -85,6 +86,8 @@ HRESULT InitPlayer(void) {
 	g_Player.Ralpha = 0.0f;
 	g_Player.time = 0.0f;
 	g_Player.speed = 0.0f;			// 移動スピードクリア
+	g_Player.boost = 0.0f;			// ブ―ストスピードクリア
+
 	g_Player.use = true;
 	g_Player.flag_Aalpha = false;
 	g_Player.size = PLAYER_SIZE;
@@ -120,14 +123,25 @@ void UpdatePlayer(void) {
 	XMFLOAT3 camRotation = cam->rot;
 	XMFLOAT3 camat = cam->at;
 	// 入力検知
+
+	if (GetKeyboardPress(DIK_LSHIFT))
+	{
+		g_Player.boost = BOOST_SPD;
+	}
+	else 
+	{
+		g_Player.boost = 0.0f;
+	}
+
+
 	if (GetKeyboardPress(DIK_A) || IsButtonTriggered(0, BUTTON_LEFT))
 	{	// 左
-		g_Player.speed = VALUE_MOVE;
+		g_Player.speed = VALUE_MOVE + g_Player.boost;
 		g_Player.direction = -XM_PI / 2;
 	}
 	else if (GetKeyboardPress(DIK_D) || IsButtonTriggered(0, BUTTON_RIGHT))
 	{	// 右
-		g_Player.speed = VALUE_MOVE;
+		g_Player.speed = VALUE_MOVE + g_Player.boost;
 		g_Player.direction = XM_PI / 2;
 	}
 	else {
@@ -136,7 +150,7 @@ void UpdatePlayer(void) {
 
 	if (GetKeyboardPress(DIK_W) || IsButtonTriggered(0, BUTTON_UP))
 	{	// 前
-		g_Player.speed = VALUE_MOVE;
+		g_Player.speed = VALUE_MOVE + g_Player.boost;
 		g_Player.direction = 0.0f;
 		if ((GetKeyboardPress(DIK_A)) || (IsButtonPressed(0, BUTTON_LEFT)))
 		{
@@ -150,7 +164,7 @@ void UpdatePlayer(void) {
 	}
 	else if (GetKeyboardPress(DIK_S) || IsButtonTriggered(0, BUTTON_DOWN))
 	{	// 後ろ
-		g_Player.speed = VALUE_MOVE;
+		g_Player.speed = VALUE_MOVE + g_Player.boost;
 		g_Player.direction = XM_PI;
 		if ((GetKeyboardPress(DIK_A)) || (IsButtonPressed(0, BUTTON_LEFT)))
 		{
@@ -176,7 +190,7 @@ void UpdatePlayer(void) {
 	
 
 	//スタミナゲージ処理&移動中のSE処理
-	if (g_Player.speed == VALUE_MOVE)
+	if (g_Player.speed == VALUE_MOVE + BOOST_SPD)
 	{
 		g_Player.str -= 0.3f;
 		if (g_Player.str <= 0)

@@ -19,6 +19,8 @@ struct PLAYER
 	WorldSpace			object;
 	
 	float				speed;			// 移動スピード
+	float				boost;			// 移動スピード
+
 	float				direction;		// 向き
 	float				str;
 	float				str_max;

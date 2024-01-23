@@ -37,7 +37,7 @@ HRESULT InitBullet(void)
 		g_Bullet[b].object.SetRotation(XMFLOAT3{ 0.0f,0.0f,0.0f });
 		g_Bullet[b].object.SetScale(XMFLOAT3{ 1.0f,1.0f,1.0f });
 		g_Bullet[b].time = 0.0f;
-		g_Bullet[b].spd = 5.0f;
+		g_Bullet[b].spd = 10.0f;
 		g_Bullet[b].use = true;
 		g_Bullet[b].object.draw = false;
 		g_Bullet[b].size = BULLET_SIZE;

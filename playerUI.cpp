@@ -303,7 +303,7 @@ void DrawPlayerUI(void)
 		//ゲージの位置やテクスチャー座標を反映
 		float px = 40.0f;						// ゲージの表示位置X
 		float py = 125.0f + (20.0f * i);		// ゲージの表示位置Y
-		float pw = 8.0f;						// ゲージの表示幅
+		float pw = 16.0f;						// ゲージの表示幅
 		float ph = 350.0f;						// ゲージの表示高さ
 
 		float tw = 50.0f;						// テクスチャの幅
