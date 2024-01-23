@@ -75,10 +75,14 @@ void CheckHit(void)
 	// 弾丸毎の当たり判定----------------------------------------------------
 	for (int cntBullet = 0; cntBullet < MAX_BULLET; cntBullet++)
 	{
+		
 		// 弾丸の使用フラグを確認
 		if (!bullet[cntBullet].use) continue;
 		bulletPos = bullet[cntBullet].object.GetPositionFloat();
 		bulletScale = bullet[cntBullet].object.GetScaleFloat();
+
+		// フラグ確認
+		bullet[cntBullet].flag_Halpha = false;
 
 		// バレット対デブリ当たり判定
 		for (int cntDebris = 0; cntDebris < MAX_DEBRIS; cntDebris++)
@@ -245,6 +249,12 @@ void CheckHit(void)
 			}
 
 		}
+
+		if (bullet[cntBullet].use == false)
+		{
+			bullet[cntBullet].flag_Halpha = false;
+			bullet[cntBullet].Halpha = 1.0f;
+		}
 	}
 
 	//----------------------------------------------------------------------
@@ -318,6 +328,7 @@ void CheckHit(void)
 					debris[cntDebris].use = false;
 					bullet[cntBullet].use = false;
 					bullet[cntBullet].flag_Halpha = false;
+					bullet[cntBullet].Halpha = 1.0f;
 					bullet[cntBullet].spd = 5.0f;
 				}
 
@@ -353,6 +364,7 @@ void CheckHit(void)
 					antenna[cntAntn].use = false;
 					bullet[cntBullet].use = false;
 					bullet[cntBullet].flag_Halpha = false;
+					bullet[cntBullet].Halpha = 1.0f;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -387,6 +399,7 @@ void CheckHit(void)
 					pod[cntPod].use = false;
 					bullet[cntBullet].use = false;
 					bullet[cntBullet].flag_Halpha = false;
+					bullet[cntBullet].Halpha = 1.0f;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -420,6 +433,7 @@ void CheckHit(void)
 					panel[cntPanel].use = false;
 					bullet[cntBullet].use = false;
 					bullet[cntBullet].flag_Halpha = false;
+					bullet[cntBullet].Halpha = 1.0f;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -454,6 +468,7 @@ void CheckHit(void)
 					hatch[cntHatch].use = false;
 					bullet[cntBullet].use = false;
 					bullet[cntBullet].flag_Halpha = false;
+					bullet[cntBullet].Halpha = 1.0f;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -488,6 +503,7 @@ void CheckHit(void)
 					satellite[cntSL].use = false;
 					bullet[cntBullet].use = false;
 					bullet[cntBullet].flag_Halpha = false;
+					bullet[cntBullet].Halpha = 1.0f;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -521,11 +537,12 @@ void CheckHit(void)
 					rocket[cntRocket].use = false;
 					bullet[cntBullet].use = false;
 					bullet[cntBullet].flag_Halpha = false;
+					bullet[cntBullet].Halpha = 1.0f;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
 		}
-
+		
 		//----------------------------------------------------------------------
 	}
 }
@@ -566,11 +583,11 @@ BOOL CheckBase(XMFLOAT3 pos1, XMFLOAT3 scale1, XMFLOAT3 pos2, XMFLOAT3 scale2)
 	
 	// baseに合うようにスケールを調整
 	scale1.x *= 20.0f;
-	scale1.y *= 4.0f;
-	scale1.z *= 2.0f;
+	scale1.y *= 5.0f;
+	scale1.z *= 8.0f;
 	scale2.x *= 20.0f;
-	scale2.y *= 4.0f;
-	scale2.z *= 6.0f;
+	scale2.y *= 5.0f;
+	scale2.z *= 8.0f;
 
 	if ((pos1.x + scale1.x > pos2.x - scale2.x) &&
 		(pos1.x - scale1.x < pos2.x + scale2.x) &&

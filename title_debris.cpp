@@ -48,7 +48,7 @@ HRESULT InitTitleDebris(void) {
 		g_TDebris[i].object.load = true;
 		g_TDebris[i].object.SetPosition(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 		g_TDebris[i].object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
-		g_TDebris[i].object.SetScale(XMFLOAT3{ 0.1f, 0.1f, 0.1f });
+		g_TDebris[i].object.SetScale(XMFLOAT3{ 0.7f, 0.7f, 0.7f });
 		g_TDebris[i].time = 0.0f;
 		g_TDebris[i].speed = 0.0f;			// 移動スピードクリア
 		g_TDebris[i].use = true;
