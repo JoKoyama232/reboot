@@ -26,7 +26,7 @@
 #include "bullet.h"
 #include "base.h"
 #include "score.h"
-
+#include "playerUI.h"
 #include "game.h"
 #include "checkhit.h"
 
@@ -91,12 +91,18 @@ void CheckHit(void)
 			debriScale = debris[cntDebris].object.GetScaleFloat();
 			// 弾丸とデブリの当たり判定
 			if (!CheckDebris(bulletPos, bulletScale, debrisPos, debriScale)) continue;
-
 			// 弾丸とデブリの当たり反応（真
+			bullet[cntBullet].flag_Halpha = true;
 			bullet[cntBullet].spd = 0.0f;
 			debris[cntDebris].flag_rotate = false;
 			debris[cntDebris].object.SetParent(&bullet[cntBullet].object);
+			if (bullet[cntBullet].Halpha <= 0.0f)
+			{
+				bullet[cntBullet].flag_Halpha = false;
+			}
+			
 		}
+
 
 
 		//バレットとアンテナの当たり判定
@@ -113,8 +119,14 @@ void CheckHit(void)
 			// X軸だけ長いためCheckLXを使用
 			if (!CheckLX(bulletPos, bulletScale, antennaPos, antennaScale))continue;
 			bullet[cntBullet].spd = 0.0f;
+			bullet[cntBullet].flag_Halpha = true;
 			antenna[cntAntn].flag_rotate = false;
 			antenna[cntAntn].object.SetParent(&bullet[cntBullet].object);
+			if (bullet[cntBullet].Halpha <= 0.0f)
+			{
+				bullet[cntBullet].flag_Halpha = false;
+			}
+
 		}
 
 		// バレットとポッドの当たり判定
@@ -130,8 +142,14 @@ void CheckHit(void)
 			// バレットとポッドの当たり判定
 			if (!CheckDebris(bulletPos, bulletScale, podPos, podScale))continue;
 			bullet[cntBullet].spd = 0.0f;
+			bullet[cntBullet].flag_Halpha = true;
 			pod[cntPod].flag_rotate = false;
 			pod[cntPod].object.SetParent(&bullet[cntBullet].object);
+			if (bullet[cntBullet].Halpha <= 0.0f)
+			{
+				bullet[cntBullet].flag_Halpha = false;
+			}
+
 		}
 
 		// バレットとソ－ラーパネルの当たり判定
@@ -146,9 +164,15 @@ void CheckHit(void)
 
 			// バレットとパネルの当たり判定
 			if (!CheckDebris(bulletPos, bulletScale, panelPos, panelScale))continue;
-			bullet[cntBullet].spd = 0.0f;
+			bullet[cntBullet].spd = 0.0f;		
+			bullet[cntBullet].flag_Halpha = true;
 			panel[cntPanel].flag_rotate = false;
 			panel[cntPanel].object.SetParent(&bullet[cntBullet].object);
+			if (bullet[cntBullet].Halpha <= 0.0f)
+			{
+				bullet[cntBullet].flag_Halpha = false;
+			}
+
 		}
 
 		// バレットとハッチの当たり判定
@@ -164,8 +188,14 @@ void CheckHit(void)
 			// バレットとハッチの当たり判定
 			if (!CheckDebris(bulletPos, bulletScale, hatchPos, hatchScale))continue;
 			bullet[cntBullet].spd = 0.0f;
+			bullet[cntBullet].flag_Halpha = true;
 			hatch[cntHatch].flag_rotate = false;
 			hatch[cntHatch].object.SetParent(&bullet[cntBullet].object);
+			if (bullet[cntBullet].Halpha <= 0.0f)
+			{
+				bullet[cntBullet].flag_Halpha = false;
+			}
+
 
 		}
 
@@ -183,8 +213,14 @@ void CheckHit(void)
 			// Z軸だけ長いためCheckLZを使用
 			if (!CheckLZ(bulletPos, bulletScale, satellitePos, satelliteScale))continue;
 			bullet[cntBullet].spd = 0.0f;
+			bullet[cntBullet].flag_Halpha = true;
 			satellite[cntSL].flag_rotate = false;
 			satellite[cntSL].object.SetParent(&bullet[cntBullet].object);
+			if (bullet[cntBullet].Halpha <= 0.0f)
+			{
+				bullet[cntBullet].flag_Halpha = false;
+			}
+
 		}
 
 		// バレットとロケットの当たり判定
@@ -200,8 +236,14 @@ void CheckHit(void)
 			// バレットとロケットの当たり判定
 			if (!CheckLY(bulletPos, bulletScale, rocketPos, rocketScale))continue;
 			bullet[cntBullet].spd = 0.0f;
+			bullet[cntBullet].flag_Halpha = true;
 			rocket[cntRocket].flag_rotate = false;
 			rocket[cntRocket].object.SetParent(&bullet[cntBullet].object);
+			if (bullet[cntBullet].Halpha <= 0.0f)
+			{
+				bullet[cntBullet].flag_Halpha = false;
+			}
+
 		}
 	}
 
@@ -275,6 +317,7 @@ void CheckHit(void)
 					debris[cntDebris].object.SetParent(NULL);
 					debris[cntDebris].use = false;
 					bullet[cntBullet].use = false;
+					bullet[cntBullet].flag_Halpha = false;
 					bullet[cntBullet].spd = 5.0f;
 				}
 
@@ -309,6 +352,7 @@ void CheckHit(void)
 					antenna[cntAntn].object.SetParent(NULL);
 					antenna[cntAntn].use = false;
 					bullet[cntBullet].use = false;
+					bullet[cntBullet].flag_Halpha = false;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -342,6 +386,7 @@ void CheckHit(void)
 					pod[cntPod].object.SetParent(NULL);
 					pod[cntPod].use = false;
 					bullet[cntBullet].use = false;
+					bullet[cntBullet].flag_Halpha = false;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -374,6 +419,7 @@ void CheckHit(void)
 					panel[cntPanel].object.SetParent(NULL);
 					panel[cntPanel].use = false;
 					bullet[cntBullet].use = false;
+					bullet[cntBullet].flag_Halpha = false;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -407,6 +453,7 @@ void CheckHit(void)
 					hatch[cntHatch].object.SetParent(NULL);
 					hatch[cntHatch].use = false;
 					bullet[cntBullet].use = false;
+					bullet[cntBullet].flag_Halpha = false;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -440,6 +487,7 @@ void CheckHit(void)
 					satellite[cntSL].object.SetParent(NULL);
 					satellite[cntSL].use = false;
 					bullet[cntBullet].use = false;
+					bullet[cntBullet].flag_Halpha = false;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}
@@ -472,6 +520,7 @@ void CheckHit(void)
 					rocket[cntRocket].object.SetParent(NULL);
 					rocket[cntRocket].use = false;
 					bullet[cntBullet].use = false;
+					bullet[cntBullet].flag_Halpha = false;
 					bullet[cntBullet].spd = 5.0f;
 				}
 			}

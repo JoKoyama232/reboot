@@ -231,6 +231,8 @@ void DrawGame(void)
 
 		DrawReticle();
 
+		DrawHit();
+
 		DrawMeterBase();
 
 		// ライティングを有効に
