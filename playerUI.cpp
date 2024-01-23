@@ -261,12 +261,12 @@ void DrawHit(void)
 			float tx = 0.0f;						// テクスチャの左上X座標
 			float ty = 0.0f;						// テクスチャの左上Y座標
 
-			if (bullet[i].flag_Halpha)
+			if (bullet[i].flag_Halpha == true)
 			{
 				bullet[i].Halpha -= 0.01f;
 			}
 
-			else
+			else if(bullet[i].flag_Halpha == false)
 			{
 				bullet[i].Halpha = 1.0f;
 			}
