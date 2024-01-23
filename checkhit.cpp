@@ -641,12 +641,12 @@ BOOL CheckDebris(XMFLOAT3 bPos, XMFLOAT3 bScale, XMFLOAT3 dPos, XMFLOAT3 dScale)
 	BOOL ans = FALSE;	// はずれのセット
 
 	//素の数値だと小さすぎるので計算内だけスケールを増やす
-	bScale.x *= 7.5f;
-	bScale.y *= 7.5f;
-	bScale.z *= 7.5f;
-	dScale.x *= 7.5f;
-	dScale.y *= 7.5f;
-	dScale.z *= 7.5f;
+	bScale.x *= 5.0f;
+	bScale.y *= 5.0f;
+	bScale.z *= 5.0f;
+	dScale.x *= 5.0f;
+	dScale.y *= 5.0f;
+	dScale.z *= 5.0f;
 
 	if ((bPos.x + bScale.x > dPos.x - dScale.x) &&
 		(bPos.x - bScale.x < dPos.x + dScale.x) &&
