@@ -29,7 +29,6 @@ struct PLAYER
 	float				Aalpha;
 	float				Ralpha;
 	bool				use;
-	bool				flag_Aalpha;
 
 	// 階層アニメーション用のメンバー変数(今は使わないかな？)
 	float				time;				// 線形補間用
