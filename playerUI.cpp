@@ -24,13 +24,13 @@ playerUI g_Hit;
 
 static const char* g_TexturName[TEXTURE_MAX] = {
 	"Data/texture/bar_white.png",
-	"Data/texture/ball_white.png",
+	"Data/texture/bullet.png",
 	"Data/texture/capture.png",
 	"Data/texture/attach.png",
 	"Data/texture/collect.png",
 	"Data/texture/meter_base.png",
 	"Data/texture/reticle.png",
-	"Data/texture/meter_base.png",
+	"Data/texture/hud_2.png",
 	"Data/texture/reroad.png",
 	"Data/texture/hit.png",
 };
@@ -359,11 +359,13 @@ void DrawPlayerUI(void)
 		material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 		SetMaterial(material);
 
-		//ゲージの位置やテクスチャー座標を反映
-		float px = 40.0f;						// ゲージの表示位置X
-		float py = 125.0f + (20.0f * i);		// ゲージの表示位置Y
-		float pw = 16.0f;						// ゲージの表示幅
-		float ph = 350.0f;						// ゲージの表示高さ
+		float boost_x = 16.0f;
+		float boost_y = 350.0f*0.6;
+
+		float px = SCREEN_CENTER_X - boost_x / 2 - 200.0f;						// ゲージの表示位置X
+		float py = SCREEN_CENTER_Y - boost_y / 2 + 100.0f;						// ゲージの表示位置Y
+		float pw = boost_x;						// ゲージの表示幅
+		float ph = boost_y;						// ゲージの表示高さ
 
 		float tw = 50.0f;						// テクスチャの幅
 		float th = 1.0f;						// テクスチャの高さ
@@ -393,7 +395,7 @@ void DrawPlayerUI(void)
 			SetSpriteLTColor(g_VertexBuffer,
 				px, py, pw, ph,
 				tx, ty, tw, th,
-				XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f));
+				XMFLOAT4(1.0f, 1.0f, 0.0f, 0.5f));
 
 		}
 		// ポリゴン描画
@@ -427,11 +429,20 @@ void DrawPlayerRestBullet(void)
 			material.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 			SetMaterial(material);
 
-			//ゲージの位置やテクスチャー座標を反映
-			float px = 70.0f;		// ゲージの表示位置X
-			float py = 125.0f + (37.5f * i);		// ゲージの表示位置Y
-			float pw = 30.0f;		// ゲージの表示幅
-			float ph = 30.0f;		// ゲージの表示高さ
+			float bullet_x = 30.0f;
+			float bullet_y = 30.0f;
+
+			float px = SCREEN_CENTER_X - bullet_x / 2 + 200.0f;						// ゲージの表示位置X
+			float py = SCREEN_CENTER_Y - bullet_y / 2 - 100.0f + (37.5f * i);						// ゲージの表示位置Y
+			float pw = bullet_x;						// ゲージの表示幅
+			float ph = bullet_y;						// ゲージの表示高さ
+
+
+			////ゲージの位置やテクスチャー座標を反映
+			//float px = 70.0f;		// ゲージの表示位置X
+			//float py = 125.0f + (37.5f * i);		// ゲージの表示位置Y
+			//float pw = 30.0f;		// ゲージの表示幅
+			//float ph = 30.0f;		// ゲージの表示高さ
 
 			float tw = 1.0f;	// テクスチャの幅
 			float th = 1.0f;	// テクスチャの高さ
@@ -448,7 +459,7 @@ void DrawPlayerRestBullet(void)
 				SetSpriteLTColor(g_VertexBuffer,
 					px, py, pw, ph,
 					tx, ty, tw, th,
-					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+					XMFLOAT4(1.0f, 1.0f, 1.0f, 0.5f));
 
 			}
 			// ポリゴン描画
@@ -549,7 +560,7 @@ void DrawMeterBase(void)
 	SetSpriteLTColor(g_VertexBuffer,
 		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
 		tx, ty, tw, th,
-		XMFLOAT4(1.0f, 1.0f, 1.0f, 0.3f));
+		XMFLOAT4(1.0f, 1.0f, 1.0f, 0.7f));
 
 	// ポリゴン描画
 	GetDeviceContext()->Draw(4, 0);
