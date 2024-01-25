@@ -75,7 +75,7 @@ HRESULT InitPlayer(void) {
 	GetModelDiffuse(&g_Player.object.modelInfo, g_Player.object.modelDiffuse);
 	g_Player.object.load = true;
 
-	g_Player.object.SetPosition(XMFLOAT3{ 500.0f, 0.0f, 0.0f });
+	g_Player.object.SetPosition(XMFLOAT3{ 500.0f, 0.0f, -100.0f });
 	g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
 	g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
 	g_Player.str = 100.0f;
@@ -84,6 +84,7 @@ HRESULT InitPlayer(void) {
 	g_Player.Calpha = 0.0f;
 	g_Player.C2alpha = 0.0f;
 	g_Player.Ralpha = 0.0f;
+	g_Player.Realpha = 0.2f;
 	g_Player.time = 0.0f;
 	g_Player.speed = 0.0f;			// 移動スピードクリア
 	g_Player.boost = 0.0f;			// ブ―ストスピードクリア
@@ -123,7 +124,7 @@ void UpdatePlayer(void) {
 	XMFLOAT3 camat = cam->at;
 	// 入力検知
 
-	if (GetKeyboardPress(DIK_LSHIFT))
+	if ((GetKeyboardPress(DIK_LSHIFT)) && !IsMouseRightPressed())
 	{
 		g_Player.boost = BOOST_SPD;
 	}
@@ -229,12 +230,17 @@ void UpdatePlayer(void) {
 	if (IsMouseRightPressed())
 	{
 		rotation.y = camRotation.y;
-
+		g_Player.Realpha = 1.0f;
 		if ((GetKeyboardTrigger(DIK_SPACE)) || IsMouseLeftTriggered())
 		{
 			SetBullet(position, camRotation);
 			PlaySound(SOUND_LABEL_SE_BULLET); //モチ発射音
 		}
+	}
+
+	else
+	{
+		g_Player.Realpha = 0.2f;
 	}
 
 	// 移動を反映(これ以上プレイヤーの位置を変えない)
