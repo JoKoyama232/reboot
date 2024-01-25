@@ -30,6 +30,7 @@ struct PLAYER
 	float				C2alpha;
 	float				Aalpha;
 	float				Ralpha;
+	float				Realpha;
 	bool				use;
 
 	// 階層アニメーション用のメンバー変数(今は使わないかな？)
