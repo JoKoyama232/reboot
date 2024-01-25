@@ -211,7 +211,7 @@ void UpdatePlayer(void) {
 	// 移動処理
 	// XZ平面移動
 	// プレイヤーの向いている方向をカメラからオフセット
-	rotation.y = g_Player.direction;
+	rotation.y = g_Player.direction + camRotation.y;
 	// 入力のあった方向へプレイヤーを向かせて移動させる
 	// プレイヤーの向いている方向を保存
 	float deltaX = sinf(rotation.y) * g_Player.speed;
@@ -225,23 +225,16 @@ void UpdatePlayer(void) {
 	float deltaY = 0.0f * deltaTime;
 	position.y += deltaY;
 
-	// 弾発射処理
-
-	if (IsMouseRightPressed())
-	{
-		rotation.y = g_Player.direction + camRotation.y;
-		if ((GetKeyboardTrigger(DIK_SPACE)) || IsMouseLeftTriggered())
-		{
-			SetBullet(position, camRotation);
-			PlaySound(SOUND_LABEL_SE_BULLET); //モチ発射音
-		}
-
-	}
-
 	// 移動を反映(これ以上プレイヤーの位置を変えない)
 	g_Player.object.SetPosition(position);
 	g_Player.object.SetRotation(rotation);
 
+	// 弾発射処理
+	if ((GetKeyboardTrigger(DIK_SPACE)) || IsMouseLeftTriggered())
+	{
+		SetBullet(position, camRotation);
+		PlaySound(SOUND_LABEL_SE_BULLET); //モチ発射音
+	}
 	PrintDebugProc((char*)"Player Information\nMovement:   W\n            A  S  D\n  Shift    Space\nPosition:(%f, %f, %f)\nRotation:(%f, %f, %f)\n", position.x, position.y, position.z, rotation.x, rotation.y, rotation.z);
 
 }
