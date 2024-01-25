@@ -18,7 +18,7 @@
 //*****************************************************************************
 // マクロ定義
 //****************************************************************************
-#define	MODEL_PLAYER			"Data/model/robo_low.obj"		// 読み込むモデル名(まだ存在してないよ)
+#define	MODEL_PLAYER			"Data/model/robo_move_front.obj"		// 読み込むモデル名(まだ存在してないよ)
 
 #define	VALUE_MOVE			(3.0f)							// 移動量
 #define	BOOST_SPD			(6.0f)							// ブースト時のスピード
@@ -77,7 +77,7 @@ HRESULT InitPlayer(void) {
 
 	g_Player.object.SetPosition(XMFLOAT3{ 500.0f, 0.0f, -100.0f });
 	g_Player.object.SetRotation(XMFLOAT3{ 0.0f, 0.0f, 0.0f });
-	g_Player.object.SetScale(XMFLOAT3{ 1.0f, 1.0f, 1.0f });
+	g_Player.object.SetScale(XMFLOAT3{ 1.0f * 0.7, 1.0f * 0.7, 1.0f * 0.7 });
 	g_Player.str = 100.0f;
 	g_Player.str_max = 100.0f;
 	g_Player.Aalpha - 0.0f;
