@@ -10,7 +10,7 @@
 #include "sprite.h"
 #include "fade.h"
 #include "sound.h"
-
+#include "input.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -121,11 +121,9 @@ void UninitClock(void)
 //=============================================================================
 void UpdateClock(void)
 {
-	if (g_Clock <= 0.0f)	//3600フレーム(約1分)たったらゲームリザルトに行く
+	if (g_Clock <= 0.0f)	//6000フレーム(約1分)たったらゲームリザルトに行く
 	{
 		SetFade(FADE_OUT, MODE_RESULT);
-		//マウス非表示
-		ShowCursor(true);
 		g_Clock = 0.0f;
 	}
 
@@ -141,7 +139,14 @@ void UpdateClock(void)
 		PlaySound(SOUND_LABEL_BGM_game2);
 	}
 
-
+	if (g_Clock >= 0.0f)
+	{
+		if (GetKeyboardTrigger(DIK_0))
+		{
+			SetFade(FADE_OUT, MODE_RESULT);
+			ShowCursor(true);
+		}
+	}
 	
 #ifdef _DEBUG	// デバッグ情報を表示する
 	//char *str = GetDebugStr();

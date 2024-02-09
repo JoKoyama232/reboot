@@ -11,7 +11,6 @@
 
 #include "rocket.h"
 #include "sprite.h"
-#include <time.h>
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -91,7 +90,7 @@ void UpdateRocket(void) {
 
 		if (!g_Rocket[i].flag_rotate)continue;
 		{
-			// ÇÆÇÈÇÆÇÈâÒì]
+			// âÒì]Ç≥ÇπÇÈ
 			rotation.x += (i + 1) * 0.005f;
 			rotation.y += ((rand() % 5) + 1) * 0.001f;
 			rotation.z += ((MAX_ROCKET + 1) - i) * 0.005f;

@@ -177,6 +177,8 @@ void UpdateIntro(void)
 		sprite[logo].use = false;
 		sprite[credit].use = false;
 		sprite[introBackground].use = false;
+		sprite[introBackground].useColor = false;
+
 		setLoad(false);
 		SetFade(FADE_OUT, MODE_TITLE);
 	}

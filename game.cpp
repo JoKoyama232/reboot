@@ -76,10 +76,8 @@ HRESULT InitGame(void)
 
 	InitBase();
 
-	//弾(モチ)の初期化
 	InitBullet();
 
-	//時計の初期化
 	InitClock();
 
 	InitScore();
@@ -87,11 +85,6 @@ HRESULT InitGame(void)
 	InitSkybox();
 
 	InitArrow();
-
-	//マウス非表示
-	ShowCursor(false);
-
-
 
 	return S_OK;
 }
@@ -121,10 +114,8 @@ void UninitGame(void)
 
 	UninitSkybox();
 
-	//弾(モチ)の終了処理
 	UninitBullet();
 
-	// 時計の終了処理
 	UninitClock();
 
 	UninitScore();
@@ -154,17 +145,15 @@ void UpdateGame(void)
 	UpdateRocket();
 
 	UpdateBase();
-	//弾(モチ)の更新処理
+
 	UpdateBullet();
 
-	// 時計の更新処理
 	UpdateClock();
 
 	UpdateSkybox();
 
 	UpdateArrow();
 
-	//当たり判定
 	CheckHit();
 }
 
@@ -178,7 +167,6 @@ void DrawGame(void)
 	// プレイヤー視点
 	pos = GetPlayer()->object.GetPositionFloat();
 	SetCameraAT(pos);
-	//SetCamera();
 
 	DrawSkybox();
 
@@ -199,7 +187,7 @@ void DrawGame(void)
 	DrawRocket();
 
 	DrawBase();
-	//弾(モチ)の描画処理
+
 	DrawBullet();
 
 	DrawArrow();

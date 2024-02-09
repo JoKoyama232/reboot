@@ -72,6 +72,7 @@ void UpdateArrow(void)
 
 	if (g_Arrow.use)
 	{
+		// プレイヤーの頭上に表示
 		position.x = playerPos.x;
 		position.y = playerPos.y + 50.0f;
 		position.z = playerPos.z;
@@ -80,6 +81,7 @@ void UpdateArrow(void)
 		rotation.y = atan2f(basePos.x - playerPos.x, basePos.z - playerPos.z);
 	}
 
+	//座標のセット
 	g_Arrow.object.SetPosition(position);
 	g_Arrow.object.SetRotation(rotation);
 
@@ -119,8 +121,6 @@ void DrawArrow(void)
 
 		// モデル描画
 		DrawModel(&g_Arrow.object.modelInfo);
-
-		SetFuchi(0);
 
 		// カリング設定を戻す
 		SetCullingMode(CULL_MODE_BACK);

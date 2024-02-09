@@ -30,6 +30,8 @@ HRESULT InitTitle(void)
 	InitTitleAntenna();
 
 	InitSkybox();
+
+
 	return S_OK;
 }
 

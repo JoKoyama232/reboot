@@ -289,13 +289,21 @@ void Update(void)
 		UpdateIntro();
 		break;
 	case MODE_TITLE:
+		ShowCursor(true);
+
 		UpdateTitle();
 		break;
 	case MODE_GAME:
+		ShowCursor(false);
+
 		UpdateGame();
+
 		break;
 	case MODE_RESULT:
+		ShowCursor(true);
+
 		UpdateResult();
+
 		break;
 
 	}

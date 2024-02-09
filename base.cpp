@@ -12,7 +12,6 @@
 
 #include "base.h"
 #include "sprite.h"
-#include <time.h>
 
 //*****************************************************************************
 // マクロ定義
@@ -111,8 +110,6 @@ void DrawBase(void)
 
 		// モデル描画
 		DrawModel(&g_Base[i].object.modelInfo);
-
-		SetFuchi(0);
 
 		// カリング設定を戻す
 		SetCullingMode(CULL_MODE_BACK);

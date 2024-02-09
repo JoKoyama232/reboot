@@ -91,7 +91,7 @@ void UpdatePod(void) {
 
 
 		if (!g_Pod[i].flag_rotate)continue;
-		// ‚®‚é‚®‚é‰ñ“]
+		// ‰ñ“]‚³‚¹‚é
 		rotation.x += (i + 1) * 0.005f;
 		rotation.y += ((rand() % 5) + 1) * 0.001f;
 		rotation.z += ((MAX_POD + 1) - i) * 0.005f;

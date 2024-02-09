@@ -81,9 +81,7 @@ void UpdateBullet(void)
 			continue;
 		}
 		
-
-		//PLAYER* player = GetPlayer();
-		//XMFLOAT3 p_pos = player->object.GetPositionFloat();
+		//座標とrotationのゲット
 		XMFLOAT3 b_pos = g_Bullet[b].object.GetPositionFloat();
 		XMFLOAT3 b_rot = g_Bullet[b].object.GetRotationFloat();
 
@@ -93,6 +91,7 @@ void UpdateBullet(void)
 		b_pos.z += cosf(b_rot.y) * g_Bullet[b].spd;
 
 		g_Bullet[b].object.SetPosition(b_pos);
+		g_Bullet[b].object.SetRotation(b_rot);
 
 	}
 }
@@ -173,9 +172,6 @@ int SetBullet(XMFLOAT3 pos, XMFLOAT3 rot)
 
 		// 最後に発射されたバレットインデックスを更新
 		nIdxBullet = nCntBullet;
-
-		// バレット音
-		//PlaySound(SOUND_LABEL_SE_shot000);
 
 		break;
 	}

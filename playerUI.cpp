@@ -156,12 +156,10 @@ void DrawCapture(void)
 		player->Calpha -= 0.01;
 	}
 
-
 	SetSpriteLTColor(g_VertexBuffer,
 		px - 2.5f, py - 2.5f, pw + 5.0f, ph + 5.0f,
 		tx, ty, tw, th,
 		XMFLOAT4(1.0f, 1.0f, 1.0f, player->Calpha));
-
 
 	// ƒ|ƒŠƒSƒ“•`‰æ
 	GetDeviceContext()->Draw(4, 0);

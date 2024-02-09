@@ -187,10 +187,7 @@ void UpdateResultTex(void)
 			{
 				switch (i) {
 				case 0:
-					SetFade(FADE_OUT, MODE_GAME);
-					//マウス非表示
-					ShowCursor(false);
-					//PlaySound();
+					SetFade(FADE_OUT, MODE_TITLE);
 					break;
 				case 1:
 				{

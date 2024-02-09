@@ -11,7 +11,6 @@
 
 #include "debris.h"
 #include "sprite.h"
-#include <time.h>
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -91,7 +90,7 @@ void UpdateDebris(void) {
 
 		if (!g_Debris[i].flag_rotate)continue;
 		{
-			// ÇÆÇÈÇÆÇÈâÒì]
+			// âÒì]Ç≥ÇπÇÈ
 			rotation.x += (i + 1) * 0.001f;
 			rotation.y += ((rand() % 5) + 1) * 0.001f;
 			rotation.z += ((MAX_DEBRIS + 1) - i) * 0.001f;

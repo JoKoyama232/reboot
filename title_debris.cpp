@@ -99,7 +99,7 @@ void UpdateTitleDebris(void) {
 
 		if (!g_TDebris[i].flag_rotate)continue;
 		{
-			// ‚®‚é‚®‚é‰ñ“]
+			// ‰ñ“]‚³‚¹‚é
 			rotation.x += (i + 1) * 0.001f;
 			rotation.y += ((rand() % 5) + 1) * 0.001f;
 			rotation.z += ((MAX_DEBRIS + 1) - i) * 0.001f;

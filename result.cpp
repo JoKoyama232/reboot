@@ -15,16 +15,13 @@
 #include "result_tex.h"
 #include "Skybox.h"
 
-//#include "title_field.h"
-//#include "model.h"
-//#include "title_model.h"
-
 //=============================================================================
 // ‰Šú‰»ˆ—
 //=============================================================================
 
 HRESULT InitResult(void)
 {
+
 	InitResultTex();
 
 	InitSkybox();
@@ -69,10 +66,6 @@ void UpdateResult(void)
 void DrawResult(void)
 {
 	DrawSkybox();
-
-
-
-
 
 	// 2D‚Ì•¨‚ğ•`‰æ‚·‚éˆ—
 	{
