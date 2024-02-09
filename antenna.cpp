@@ -91,7 +91,7 @@ void UpdateAntenna(void) {
 
 		if (!g_Antenna[i].flag_rotate)continue;
 		{
-			// ‰ñ“]‚³‚¹‚é
+			//‰ñ“]‚³‚¹‚é
 			rotation.x += (i + 1) * 0.001f;
 			rotation.y += ((rand() % 5) + 1) * 0.001f;
 			rotation.z += ((MAX_ANTENNA + 1) - i) * 0.001f;
